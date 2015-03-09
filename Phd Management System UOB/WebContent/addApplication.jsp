@@ -68,43 +68,69 @@
 		<table>
 			<thead>
 				<tr>
+					<td>UB Number:</td>
+					<td><input name="ubNumber"></td>
+					<td></td>
+					<td>Discipline:</td>
+					<td><select name="discipline">
+							<option value="mechanical">Mechanical</option>
+							<option value="medical">Medical</option>
+							<option value="civil">Civil</option>
+							<option value="chemical">Chemical</option>
+							<option value="electrical">Electrical</option>
+							<option value="computing">Computing</option>
+							<option value="filmAndMedia">Film and Media</option>
+					</select></td>
+
+				</tr>
+				<tr>
 					<td>First Name:</td>
 					<td><input name="firstName"></td>
-					<td>Gender:</td>
-					<td><select name="gender">
-							<option value="m">Male</option>
-							<option value="w">Female</option>
-					</select></td>
-					<td>Cell</td>
+					<td></td>
+					<td>Title of Research:</td>
+					<td><input name="titleOfresearch"></td>
+
 				</tr>
 				<tr>
 					<td>Middle Name:</td>
 					<td><input name="middleName"></td>
-					<td>Cell</td>
-					<td>Cell</td>
-					<td>Cell</td>
+					<td></td>
+					<td>Highest award</td>
+					<td><input name="highestAward"></td>
 				</tr>
 				<tr>
 					<td>Last Name:</td>
 					<td><input name="lastName"></td>
-					<td>Cell</td>
-					<td>Cell</td>
-					<td>Cell</td>
+					<td></td>
+					<td>Qualification of highest award</td>
+					<td><input name="qualificationHighestAward"></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
 					<td><input name="eMail"></td>
-					<td>Cell</td>
-					<td>Cell</td>
-					<td>Cell</td>
+					<td></td>
+					<td>Other award</td>
+					<td><input name="otherAward"></td>
 				</tr>
 				<tr>
 					<td>Date of Birth:</td>
 					<td><input class="myDate" type="text" name="dateOfBirth"
 						size="10" value="" />&nbsp;(mm/dd/yyyy)</td>
-					<td>Cell</td>
-					<td>Cell</td>
-					<td>Cell</td>
+					<td></td>
+					<td>Qualification of other award</td>
+					<td><input name="qualificationOtherAward"></td>
+				</tr>
+				<tr>
+					<td>Gender:</td>
+					<td><select name="gender">
+							<option value="f">Female</option>
+							<option value="m">Male</option>
+					</select></td>
+					<td></td>
+					<td>Proposal</td>
+					<td><input type="submit" name="chooseFile" value="Choose file">
+						<input name="filePath"> <input type="submit"
+						name="uploadFile" value="Upload file"></td>
 				</tr>
 			</thead>
 		</table>

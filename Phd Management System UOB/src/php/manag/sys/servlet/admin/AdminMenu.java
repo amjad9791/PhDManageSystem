@@ -1,4 +1,4 @@
-package php.manag.sys.servlet;
+package php.manag.sys.servlet.admin;
 
 import java.io.IOException;
 

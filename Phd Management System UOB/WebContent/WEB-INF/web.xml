@@ -38,7 +38,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>AdminMenuServlet</servlet-name>
-    <servlet-class>php.manag.sys.servlet.AdminMenu</servlet-class>
+    <servlet-class>php.manag.sys.servlet.admin.AdminMenu</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminMenuServlet</servlet-name>
@@ -46,7 +46,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>AddApplicationServlet</servlet-name>
-    <servlet-class>php.manag.sys.servlet.AddApplication</servlet-class>
+    <servlet-class>php.manag.sys.servlet.admin.AddApplication</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddApplicationServlet</servlet-name>

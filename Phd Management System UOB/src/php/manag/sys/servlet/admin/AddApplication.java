@@ -1,4 +1,4 @@
-package php.manag.sys.servlet;
+package php.manag.sys.servlet.admin;
 
 import java.io.IOException;
 
@@ -42,15 +42,30 @@ public class AddApplication extends HttpServlet
 			String dateOfBirth = request.getParameter( "dateOfBirth" );
 			String gender = request.getParameter( "gender" );
 
+			String discipline = request.getParameter( "discipline" );
+			String titleOfresearch = request.getParameter( "titleOfresearch" );
+			String highestAward = request.getParameter( "highestAward" );
+			String qualificationHighestAward = request.getParameter( "qualificationHighestAward" );
+			String otherAward = request.getParameter( "otherAward" );
+			String qualificationOtherAward = request.getParameter( "qualificationOtherAward" );
+
 			// checking for a valid mail address
 			if( !isValidEmailAddress( eMail ) )
 			{
 				showAlert( "Mail Address is not valid" );
 			}
+			//Every field needs to be filled, otherwise a alert will inform the user
+			else if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) || otherAward.equals( "" ) || qualificationOtherAward.equals( "" ) )
+			{
+				showAlert( "Please fill every field with your details" );
+			}
+			//All correct and saving the data into the database
+			else
+			{
 
-			SqlLiteDatabase sql = new SqlLiteDatabase( );
-			sql.insertApplication( firstName, middleName, lastName, eMail, dateOfBirth, gender );
-
+				SqlLiteDatabase sql = new SqlLiteDatabase( );
+				sql.insertApplication( firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward );
+			}
 		}
 
 	}
@@ -70,13 +85,5 @@ public class AddApplication extends HttpServlet
 		out.println( "location='addApplication.jsp';" );
 		out.println( "</script>" );
 	}
-	
-	public void convertDateToSql(String date){
-//		DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-//		format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
-//
-//		java.util.Date date2 = format.parse(date);
-//
-//		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-	}
+
 }

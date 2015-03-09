@@ -17,31 +17,35 @@ public class SqlLiteDatabase
 	public static final String PASSWORD = "siemens";
 
 	/**
-	 * @param username
-	 *            The desired username from the loginScreen
-	 * @param password
-	 *            The password according to the username above
-	 * @return Valid values are "admin", "user" or null. Null represents either
-	 *         the user is not existing or the entered password ist wrong
+	 * inserts a Applciation will all required data into the Database
 	 */
-	public void insertApplication( String firstName, String middleName, String lastname, String email, String birthday, String gender )
+	public void insertApplication( String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward )
 	{
-//		String query = "";
-//		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
-//		     Statement stmt = conn.createStatement( ); )
-//		{
-//			String[] date = birthday.split( "/" ) ;
-//			date.
-////			query = "INSERT INTO `application` (`firstName`, `middleName`, `lastName`, `email`, `birthday`, `gender`) VALUES	('" + firstName + "', '" + middleName + "', '" + lastname + "', '" + email + "', '" + date[2] + "-" + date[1] + "-" + "-" + date[0] + "', '" + gender + "');";
-//			System.out.println( "The SQL query is: " + query ); // Echo For
-//			// debugging
-//
-//			stmt.executeUpdate( query );
-//		}
-//		catch( SQLException ex )
-//		{
-//			ex.printStackTrace( );
-//		}
+		String query = "";
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		     Statement stmt = conn.createStatement( ); )
+		{
+			String[ ] date = birthday.split( "/" );
+
+			query = "INSERT INTO `application` (`firstName`, `middleName`, `lastName`, `email`, `birthday`, `gender`, `discipline`, `titleOfresearch`, `highestAward`, `qualiHighAward`, `otherAward`, `qualiOtherAward`) VALUES	('" + firstName + "', '" + middleName + "', '" + lastname + "', '" + email + "', '" + date[ 2 ] + "-" + date[ 1 ] + "-" + "-" + date[ 0 ] + "', '" + gender + "', '" + discipline + "', '" + titleOfresearch + "', '" + highestAward + "', '" + qualificationHighestAward + "', '" + otherAward + "', '" + qualificationOtherAward + "');";
+			System.out.println( "The SQL query is: " + query ); // Echo For
+			// debugging
+
+			stmt.executeUpdate( query );
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
 	}
 
 	/**
@@ -56,9 +60,18 @@ public class SqlLiteDatabase
 	{
 		String result = "";
 		int rowCount = 0;
-		try(
+
 		// Step 1: Allocate a database "Connection" object
-		Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
 
 		// Step 2: Allocate a "Statement" object in the Connection
 		Statement stmt = conn.createStatement( ); )
@@ -100,5 +113,4 @@ public class SqlLiteDatabase
 		}
 		return result;
 	}
-
 }
