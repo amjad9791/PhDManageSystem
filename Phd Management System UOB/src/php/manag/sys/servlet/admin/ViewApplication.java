@@ -51,7 +51,7 @@ public class ViewApplication extends HttpServlet
 
 		out = response.getWriter( );
 		out.println( "Hello Unleashed..." );
-
+		createTable( );
 		// Verifying which button got pressed - First the Button Supervisor
 		int i = 1;
 		while( i < tableSize )
@@ -59,7 +59,17 @@ public class ViewApplication extends HttpServlet
 			String act = request.getParameter( "butSupervisorYes_" + i );
 			if( act != null )
 			{
-				System.out.println( "butSupervisorYes_" + i );
+				SqlLiteDatabase sql = new SqlLiteDatabase( );
+
+				if( sql.isAlreadySupervisor( username, i ) )
+				{
+					showAlert( "You are already supervisor of this application" );
+					
+				} else {
+					sql.addSupervisor( username, i );
+				}
+
+				request.getRequestDispatcher( "ViewApplication" );
 				return;
 			}
 			i++;
@@ -72,34 +82,36 @@ public class ViewApplication extends HttpServlet
 			String act = request.getParameter( "butSupervisorNo_" + i );
 			if( act != null )
 			{
-				System.out.println( "butSupervisorNo_" + i );
+				SqlLiteDatabase sql = new SqlLiteDatabase( );
+				sql.deleteSupervisor( username, i );
 				return;
 			}
 			i++;
 		}
-		
-		// Here the buttons for editing the applications. That means, that the admin can edit the applicaitons
+
+		// Here the buttons for editing the applications. That means, that the
+		// admin can edit the applicaitons
 		i = 1;
 		while( i < tableSize )
 		{
 			String act = request.getParameter( "butEditApp_" + i );
 			if( act != null )
 			{
-				//Set the raw number to query the data for the editing process
+				// Set the raw number to query the data for the editing process
 				getServletContext( ).setAttribute( "applicationNr", i );
 				System.out.println( "butEditApp_" + i );
-				queryValuesOfApplication(request, i);
+				queryValuesOfApplication( request, i );
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 				return;
 			}
 			i++;
 		}
 
-		createTable( );
+//		createTable( );
 	}
 
-	private void queryValuesOfApplication( HttpServletRequest request, int applicationNr  )
-    {
+	private void queryValuesOfApplication( HttpServletRequest request, int applicationNr )
+	{
 		// Step 1: Allocate a database "Connection" object
 		try
 		{
@@ -139,8 +151,8 @@ public class ViewApplication extends HttpServlet
 				request.setAttribute( "email", rset.getString( "email" ) );
 				String birthday = rset.getString( "birthday" );
 				String[ ] date = birthday.split( "-" );
-				
-				request.setAttribute( "birthday", date[1] + "/" + date[2] + "/" + date[0]);				
+
+				request.setAttribute( "birthday", date[ 1 ] + "/" + date[ 2 ] + "/" + date[ 0 ] );
 				request.setAttribute( "gender", rset.getString( "gender" ) );
 				request.setAttribute( "discipline", rset.getString( "discipline" ) );
 				request.setAttribute( "titleOfresearch", rset.getString( "titleOfresearch" ) );
@@ -148,7 +160,6 @@ public class ViewApplication extends HttpServlet
 				request.setAttribute( "qualiHighAward", rset.getString( "qualiHighAward" ) );
 				request.setAttribute( "otherAward", rset.getString( "otherAward" ) );
 				request.setAttribute( "qualiOtherAward", rset.getString( "qualiOtherAward" ) );
-				
 
 			}
 
@@ -159,8 +170,8 @@ public class ViewApplication extends HttpServlet
 		}
 		// Step 5: Close the resources - Done automatically by
 		// try-with-resources
-	    
-    }
+
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -185,7 +196,7 @@ public class ViewApplication extends HttpServlet
 		{
 			Connection cnx = DriverManager.getConnection( SqlLiteDatabase.DB_URL, SqlLiteDatabase.USER, SqlLiteDatabase.PASSWORD );
 			Statement st = cnx.createStatement( );
-			ResultSet rs = st.executeQuery( "Select * from application" );
+			ResultSet rs = st.executeQuery( "Select * from application LEFT JOIN supervisor ON application.id = supervisor.app_id" );
 			tableSize = 1;
 
 			out.println( "<HTML>" );
@@ -212,6 +223,7 @@ public class ViewApplication extends HttpServlet
 				out.print( "<td>" + rs.getString( "otherAward" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "qualiOtherAward" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "timestamp" ) + "</td>" );
+				out.print( "<td>" + rs.getString( "supervisor" ) + "</td>" );
 
 				// Different views: This buttons are only necessary for
 				// professors
@@ -241,5 +253,13 @@ public class ViewApplication extends HttpServlet
 		out.println( "</CENTER>" );
 		out.println( "</form>" );
 		out.println( "</BODY></HTML>" );
+	}
+	
+	public void showAlert( String alertText )
+	{
+		out.println( "<script type=\"text/javascript\">" );
+		out.println( "alert('" + alertText + "');" );
+		out.println( "location='ViewApplication';" );
+		out.println( "</script>" );
 	}
 }
