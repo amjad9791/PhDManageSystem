@@ -115,6 +115,36 @@ public class SqlLiteDatabase
 		}
 		return result;
 	}
+
+	public void updateApplication( String appNr, String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
+    {
+		String query = "";
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		     Statement stmt = conn.createStatement( ); )
+		{
+			String[ ] date = birthday.split( "/" );
+
+			query = "UPDATE application SET ubNumber = " + ubNumber + ", firstName = '" + firstName + "', middleName = '" + middleName + "', lastName = '" + lastname + "', email = '" + email + "', birthday = '" + date[2] + "-" + date[1] + "-" + date[0]+ "', gender = '" + gender + "', discipline = '" + discipline + "', titleOfresearch = '" + titleOfresearch + "', highestAward = '" + highestAward + "', qualiHighAward = '" + qualificationHighestAward + "', otherAward = '" + otherAward + "', qualiOtherAward = '" + qualificationOtherAward + "' WHERE id = " + appNr + ";";
+					System.out.println( "The SQL query is: " + query ); // Echo For
+			// debugging
+
+			stmt.executeUpdate( query );
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+	    
+    }
 	
 
 }

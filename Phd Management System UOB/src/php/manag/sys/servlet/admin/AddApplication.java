@@ -81,9 +81,7 @@ public class AddApplication extends HttpServlet
 			else
 			{
 
-				SqlLiteDatabase sql = new SqlLiteDatabase( );
-				sql.insertApplication( ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
-
+				
 				// Here are two cases, the first is that the admin register a
 				// complete new application or the admin wants to edit a
 				// existing application. If the value of application greater
@@ -91,10 +89,16 @@ public class AddApplication extends HttpServlet
 
 				if( applicationNr > 0 )
 				{
+					SqlLiteDatabase sql = new SqlLiteDatabase( );
+					sql.updateApplication(Integer.toString( applicationNr), ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
+
 					request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 				}
 				else
 				{
+					SqlLiteDatabase sql = new SqlLiteDatabase( );
+					sql.insertApplication( ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
+
 					request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 				}
 			}
