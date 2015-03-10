@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import sun.font.CreatedFontTracker;
+
 // JDK 7 and above
 public class SqlLiteDatabase
 {
@@ -19,7 +21,7 @@ public class SqlLiteDatabase
 	/**
 	 * inserts a Applciation will all required data into the Database
 	 */
-	public void insertApplication( String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward )
+	public void insertApplication( String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
 	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
@@ -36,7 +38,7 @@ public class SqlLiteDatabase
 		{
 			String[ ] date = birthday.split( "/" );
 
-			query = "INSERT INTO `application` (`firstName`, `middleName`, `lastName`, `email`, `birthday`, `gender`, `discipline`, `titleOfresearch`, `highestAward`, `qualiHighAward`, `otherAward`, `qualiOtherAward`) VALUES	('" + firstName + "', '" + middleName + "', '" + lastname + "', '" + email + "', '" + date[ 2 ] + "-" + date[ 1 ] + "-" + "-" + date[ 0 ] + "', '" + gender + "', '" + discipline + "', '" + titleOfresearch + "', '" + highestAward + "', '" + qualificationHighestAward + "', '" + otherAward + "', '" + qualificationOtherAward + "');";
+			query = "INSERT INTO `application` (`ubNumber`, `firstName`, `middleName`, `lastName`, `email`, `birthday`, `gender`, `discipline`, `titleOfresearch`, `highestAward`, `qualiHighAward`, `otherAward`, `qualiOtherAward`,  `createrUser`) VALUES	( '" + ubNumber + "', '" + firstName + "', '" + middleName + "', '" + lastname + "', '" + email + "', '" + date[ 2 ] + "-" + date[ 1 ] + "-" + "-" + date[ 0 ] + "', '" + gender + "', '" + discipline + "', '" + titleOfresearch + "', '" + highestAward + "', '" + qualificationHighestAward + "', '" + otherAward + "', '" + qualificationOtherAward + "', '" + createrUser + "' );";
 			System.out.println( "The SQL query is: " + query ); // Echo For
 			// debugging
 
@@ -113,4 +115,6 @@ public class SqlLiteDatabase
 		}
 		return result;
 	}
+	
+
 }

@@ -46,12 +46,18 @@ public class Login extends HttpServlet
 				// Depending on the user type, it will open different interfaces
 				if( result.equals( "professor" ) )
 				{
-					// request.getRequestDispatcher( "PhdListServlet.jsp"
-					// ).forward(
-					// request, response );
+					// Saving the username to carry it on to certain servlets
+					getServletContext( ).setAttribute( "username", username );
+					getServletContext( ).setAttribute( "role", "professor" );
+
+					//Start the viewApplication to list all current applications
+					request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 				}
 				else if( result.equals( "admin" ) )
 				{
+					// Saving the username to carry it on to certain servlets
+					getServletContext( ).setAttribute( "username", username );
+					getServletContext( ).setAttribute( "role", "admin" );
 					request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 				}
 				else

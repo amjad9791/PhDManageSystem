@@ -69,7 +69,7 @@
 			<thead>
 				<tr>
 					<td>UB Number:</td>
-					<td><input name="ubNumber"></td>
+					<td><input name="ubNumber" value='<%=request.getAttribute( "ubNumber") %>'></td>
 					<td></td>
 					<td>Discipline:</td>
 					<td><select name="discipline">
@@ -85,44 +85,44 @@
 				</tr>
 				<tr>
 					<td>First Name:</td>
-					<td><input name="firstName"></td>
+					<td><input name="firstName" value='<%=request.getAttribute( "firstName") %>'></td>
 					<td></td>
 					<td>Title of Research:</td>
-					<td><input name="titleOfresearch"></td>
+					<td><input name="titleOfresearch" value='<%=request.getAttribute( "titleOfresearch") %>'></td>
 
 				</tr>
 				<tr>
 					<td>Middle Name:</td>
-					<td><input name="middleName"></td>
+					<td><input name="middleName" value='<%=request.getAttribute( "middleName") %>'></td>
 					<td></td>
 					<td>Highest award</td>
-					<td><input name="highestAward"></td>
+					<td><input name="highestAward" value='<%=request.getAttribute( "highestAward") %>'></td>
 				</tr>
 				<tr>
 					<td>Last Name:</td>
-					<td><input name="lastName"></td>
+					<td><input name="lastName" value='<%=request.getAttribute( "lastName") %>'></td>
 					<td></td>
 					<td>Qualification of highest award</td>
-					<td><input name="qualificationHighestAward"></td>
+					<td><input name="qualificationHighestAward" value='<%=request.getAttribute( "qualiHighAward") %>'></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
-					<td><input name="eMail"></td>
+					<td><input name="eMail" value='<%=request.getAttribute( "eMail") %>'></td>
 					<td></td>
 					<td>Other award</td>
-					<td><input name="otherAward"></td>
+					<td><input name="otherAward" value='<%=request.getAttribute( "otherAward") %>'></td>
 				</tr>
 				<tr>
 					<td>Date of Birth:</td>
 					<td><input class="myDate" type="text" name="dateOfBirth"
-						size="10" value="" />&nbsp;(mm/dd/yyyy)</td>
+						size="10"value='<%=request.getAttribute( "birthday") %>' />&nbsp;(mm/dd/yyyy)</td>
 					<td></td>
 					<td>Qualification of other award</td>
-					<td><input name="qualificationOtherAward"></td>
+					<td><input name="qualificationOtherAward" value='<%=request.getAttribute( "qualiOtherAward") %>'></td>
 				</tr>
 				<tr>
 					<td>Gender:</td>
-					<td><select name="gender">
+					<td><select name="gender" >
 							<option value="f">Female</option>
 							<option value="m">Male</option>
 					</select></td>

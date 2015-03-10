@@ -18,14 +18,14 @@ import java.io.PrintWriter;
 public class AdminMenu extends HttpServlet
 {
 
-
 	/**
 	 * 
 	 */
-    private static final long serialVersionUID = 6192688008912715427L;
+	private static final long serialVersionUID = 6192688008912715427L;
 
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
+
 
 		// Calling when AddApplication Button is selected
 		if( request.getParameter( "addApplication" ) != null )
@@ -36,9 +36,9 @@ public class AdminMenu extends HttpServlet
 		// Calling this clauses when the viewResponses Button got pressed
 		else if( request.getParameter( "viewResponses" ) != null )
 		{
-
+			request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 		}
-		
+
 		// Calling this clauses when the viewResponses Button got pressed
 		else if( request.getParameter( "pending" ) != null )
 		{
