@@ -69,7 +69,7 @@
 			<thead>
 				<tr>
 					<td>UB Number:</td>
-					<td><input name="ubNumber" value='<%=((request.getAttribute( "ubNumber") == null) ? "" : request.getAttribute( "ubNumber")) %>'></td>
+					<td><input name="ubNumber" type="text" maxlength="8" value='<%=((request.getAttribute( "ubNumber") == null) ? "" : request.getAttribute( "ubNumber")) %>'></td>
 					<td></td>
 					<td>Discipline:</td>
 					<td><select name="discipline">
@@ -85,32 +85,32 @@
 				</tr>
 				<tr>
 					<td>First Name:</td>
-					<td><input name="firstName" value='<%=((request.getAttribute( "firstName") == null) ? "" : request.getAttribute( "firstName")) %>'></td>
+					<td><input name="firstName" type="text" maxlength="49" value='<%=((request.getAttribute( "firstName") == null) ? "" : request.getAttribute( "firstName")) %>'></td>
 					<td></td>
 					<td>Title of Research:</td>
-					<td><input name="titleOfresearch" value='<%=((request.getAttribute( "titleOfresearch") == null) ? "" : request.getAttribute( "titleOfresearch")) %>'></td>
+					<td><input name="titleOfresearch" type="text" maxlength="49" value='<%=((request.getAttribute( "titleOfresearch") == null) ? "" : request.getAttribute( "titleOfresearch")) %>'></td>
 
 				</tr>
 				<tr>
 					<td>Middle Name:</td>
-					<td><input name="middleName" value='<%=((request.getAttribute( "middleName") == null) ? "" : request.getAttribute( "middleName")) %>'></td>
+					<td><input name="middleName" type="text" maxlength="49" value='<%=((request.getAttribute( "middleName") == null) ? "" : request.getAttribute( "middleName")) %>'></td>
 					<td></td>
 					<td>Highest award</td>
-					<td><input name="highestAward" value='<%=((request.getAttribute( "highestAward") == null) ? "" : request.getAttribute( "highestAward")) %>'></td>
+					<td><input name="highestAward" type="text" maxlength="49" value='<%=((request.getAttribute( "highestAward") == null) ? "" : request.getAttribute( "highestAward")) %>'></td>
 				</tr>
 				<tr>
 					<td>Last Name:</td>
-					<td><input name="lastName" value='<%=((request.getAttribute( "lastName") == null) ? "" : request.getAttribute( "lastName")) %>'></td>
+					<td><input name="lastName" type="text" maxlength="49" value='<%=((request.getAttribute( "lastName") == null) ? "" : request.getAttribute( "lastName")) %>'></td>
 					<td></td>
 					<td>Qualification of highest award</td>
-					<td><input name="qualificationHighestAward" value='<%=((request.getAttribute( "qualiHighAward") == null) ? "" : request.getAttribute( "qualiHighAward")) %>'></td>
+					<td><input name="qualificationHighestAward" type="text" maxlength="49" value='<%=((request.getAttribute( "qualiHighAward") == null) ? "" : request.getAttribute( "qualiHighAward")) %>'></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
-					<td><input name="eMail" value='<%=((request.getAttribute( "email") == null) ? "" : request.getAttribute( "email")) %>'></td>
+					<td><input name="eMail" type="text" maxlength="49" value='<%=((request.getAttribute( "email") == null) ? "" : request.getAttribute( "email")) %>'></td>
 					<td></td>
 					<td>Other award</td>
-					<td><input name="otherAward" value='<%=((request.getAttribute( "otherAward") == null) ? "" : request.getAttribute( "otherAward")) %>'></td>
+					<td><input name="otherAward" type="text" maxlength="49" value='<%=((request.getAttribute( "otherAward") == null) ? "" : request.getAttribute( "otherAward")) %>'></td>
 				</tr>
 				<tr>
 					<td>Date of Birth:</td>
@@ -118,7 +118,7 @@
 						size="10"value='<%=((request.getAttribute( "birthday") == null) ? "" : request.getAttribute( "birthday")) %>' />&nbsp;(mm/dd/yyyy)</td>
 					<td></td>
 					<td>Qualification of other award</td>
-					<td><input name="qualificationOtherAward" value='<%=((request.getAttribute( "qualiOtherAward") == null) ? "" : request.getAttribute( "qualiOtherAward")) %>'></td>
+					<td><input name="qualificationOtherAward" type="text" maxlength="49" value='<%=((request.getAttribute( "qualiOtherAward") == null) ? "" : request.getAttribute( "qualiOtherAward")) %>'></td>
 				</tr>
 				<tr>
 					<td>Gender:</td>

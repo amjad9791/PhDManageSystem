@@ -38,7 +38,7 @@ public class SqlLiteDatabase
 		{
 			String[ ] date = birthday.split( "/" );
 
-			query = "INSERT INTO `application` (`ubNumber`, `firstName`, `middleName`, `lastName`, `email`, `birthday`, `gender`, `discipline`, `titleOfresearch`, `highestAward`, `qualiHighAward`, `otherAward`, `qualiOtherAward`,  `createrUser`) VALUES	( '" + ubNumber + "', '" + firstName + "', '" + middleName + "', '" + lastname + "', '" + email + "', '" + date[ 2 ] + "-" + date[ 1 ] + "-" + "-" + date[ 0 ] + "', '" + gender + "', '" + discipline + "', '" + titleOfresearch + "', '" + highestAward + "', '" + qualificationHighestAward + "', '" + otherAward + "', '" + qualificationOtherAward + "', '" + createrUser + "' );";
+			query = "INSERT INTO `application` (`ubNumber`, `firstName`, `middleName`, `lastName`, `email`, `birthday`, `gender`, `discipline`, `titleOfresearch`, `highestAward`, `qualiHighAward`, `otherAward`, `qualiOtherAward`,  `createrUser`) VALUES	( '" + ubNumber + "', '" + firstName + "', '" + middleName + "', '" + lastname + "', '" + email + "', '" + date[ 2 ] + "-" + date[ 0 ] + "-" + date[ 1 ] + "', '" + gender + "', '" + discipline + "', '" + titleOfresearch + "', '" + highestAward + "', '" + qualificationHighestAward + "', '" + otherAward + "', '" + qualificationOtherAward + "', '" + createrUser + "' );";
 			System.out.println( "The SQL query is: " + query ); // Echo For
 			// debugging
 
@@ -256,6 +256,63 @@ public class SqlLiteDatabase
 			ex.printStackTrace( );
 		}
 	    
+    }
+
+	public boolean hasSufficientSupervisor( int applicationNr )
+    {
+		int result = 0;
+
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+
+		// Step 2: Allocate a "Statement" object in the Connection
+		Statement stmt = conn.createStatement( ); )
+		{
+			// Step 3: Execute a SQL SELECT query, the query result
+			// is returned in a "ResultSet" object.
+			String strSelect = "SELECT COUNT(*) AS number FROM supervisor WHERE app_id = " + applicationNr + ";";
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			                                                        // debugging
+			System.out.println( );
+
+			ResultSet rset = stmt.executeQuery( strSelect );
+
+			// Step 4: Process the ResultSet by scrolling the cursor forward via
+			// next().
+			// For each row, retrieve the contents of the cells with
+			// getXxx(columnName).
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				result = Integer.parseInt( rset.getString( "number" ));
+				System.out.println( "Number of supervisor: " + result );
+			}
+
+			if( result >= 2)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+		// Step 5: Close the resources - Done automatically by
+		// try-with-resources
+		return false;
     }
 
 }

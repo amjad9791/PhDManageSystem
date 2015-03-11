@@ -34,19 +34,23 @@ public class AddApplication extends HttpServlet
 	{
 		// Receiving the applicationNr from the viewApplication page
 		ServletContext context = getServletContext( );
-		applicationNr = (int) context.getAttribute( "applicationNr" );
+		if( ( (String) context.getAttribute( "applicationNr" ) )!= null )
+		{
+			applicationNr = Integer.parseInt( (String) context.getAttribute( "applicationNr" ) );
+		}
 		// Receiving the username from the login page
 		String username = (String) context.getAttribute( "username" );
 
 		// Creating a Html writer object to modify the webpage on runtime
 		out = response.getWriter( );
-		
-		//Filling the form with the values of an application. This happens when the admin wants to edit a existing application
-		if(applicationNr > 0){
-			
+
+		// Filling the form with the values of an application. This happens when
+		// the admin wants to edit a existing application
+		if( applicationNr > 0 )
+		{
+
 		}
-		
-		
+
 		// Calling when AddApplication Button is selected
 		if( request.getParameter( "addApplication" ) != null )
 		{
@@ -71,6 +75,13 @@ public class AddApplication extends HttpServlet
 			{
 				showAlert( "Mail Address is not valid" );
 			}
+
+			// check the ub number for digits
+			if( !isValidDigit( ubNumber ) )
+			{
+				showAlert( "UB number are only digits" );
+			}
+
 			// Every field needs to be filled, otherwise a alert will inform the
 			// user
 			else if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) || otherAward.equals( "" ) || qualificationOtherAward.equals( "" ) )
@@ -80,8 +91,6 @@ public class AddApplication extends HttpServlet
 			// All correct and saving the data into the database
 			else
 			{
-
-				
 				// Here are two cases, the first is that the admin register a
 				// complete new application or the admin wants to edit a
 				// existing application. If the value of application greater
@@ -90,15 +99,15 @@ public class AddApplication extends HttpServlet
 				if( applicationNr > 0 )
 				{
 					SqlLiteDatabase sql = new SqlLiteDatabase( );
-					sql.updateApplication(Integer.toString( applicationNr), ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
-
+					sql.updateApplication( Integer.toString( applicationNr ), ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
+					applicationNr = 0;
 					request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 				}
 				else
 				{
 					SqlLiteDatabase sql = new SqlLiteDatabase( );
 					sql.insertApplication( ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
-
+					applicationNr = 0;
 					request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 				}
 			}
@@ -112,6 +121,19 @@ public class AddApplication extends HttpServlet
 		java.util.regex.Pattern p = java.util.regex.Pattern.compile( ePattern );
 		java.util.regex.Matcher m = p.matcher( email );
 		return m.matches( );
+	}
+
+	public boolean isValidDigit( String value )
+	{
+		try
+		{
+			Integer.parseInt( value );
+			return true;
+		}
+		catch( NumberFormatException e )
+		{
+			return false;
+		}
 	}
 
 	public void showAlert( String alertText )

@@ -64,8 +64,14 @@ public class ViewApplication extends HttpServlet
 				if( sql.isAlreadySupervisor( username, i ) )
 				{
 					showAlert( "You are already supervisor of this application" );
-					
-				} else {
+
+				}
+				else if( sql.hasSufficientSupervisor( i ) )
+				{
+					showAlert( "This application has enough supervisors" );
+				}
+				else
+				{
 					sql.addSupervisor( username, i );
 				}
 
@@ -107,7 +113,7 @@ public class ViewApplication extends HttpServlet
 			i++;
 		}
 
-//		createTable( );
+		// createTable( );
 	}
 
 	private void queryValuesOfApplication( HttpServletRequest request, int applicationNr )
@@ -254,7 +260,7 @@ public class ViewApplication extends HttpServlet
 		out.println( "</form>" );
 		out.println( "</BODY></HTML>" );
 	}
-	
+
 	public void showAlert( String alertText )
 	{
 		out.println( "<script type=\"text/javascript\">" );
