@@ -36,6 +36,8 @@ public class AdminMenu extends HttpServlet
 		// Calling this clauses when the viewResponses Button got pressed
 		else if( request.getParameter( "viewResponses" ) != null )
 		{
+			getServletContext().removeAttribute( "applicationNr" );
+			getServletContext( ).setAttribute( "applicationNr", 0 );
 			request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 		}
 

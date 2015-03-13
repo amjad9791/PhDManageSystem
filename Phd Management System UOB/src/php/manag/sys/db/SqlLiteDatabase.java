@@ -138,7 +138,7 @@ public class SqlLiteDatabase
 		{
 			// Step 3: Execute a SQL SELECT query, the query result
 			// is returned in a "ResultSet" object.
-			String strSelect = "SELECT * FROM supervisor WHERE supervisor = '" + username + "' AND app_id = '" + applicationNr + "';";
+			String strSelect = "SELECT * FROM supervisor WHERE supervisorName = '" + username + "' AND app_id = '" + applicationNr + "';";
 			System.out.println( "The SQL query is: " + strSelect ); // Echo For
 			                                                        // debugging
 			System.out.println( );
@@ -187,7 +187,7 @@ public class SqlLiteDatabase
 		{
 			String[ ] date = birthday.split( "/" );
 
-			query = "UPDATE application SET ubNumber = " + ubNumber + ", firstName = '" + firstName + "', middleName = '" + middleName + "', lastName = '" + lastname + "', email = '" + email + "', birthday = '" + date[ 2 ] + "-" + date[ 1 ] + "-" + date[ 0 ] + "', gender = '" + gender + "', discipline = '" + discipline + "', titleOfresearch = '" + titleOfresearch + "', highestAward = '" + highestAward + "', qualiHighAward = '" + qualificationHighestAward + "', otherAward = '" + otherAward + "', qualiOtherAward = '" + qualificationOtherAward + "' WHERE id = " + appNr + ";";
+			query = "UPDATE application SET ubNumber = " + ubNumber + ", firstName = '" + firstName + "', middleName = '" + middleName + "', lastName = '" + lastname + "', email = '" + email + "', birthday = '" + date[ 2 ] + "-" + date[ 0 ] + "-" + date[ 1 ] + "', gender = '" + gender + "', discipline = '" + discipline + "', titleOfresearch = '" + titleOfresearch + "', highestAward = '" + highestAward + "', qualiHighAward = '" + qualificationHighestAward + "', otherAward = '" + otherAward + "', qualiOtherAward = '" + qualificationOtherAward + "' WHERE app_id = " + appNr + ";";
 			System.out.println( "The SQL query is: " + query ); // Echo For
 			// debugging
 
@@ -216,7 +216,7 @@ public class SqlLiteDatabase
 		     Statement stmt = conn.createStatement( ); )
 		{
 
-			query = "INSERT INTO supervisor (app_id, supervisor) VALUES ('" + applicationNr + "', '" + username + "');";
+			query = "INSERT INTO supervisor (app_id, supervisorName) VALUES ('" + applicationNr + "', '" + username + "');";
 			System.out.println( "The SQL query is: " + query ); // Echo For
 			// debugging
 
@@ -245,7 +245,7 @@ public class SqlLiteDatabase
 		     Statement stmt = conn.createStatement( ); )
 		{
 
-			query = "DELETE FROM supervisor WHERE app_id = " + applicationNr + " AND supervisor = '" + username + "';";
+			query = "DELETE FROM supervisor WHERE app_id = " + applicationNr + " AND supervisorName = '" + username + "';";
 			System.out.println( "The SQL query is: " + query ); // Echo For
 			// debugging
 

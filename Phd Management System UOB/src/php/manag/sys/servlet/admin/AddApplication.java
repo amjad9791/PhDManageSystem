@@ -34,10 +34,11 @@ public class AddApplication extends HttpServlet
 	{
 		// Receiving the applicationNr from the viewApplication page
 		ServletContext context = getServletContext( );
-		if( ( (String) context.getAttribute( "applicationNr" ) )!= null )
+		if( context.getAttribute( "applicationNr" ) != null )
 		{
-			applicationNr = Integer.parseInt( (String) context.getAttribute( "applicationNr" ) );
+			applicationNr = (Integer) context.getAttribute( "applicationNr" );
 		}
+
 		// Receiving the username from the login page
 		String username = (String) context.getAttribute( "username" );
 

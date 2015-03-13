@@ -135,7 +135,7 @@ public class ViewApplication extends HttpServlet
 		{
 			// Step 3: Execute a SQL SELECT query, the query result
 			// is returned in a "ResultSet" object.
-			String strSelect = "SELECT * FROM application WHERE id = '" + applicationNr + "';";
+			String strSelect = "SELECT * FROM application WHERE app_id = '" + applicationNr + "';";
 			System.out.println( "The SQL query is: " + strSelect ); // Echo For
 			                                                        // debugging
 			System.out.println( );
@@ -202,7 +202,7 @@ public class ViewApplication extends HttpServlet
 		{
 			Connection cnx = DriverManager.getConnection( SqlLiteDatabase.DB_URL, SqlLiteDatabase.USER, SqlLiteDatabase.PASSWORD );
 			Statement st = cnx.createStatement( );
-			ResultSet rs = st.executeQuery( "Select * from application LEFT JOIN supervisor ON application.id = supervisor.app_id" );
+			ResultSet rs = st.executeQuery( "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp,sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id;" );
 			tableSize = 1;
 
 			out.println( "<HTML>" );
@@ -215,7 +215,8 @@ public class ViewApplication extends HttpServlet
 			{
 
 				out.println( "<tr>" );
-				out.print( "<td>" + rs.getString( "id" ) + "</td>" );
+				out.print( "<td>" + rs.getString( "app_id" ) + "</td>" );
+				out.print( "<td>" + rs.getString( "ubNumber" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "firstName" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "middleName" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "lastName" ) + "</td>" );
@@ -228,9 +229,11 @@ public class ViewApplication extends HttpServlet
 				out.print( "<td>" + rs.getString( "qualiHighAward" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "otherAward" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "qualiOtherAward" ) + "</td>" );
+				out.print( "<td>" + rs.getString( "createrUser" ) + "</td>" );
 				out.print( "<td>" + rs.getString( "timestamp" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "supervisor" ) + "</td>" );
-
+				out.print( "<td>" + rs.getString( "id_value" ) + "</td>" );
+				out.print( "<td>" + rs.getString( "supervisorName" ) + "</td>" );
+				
 				// Different views: This buttons are only necessary for
 				// professors
 				if( role.equals( "professor" ) )
