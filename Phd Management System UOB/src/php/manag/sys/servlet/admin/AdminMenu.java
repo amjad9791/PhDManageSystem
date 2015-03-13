@@ -41,7 +41,7 @@ public class AdminMenu extends HttpServlet
 			request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 		}
 
-		// Calling this clauses when the viewResponses Button got pressed
+		// Calling this clauses when the pending Button got pressed
 		else if( request.getParameter( "pending" ) != null )
 		{
 
