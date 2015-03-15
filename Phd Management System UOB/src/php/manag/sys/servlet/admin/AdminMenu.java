@@ -7,10 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import php.manag.sys.db.SqlLiteDatabase;
-
-import java.io.PrintWriter;
-
 /**
  * @author Crunchify.com
  */
@@ -23,7 +19,8 @@ public class AdminMenu extends HttpServlet
 	 */
 	private static final long serialVersionUID = 6192688008912715427L;
 
-	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	@Override
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 
 
@@ -38,7 +35,7 @@ public class AdminMenu extends HttpServlet
 		{
 			getServletContext().removeAttribute( "applicationNr" );
 			getServletContext( ).setAttribute( "applicationNr", 0 );
-			request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
+			request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 		}
 
 		// Calling this clauses when the pending Button got pressed

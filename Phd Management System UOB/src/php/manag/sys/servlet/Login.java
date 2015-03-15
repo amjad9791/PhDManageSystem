@@ -22,7 +22,8 @@ public class Login extends HttpServlet
 	 */
 	private static final long serialVersionUID = 2443648499957228483L;
 
-	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	@Override
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 
 		// Calling when Send Button got pressed
@@ -51,7 +52,7 @@ public class Login extends HttpServlet
 					getServletContext( ).setAttribute( "role", "professor" );
 
 					//Start the viewApplication to list all current applications
-					request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
+					request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 				}
 				else if( result.equals( "admin" ) )
 				{

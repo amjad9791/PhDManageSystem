@@ -6,8 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,16 +40,20 @@ public class ViewApplication extends HttpServlet
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
+		SqlLiteDatabase sql = new SqlLiteDatabase( );
+
 		// Receiving the username from the login page
 		ServletContext context = getServletContext( );
 		username = (String) context.getAttribute( "username" );
 		role = (String) context.getAttribute( "role" );
+		tableSize = sql.numberOfApplications( );
 
 		out = response.getWriter( );
 		out.println( "Hello Unleashed..." );
-		createTable( );
+		// createTable( );
 		// Verifying which button got pressed - First the Button Supervisor
 		int i = 1;
 		while( i < tableSize )
@@ -59,7 +61,6 @@ public class ViewApplication extends HttpServlet
 			String act = request.getParameter( "butSupervisorYes_" + i );
 			if( act != null )
 			{
-				SqlLiteDatabase sql = new SqlLiteDatabase( );
 
 				if( sql.isAlreadySupervisor( username, i ) )
 				{
@@ -75,7 +76,7 @@ public class ViewApplication extends HttpServlet
 					sql.addSupervisor( username, i );
 				}
 
-				request.getRequestDispatcher( "ViewApplication" );
+				request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 				return;
 			}
 			i++;
@@ -88,8 +89,8 @@ public class ViewApplication extends HttpServlet
 			String act = request.getParameter( "butSupervisorNo_" + i );
 			if( act != null )
 			{
-				SqlLiteDatabase sql = new SqlLiteDatabase( );
 				sql.deleteSupervisor( username, i );
+				request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 				return;
 			}
 			i++;
@@ -112,8 +113,6 @@ public class ViewApplication extends HttpServlet
 			}
 			i++;
 		}
-
-		// createTable( );
 	}
 
 	private void queryValuesOfApplication( HttpServletRequest request, int applicationNr )
@@ -183,92 +182,17 @@ public class ViewApplication extends HttpServlet
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		// TODO Auto-generated method stub
-	}
-
-	public void createTable( )
-	{
-		try
-		{
-			Class.forName( "com.mysql.jdbc.Driver" );
-		}
-		catch( ClassNotFoundException e )
-		{
-			e.printStackTrace( );
-		}
-		try
-		{
-			Connection cnx = DriverManager.getConnection( SqlLiteDatabase.DB_URL, SqlLiteDatabase.USER, SqlLiteDatabase.PASSWORD );
-			Statement st = cnx.createStatement( );
-			ResultSet rs = st.executeQuery( "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp,sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id;" );
-			tableSize = 1;
-
-			out.println( "<HTML>" );
-			// Start on the body
-			out.println( "<BODY>" );
-			out.println( "<form action='ViewApplication'>" );
-			out.println( "<CENTER>" );
-			out.println( "<table BORDER=1 CELLPADDING=0 CELLSPACING=0 WIDTH=50% >" );
-			while( rs.next( ) )
-			{
-
-				out.println( "<tr>" );
-				out.print( "<td>" + rs.getString( "app_id" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "ubNumber" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "firstName" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "middleName" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "lastName" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "email" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "birthday" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "gender" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "discipline" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "titleOfresearch" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "highestAward" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "qualiHighAward" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "otherAward" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "qualiOtherAward" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "createrUser" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "timestamp" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "id_value" ) + "</td>" );
-				out.print( "<td>" + rs.getString( "supervisorName" ) + "</td>" );
-				
-				// Different views: This buttons are only necessary for
-				// professors
-				if( role.equals( "professor" ) )
-				{
-					out.println( "<td><input type='submit' name='butSupervisorYes_" + tableSize + "' value='Become Supervisor'</td>" );
-					out.println( "<td><input type='submit' name='butSupervisorNo_" + tableSize + "' value='Reject supervisor task'</td>" );
-				}
-
-				// Different views: This buttons are only necessary for
-				// professors
-				if( role.equals( "admin" ) )
-				{
-					out.println( "<td><input type='submit' name='butEditApp_" + tableSize + "' value='Edit application'</td>" );
-				}
-
-				out.println( "</tr>" );
-				tableSize++;
-			}
-		}
-		catch( Exception ex )
-		{
-			System.out.println( ex.getMessage( ) );
-		}
-
-		out.println( "</table>" );
-		out.println( "</CENTER>" );
-		out.println( "</form>" );
-		out.println( "</BODY></HTML>" );
 	}
 
 	public void showAlert( String alertText )
 	{
 		out.println( "<script type=\"text/javascript\">" );
 		out.println( "alert('" + alertText + "');" );
-		out.println( "location='ViewApplication';" );
+		out.println( "location='viewApplication.jsp';" );
 		out.println( "</script>" );
 	}
 }

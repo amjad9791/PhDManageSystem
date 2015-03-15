@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import php.manag.sys.db.SqlLiteDatabase;
 
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * @author Crunchify.com
@@ -30,7 +26,8 @@ public class AddApplication extends HttpServlet
 	private PrintWriter out;
 	private int applicationNr;
 
-	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	@Override
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		// Receiving the applicationNr from the viewApplication page
 		ServletContext context = getServletContext( );
@@ -102,7 +99,7 @@ public class AddApplication extends HttpServlet
 					SqlLiteDatabase sql = new SqlLiteDatabase( );
 					sql.updateApplication( Integer.toString( applicationNr ), ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
 					applicationNr = 0;
-					request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
+					request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 				}
 				else
 				{

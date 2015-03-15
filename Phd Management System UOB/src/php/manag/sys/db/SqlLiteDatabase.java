@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import sun.font.CreatedFontTracker;
-
 // JDK 7 and above
 public class SqlLiteDatabase
 {
@@ -230,7 +228,7 @@ public class SqlLiteDatabase
 	}
 
 	public void deleteSupervisor( String username, int applicationNr )
-    {
+	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
 		try
@@ -255,11 +253,11 @@ public class SqlLiteDatabase
 		{
 			ex.printStackTrace( );
 		}
-	    
-    }
+
+	}
 
 	public boolean hasSufficientSupervisor( int applicationNr )
-    {
+	{
 		int result = 0;
 
 		// Step 1: Allocate a database "Connection" object
@@ -292,11 +290,11 @@ public class SqlLiteDatabase
 			// getXxx(columnName).
 			while( rset.next( ) )
 			{ // Move the cursor to the next row
-				result = Integer.parseInt( rset.getString( "number" ));
+				result = Integer.parseInt( rset.getString( "number" ) );
 				System.out.println( "Number of supervisor: " + result );
 			}
 
-			if( result >= 2)
+			if( result >= 2 )
 			{
 				return true;
 			}
@@ -313,6 +311,56 @@ public class SqlLiteDatabase
 		// Step 5: Close the resources - Done automatically by
 		// try-with-resources
 		return false;
-    }
+	}
+
+	public int numberOfApplications( )
+	{
+		int result = 0;
+
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+
+		// Step 2: Allocate a "Statement" object in the Connection
+		Statement stmt = conn.createStatement( ); )
+		{
+			// Step 3: Execute a SQL SELECT query, the query result
+			// is returned in a "ResultSet" object.
+			String strSelect = "SELECT MAX(app_id) AS number FROM application;";
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			                                                        // debugging
+			System.out.println( );
+
+			ResultSet rset = stmt.executeQuery( strSelect );
+
+			// Step 4: Process the ResultSet by scrolling the cursor forward via
+			// next().
+			// For each row, retrieve the contents of the cells with
+			// getXxx(columnName).
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				result = Integer.parseInt( rset.getString( "number" ) );
+				System.out.println( "Number of Applications: " + result );
+			}
+
+			return result;
+
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+		// Step 5: Close the resources - Done automatically by
+		// try-with-resources
+		return 0;
+	}
 
 }
