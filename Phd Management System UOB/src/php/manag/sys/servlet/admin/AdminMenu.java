@@ -41,7 +41,7 @@ public class AdminMenu extends HttpServlet
 		// Calling this clauses when the pending Button got pressed
 		else if( request.getParameter( "pending" ) != null )
 		{
-
+			request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
 		}
 
 	}

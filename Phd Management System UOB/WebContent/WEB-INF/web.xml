@@ -54,5 +54,14 @@
 		<servlet-name>ViewApplicationServlet</servlet-name>
 		<url-pattern>/ViewApplication</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<description></description>
+		<servlet-name>RegisterUserServlet</servlet-name>
+		<servlet-class>php.manag.sys.servlet.admin.RegisterUser</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegisterUserServlet</servlet-name>
+		<url-pattern>/RegisterUser</url-pattern>
+	</servlet-mapping>
 	
 </web-app>

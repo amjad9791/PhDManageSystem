@@ -1,10 +1,14 @@
 package php.manag.sys.db;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection; // Use classes in java.sql package
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Formatter;
 
 // JDK 7 and above
 public class SqlLiteDatabase
@@ -60,6 +64,7 @@ public class SqlLiteDatabase
 	{
 		String result = "";
 		int rowCount = 0;
+		password = encryptPassword( password );
 
 		// Step 1: Allocate a database "Connection" object
 		try
@@ -361,6 +366,66 @@ public class SqlLiteDatabase
 		// Step 5: Close the resources - Done automatically by
 		// try-with-resources
 		return 0;
+	}
+
+	public void createUser( String username, String password, String email, String roleUser )
+	{
+		String query = "";
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		     Statement stmt = conn.createStatement( ); )
+		{
+			query = "INSERT INTO `user` (`username`, `password`, `email`, `role`) VALUES	( '" + username + "', '" + password + "', '" + email + "', '" + roleUser + "');";
+			System.out.println( "The SQL query is: " + query ); // Echo For
+			// debugging
+
+			stmt.executeUpdate( query );
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+	}
+	
+	private static String encryptPassword(String password)
+	{
+	    String sha1 = "";
+	    try
+	    {
+	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+	        crypt.reset();
+	        crypt.update(password.getBytes("UTF-8"));
+	        sha1 = byteToHex(crypt.digest());
+	    }
+	    catch(NoSuchAlgorithmException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    catch(UnsupportedEncodingException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    return sha1;
+	}
+
+	private static String byteToHex(final byte[] hash)
+	{
+	    Formatter formatter = new Formatter();
+	    for (byte b : hash)
+	    {
+	        formatter.format("%02x", b);
+	    }
+	    String result = formatter.toString();
+	    formatter.close();
+	    return result;
 	}
 
 }
