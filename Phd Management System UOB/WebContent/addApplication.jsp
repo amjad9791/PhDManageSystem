@@ -64,7 +64,7 @@
 </head>
 <body>
 
-	<form action="AddApplication">
+	<form action="AddApplication" action="upload" method="POST" enctype="multipart/form-data">
 		<table>
 			<thead>
 				<tr>
@@ -128,9 +128,8 @@
 					</select></td>
 					<td></td>
 					<td>Proposal</td>
-					<td><input type="submit" name="chooseFile" value="Choose file">
-						<input name="filePath"> <input type="submit"
-						name="uploadFile" value="Upload file"></td>
+					<td><input type="file" name="file" />
+                <input type="submit" value="upload" /></td>
 				</tr>
 			</thead>
 		</table>
