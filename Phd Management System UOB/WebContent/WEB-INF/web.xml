@@ -63,21 +63,16 @@
 		<servlet-name>RegisterUserServlet</servlet-name>
 		<url-pattern>/RegisterUser</url-pattern>
 	</servlet-mapping>
-	   <servlet>
-        <servlet-name>AddApplication</servlet-name>
-        <servlet-class>php.manag.sys.servlet.admin.AddApplication</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddApplication</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
-  
-  
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
+		<servlet>
+		<description></description>
+		<servlet-name>UploadFileProposalServlet</servlet-name>
+		<servlet-class>php.manag.sys.uploadFile.UploadDownloadFileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadFileProposalServlet</servlet-name>
+		<url-pattern>/UploadFileProposal</url-pattern>
+	</servlet-mapping>
+
 
 	
 </web-app>

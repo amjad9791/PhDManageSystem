@@ -11,7 +11,8 @@
 	<form action="AdminMenu">
 		<input type="submit" name="addApplication" value="Add Application" style="width: 500px; "><br>
 		<input type="submit" name="viewResponses" value="View Responses" style="width: 500px; "><br>
-		<input type="submit" name="pending" value="Add User" style="width: 500px; "><br>
+		<input type="submit" name="addUser" value="Add User" style="width: 500px; "><br>
+		<input type="submit" name="uploadFile" value="Upload File" style="width: 500px; "><br>
 	</form>
 </body>
 </html>

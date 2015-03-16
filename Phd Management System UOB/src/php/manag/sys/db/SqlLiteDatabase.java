@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Formatter;
 
 // JDK 7 and above
@@ -393,6 +394,57 @@ public class SqlLiteDatabase
 		{
 			ex.printStackTrace( );
 		}
+	}
+	
+	
+	public ArrayList<Integer> listOfUBNumbers( )
+	{
+		ArrayList<Integer> list = new ArrayList< Integer >( );
+
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+
+		// Step 2: Allocate a "Statement" object in the Connection
+		Statement stmt = conn.createStatement( ); )
+		{
+			// Step 3: Execute a SQL SELECT query, the query result
+			// is returned in a "ResultSet" object.
+			String strSelect = "SELECT ubNumber AS number FROM application;";
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			                                                        // debugging
+			System.out.println( );
+
+			ResultSet rset = stmt.executeQuery( strSelect );
+
+			// Step 4: Process the ResultSet by scrolling the cursor forward via
+			// next().
+			// For each row, retrieve the contents of the cells with
+			// getXxx(columnName).
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				list.add( Integer.parseInt( rset.getString( "number" )) );
+
+			}
+
+			return list;
+
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+		// Step 5: Close the resources - Done automatically by
+		// try-with-resources
+		return null;
 	}
 	
 	private static String encryptPassword(String password)
