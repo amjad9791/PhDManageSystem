@@ -2,6 +2,7 @@ package php.manag.sys.servlet.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +50,10 @@ public class AdminMenu extends HttpServlet
 		// Calling when Upload File Button is selected
 		if( request.getParameter( "uploadFile" ) != null )
 		{
+			SqlLiteDatabase sql = new SqlLiteDatabase( );
+			List<Integer> list = sql.listOfUBNumbers( );
+			getServletContext( ).setAttribute( "listUbNumber", list );
+			request.setAttribute( "listUbNumber", list );
 			request.getRequestDispatcher( "uploadFileProposal.jsp" ).forward( request, response );
 		}
 
