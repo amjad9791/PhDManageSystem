@@ -20,7 +20,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import php.manag.sys.db.SqlLiteDatabase;
 
 @WebServlet( "/UploadDownloadFileServlet" )
@@ -88,6 +87,7 @@ public class UploadDownloadFileServlet extends HttpServlet
 			Iterator< FileItem > fileItemsIterator = fileItemsList.iterator( );
 			while( fileItemsIterator.hasNext( ) )
 			{
+
 				FileItem fileItem = fileItemsIterator.next( );
 				System.out.println( "FieldName=" + fileItem.getFieldName( ) );
 				System.out.println( "FileName=" + fileItem.getName( ) );
@@ -96,14 +96,13 @@ public class UploadDownloadFileServlet extends HttpServlet
 
 				File file = new File( request.getServletContext( ).getAttribute( "FILES_DIR" ) + File.separator + fileItem.getName( ) );
 				System.out.println( "Absolute Path at server=" + file.getAbsolutePath( ) );
+
 				fileItem.write( file );
 				
 				SqlLiteDatabase sql = new SqlLiteDatabase( );
 				sql.insertFile( request.getParameter( "listUBNumbers" ), file.getAbsolutePath( ) );
 				request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
-//				out.write( "File " + fileItem.getName( ) + " uploaded successfully." );
-//				out.write( "<br>" );
-//				out.write( "<a href=\"UploadDownloadFileServlet?fileName=" + fileItem.getName( ) + "\">Download " + fileItem.getName( ) + "</a>" );
+
 			}
 		}
 		catch( FileUploadException e )
