@@ -11,17 +11,16 @@
 		SELECT ubNumber FROM application;
 		</sql:query>
 
-	<select name="listUBNumbers">
-		<c:forEach var="user" items="${listUbNumbers.rows}">
+	<form name="uploadSelection" action="UploadDownloadFileServlet"
+		method="post" enctype="multipart/form-data">
 
-			<option value="${user.ubNumber}">${user.ubNumber}</option>
+		<select name="listUBNumbers">
+			<c:forEach var="user" items="${listUbNumbers.rows}">
 
-		</c:forEach>
-	</select>
-	<form action="UploadDownloadFileServlet" method="post"
-		enctype="multipart/form-data">
+				<option value="${user.ubNumber}">${user.ubNumber}</option>
 
-		<input type="file" name="fileName"> <br> <input
+			</c:forEach>
+		</select> <input type="file" name="fileName"> <br> <input
 			type="submit" value="Upload">
 	</form>
 </body>

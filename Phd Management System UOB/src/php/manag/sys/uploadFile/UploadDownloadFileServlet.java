@@ -100,7 +100,9 @@ public class UploadDownloadFileServlet extends HttpServlet
 				fileItem.write( file );
 				
 				SqlLiteDatabase sql = new SqlLiteDatabase( );
-				sql.insertFile( request.getParameter( "listUBNumbers" ), file.getAbsolutePath( ) );
+				String selUBNum = request.getParameter( "listUBNumbers" );
+				System.out.println("HELLLOOOOOOO: " + selUBNum);
+				sql.insertFile( selUBNum, file.getAbsolutePath( ) );
 				request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 
 			}
