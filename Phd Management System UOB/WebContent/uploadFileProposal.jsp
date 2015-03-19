@@ -1,12 +1,13 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@ page import="php.manag.sys.db.SqlLiteDatabase"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <html>
 <head></head>
 <body>
 	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:8888/phdmanagsys" user="jerry"
-		password="siemens" />
+		url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
+		password="<%=SqlLiteDatabase.PASSWORD%>" />
 	<sql:query var="listUbNumbers" dataSource="${myDS}">
 		SELECT ubNumber FROM application;
 		</sql:query>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="php.manag.sys.db.SqlLiteDatabase"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
@@ -12,8 +13,9 @@
 <body>
 	<form action="ViewApplication">
 		<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-			url="jdbc:mysql://localhost:8888/phdmanagsys" user="jerry"
-			password="siemens" />
+			url="<%=SqlLiteDatabase.DB_URL%>"
+			user="<%=SqlLiteDatabase.USER%>"
+			password="<%=SqlLiteDatabase.PASSWORD%>" />
 
 		<sql:query var="listUsers" dataSource="${myDS}">
 		SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp,sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id;
