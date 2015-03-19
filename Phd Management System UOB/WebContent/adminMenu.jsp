@@ -13,6 +13,8 @@
 		<input type="submit" name="viewResponses" value="View Responses" style="width: 500px; "><br>
 		<input type="submit" name="addUser" value="Add User" style="width: 500px; "><br>
 		<input type="submit" name="uploadFile" value="Upload File" style="width: 500px; "><br>
+		<input type="submit" name="ChangePropsalStatus" value="Change Propsal Status" style="width: 500px; "><br>
+		<input type="submit" name="ShowProposalByDiscipline" value="Show Proposal By Discipline" style="width: 500px; "><br>
 	</form>
 </body>
 </html>
