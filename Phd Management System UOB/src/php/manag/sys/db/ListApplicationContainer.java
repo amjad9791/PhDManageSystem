@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class ListApplicationContainer
 {
-	
 
 	int app_id;
 	int id_status;
@@ -25,29 +24,29 @@ public class ListApplicationContainer
 	String createrUser;
 	String id_value;
 	String supervisorName;
-	Timestamp timestamp;	
-	
+	Timestamp timestamp;
+
 	public ListApplicationContainer( )
-    {
-		 app_id = 0;
-		 id_status = 0;
-		 ubNumber = 0;
-		 firstName = "";
-		 middleName = "";
-		 lastName = "";
-		 email = "";
-//		 birthday = new Data();
-		 gender = "";
-		 discipline = "";
-		 titleOfResearch = "";
-		 highestAward = "";
-		 qualiHighAward = "";
-		 otherAward = "";
-		 qualiOtherAward = "";
-		 createrUser = "";
-//		 timestamp  = new Data();	
-    }
-	
+	{
+		app_id = 0;
+		id_status = 0;
+		ubNumber = 0;
+		firstName = "";
+		middleName = "";
+		lastName = "";
+		email = "";
+		// birthday = new Data();
+		gender = "";
+		discipline = "";
+		titleOfResearch = "";
+		highestAward = "";
+		qualiHighAward = "";
+		otherAward = "";
+		qualiOtherAward = "";
+		createrUser = "";
+		// timestamp = new Data();
+	}
+
 	public int getApp_id( )
 	{
 		return app_id;
@@ -235,6 +234,13 @@ public class ListApplicationContainer
 
 	public void setSupervisorName( String supervisorName )
 	{
-		this.supervisorName = supervisorName;
+		if( supervisorName == null )
+		{
+			this.supervisorName = "";
+		}
+		else
+		{
+			this.supervisorName = supervisorName;
+		}
 	}
 }
