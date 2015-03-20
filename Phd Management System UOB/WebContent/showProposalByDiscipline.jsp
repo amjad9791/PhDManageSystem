@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Show applications by Discipline</title>
 </head>
 <body>
+<pre>Please choose PhD Proposal By Discipline:</pre>
+
+
 
 <td>Discipline:</td>
 					<td><select name="discipline">
@@ -17,6 +20,7 @@
 							<option value="electrical">Electrical</option>
 							<option value="computing">Computing</option>
 							<option value="filmAndMedia">Film and Media</option>
+							<input type="submit" name="submit" value="Submit">
 					</select></td>
 </body>
 </html>
