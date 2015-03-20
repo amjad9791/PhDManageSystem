@@ -51,14 +51,14 @@ public class AdminMenu extends HttpServlet {
 			request.getRequestDispatcher("uploadFileProposal.jsp").forward(
 					request, response);
 		}
-		// Calling when ChangePropsalStatus File Button is selected
-		else if (request.getParameter("changePropsalStatus") != null) {
-			request.getRequestDispatcher("changePropsalStatus.jsp").forward(
+		// Calling when ChangePropsalStatus  Button is selected
+		else if (request.getParameter("changeProposalStatus") != null) {
+			request.getRequestDispatcher("changeProposalStatus.jsp").forward(
 					request, response);
 		}
-		// Calling when ShowProposalByDiscipline File Button is selected
+		// Calling when ShowProposalByDiscipline  Button is selected
 		else if (request.getParameter("showProposalByDiscipline") != null) {
-			request.getRequestDispatcher("ShowProposalByDiscipline.jsp").forward(
+			request.getRequestDispatcher("showProposalByDiscipline.jsp").forward(
 					request, response);
 		}
 
