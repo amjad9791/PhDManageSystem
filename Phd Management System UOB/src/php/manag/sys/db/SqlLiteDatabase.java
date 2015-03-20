@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.HashMap;
 
 // JDK 7 and above
 public class SqlLiteDatabase
@@ -447,7 +448,20 @@ public class SqlLiteDatabase
 		return null;
 	}
 
-	public ArrayList< ListApplicationContainer > listOfApplications( )
+	/**
+	 * @param sortIsActivated
+	 *            has to set to TRUE, if a sorting is desired. False for the
+	 *            regular SQL, that query all records from applicants
+	 * @param columnForSort
+	 *            if the previous parameter is TRUE, the SQL will group it by
+	 *            the particular column
+	 * @param sortType
+	 *            here are TWO PARAMETERS. The first parameter is "+" and will
+	 *            affect that the query is ascending order (normal order). The
+	 *            second parameter is "-"
+	 * @return
+	 */
+	public ArrayList< ListApplicationContainer > listOfApplications( ArrayList< ListFilterContainer > filterList )
 	{
 		ArrayList< ListApplicationContainer > list = new ArrayList< ListApplicationContainer >( );
 
@@ -468,12 +482,29 @@ public class SqlLiteDatabase
 		{
 			// Step 3: Execute a SQL SELECT query, the query result
 			// is returned in a "ResultSet" object.
-			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id;";
-			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id";
+			StringBuilder sbQuery = new StringBuilder( strSelect );
+
+			// It will append the filters. If the ArrayList is empty, then there
+			// are no filters
+			if( filterList.size( ) > 0 )
+			{
+				sbQuery.append( " ORDER BY " );
+				for( ListFilterContainer element : filterList )
+				{
+					 String append = element.getKeyDatabaseField( ) + " " + element.getValueSort( ) + ", ";
+					 sbQuery.append( append );
+				}
+				sbQuery.delete( sbQuery.length( ) - 2, sbQuery.length( ) - 1 );
+			}
+			
+			sbQuery.append( ";" );
+			
+			System.out.println( "The SQL query is: " + sbQuery.toString( ) ); // Echo For
 			                                                        // debugging
 			System.out.println( );
 
-			ResultSet rset = stmt.executeQuery( strSelect );
+			ResultSet rset = stmt.executeQuery( sbQuery.toString( ) );
 
 			// Step 4: Process the ResultSet by scrolling the cursor forward via
 			// next().
@@ -482,15 +513,15 @@ public class SqlLiteDatabase
 			while( rset.next( ) )
 			{ // Move the cursor to the next row
 				ListApplicationContainer element = new ListApplicationContainer( );
-				element.setApp_id(  rset.getInt( "app_id" ) ) ;
-				element.setId_status( rset.getInt(  "id_status" ) ) ;
-				element.setUbNumber( rset.getInt( "ubNumber" ) ) ;
+				element.setApp_id( rset.getInt( "app_id" ) );
+				element.setId_status( rset.getInt( "id_status" ) );
+				element.setUbNumber( rset.getInt( "ubNumber" ) );
 				element.setFirstName( rset.getString( "firstName" ) );
 				element.setMiddleName( rset.getString( "middleName" ) );
 				element.setLastName( rset.getString( "lastName" ) );
 				element.setEmail( rset.getString( "email" ) );
 				element.setBirthday( rset.getDate( "birthday" ) );
-				
+
 				element.setGender( rset.getString( "gender" ) );
 				element.setDiscipline( rset.getString( "discipline" ) );
 				element.setTitleOfResearch( rset.getString( "titleOfresearch" ) );
@@ -499,11 +530,11 @@ public class SqlLiteDatabase
 				element.setOtherAward( rset.getString( "otherAward" ) );
 				element.setQualiOtherAward( rset.getString( "qualiOtherAward" ) );
 				element.setCreaterUser( rset.getString( "createrUser" ) );
-				element.setTimestamp ( rset.getTimestamp(  "timestamp" ));
-				element.setId_value( rset.getString(  "id_value"  ));
+				element.setTimestamp( rset.getTimestamp( "timestamp" ) );
+				element.setId_value( rset.getString( "id_value" ) );
 				element.setSupervisorName( rset.getString( "supervisorName" ) );
-				
-				//Add the colected informations to the major list
+
+				// Add the colected informations to the major list
 				list.add( element );
 			}
 
