@@ -8,6 +8,15 @@
 </head>
 <body>
 
-
+<td>Discipline:</td>
+					<td><select name="discipline">
+							<option value="mechanical">Mechanical</option>
+							<option value="medical">Medical</option>
+							<option value="civil">Civil</option>
+							<option value="chemical">Chemical</option>
+							<option value="electrical">Electrical</option>
+							<option value="computing">Computing</option>
+							<option value="filmAndMedia">Film and Media</option>
+					</select></td>
 </body>
 </html>
