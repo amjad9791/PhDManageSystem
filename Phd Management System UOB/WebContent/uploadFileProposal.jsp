@@ -5,16 +5,17 @@
 <html>
 <head></head>
 <body>
-	<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-		url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
-		password="<%=SqlLiteDatabase.PASSWORD%>" />
-	<sql:query var="listUbNumbers" dataSource="${myDS}">
-		SELECT ubNumber FROM application;
-		</sql:query>
+
 
 	<form name="uploadSelection" action="UploadDownloadFileServlet"
 		method="post" enctype="multipart/form-data">
-
+		
+		<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
+			url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
+			password="<%=SqlLiteDatabase.PASSWORD%>" />
+		<sql:query var="listUbNumbers" dataSource="${myDS}">
+		SELECT ubNumber FROM application;
+		</sql:query>
 		<select name="listUBNumbers">
 			<c:forEach var="user" items="${listUbNumbers.rows}">
 

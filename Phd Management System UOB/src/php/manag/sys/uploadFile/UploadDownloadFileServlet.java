@@ -20,6 +20,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import php.manag.sys.db.SqlLiteDatabase;
 
 @WebServlet( "/UploadDownloadFileServlet" )
@@ -27,6 +28,7 @@ public class UploadDownloadFileServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	private ServletFileUpload uploader = null;
+	private String selUBNum;
 
 	@Override
 	public void init( ) throws ServletException
@@ -87,23 +89,33 @@ public class UploadDownloadFileServlet extends HttpServlet
 			Iterator< FileItem > fileItemsIterator = fileItemsList.iterator( );
 			while( fileItemsIterator.hasNext( ) )
 			{
-
 				FileItem fileItem = fileItemsIterator.next( );
-				System.out.println( "FieldName=" + fileItem.getFieldName( ) );
-				System.out.println( "FileName=" + fileItem.getName( ) );
-				System.out.println( "ContentType=" + fileItem.getContentType( ) );
-				System.out.println( "Size in bytes=" + fileItem.getSize( ) );
 
-				File file = new File( request.getServletContext( ).getAttribute( "FILES_DIR" ) + File.separator + fileItem.getName( ) );
-				System.out.println( "Absolute Path at server=" + file.getAbsolutePath( ) );
+				// Needed otherwise it runs twice because of the other input
+				// fields of the interface
+				if( !fileItem.isFormField( ) )
+				{
+					 // Process form file field (input type="file").
+					System.out.println( "FieldName=" + fileItem.getFieldName( ) );
+					System.out.println( "FileName=" + fileItem.getName( ) );
+					System.out.println( "ContentType=" + fileItem.getContentType( ) );
+					System.out.println( "Size in bytes=" + fileItem.getSize( ) );
 
-				fileItem.write( file );
-				
-				SqlLiteDatabase sql = new SqlLiteDatabase( );
-				String selUBNum = request.getParameter( "listUBNumbers" );
-				System.out.println("HELLLOOOOOOO: " + selUBNum);
-				sql.insertFile( selUBNum, file.getAbsolutePath( ) );
-				request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
+					File file = new File( request.getServletContext( ).getAttribute( "FILES_DIR" ) + File.separator + fileItem.getName( ) );
+					System.out.println( "Absolute Path at server=" + file.getAbsolutePath( ) );
+
+					fileItem.write( file );
+
+					SqlLiteDatabase sql = new SqlLiteDatabase( );
+
+					sql.insertFile( selUBNum, file.getAbsolutePath( ) );
+					request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
+				}
+				else
+				{
+					// Process regular form field (input type: select)
+					selUBNum = request.getParameter( "listUBNumbers" );
+				}
 
 			}
 		}
