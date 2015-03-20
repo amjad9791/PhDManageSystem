@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import php.manag.sys.db.ListApplicationContainer;
 import php.manag.sys.db.SqlLiteDatabase;
 
 /**
@@ -26,6 +29,7 @@ public class ViewApplication extends HttpServlet
 	private int tableSize;
 	private String username;
 	private String role;
+	ArrayList< ListApplicationContainer > listOfApplications;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -49,13 +53,59 @@ public class ViewApplication extends HttpServlet
 		ServletContext context = getServletContext( );
 		username = (String) context.getAttribute( "username" );
 		role = (String) context.getAttribute( "role" );
+		
+		//Query how many records are in the application
 		tableSize = sql.numberOfApplications( );
 
-		out = response.getWriter( );
-		out.println( "Hello Unleashed..." );
-		// createTable( );
+		//Query all records in the table application and forward it to the jsp
+		listOfApplications = sql.listOfApplications( );
+		request.setAttribute( "listOfApplications", listOfApplications );
+		
 		// Verifying which button got pressed - First the Button Supervisor
-		int i = 1;
+        supervisorButtonListener( request, response, sql );
+		editButtonListener( request, response );
+		
+		//Forward to the application jsp 
+		request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+	}
+
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+    private void editButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
+	    // Here the buttons for editing the applications. That means, that the
+		// admin can edit the applicaitons
+        int i = 1;
+		while( i < tableSize )
+		{
+			String act = request.getParameter( "butEditApp_" + i );
+			if( act != null )
+			{
+				// Set the raw number to query the data for the editing process
+				getServletContext( ).setAttribute( "applicationNr", i );
+				System.out.println( "butEditApp_" + i );
+				queryValuesOfApplication( request, i );
+				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
+				return;
+			}
+			i++;
+		}
+    }
+
+	/**
+	 * @param request
+	 * @param response
+	 * @param sql
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+    private void supervisorButtonListener( HttpServletRequest request, HttpServletResponse response, SqlLiteDatabase sql ) throws ServletException, IOException
+    {
+	    int i = 1;
 		while( i < tableSize )
 		{
 			String act = request.getParameter( "butSupervisorYes_" + i );
@@ -76,7 +126,11 @@ public class ViewApplication extends HttpServlet
 					sql.addSupervisor( username, i );
 				}
 
-				request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+				//Refresh List because of modifying the table
+				listOfApplications = sql.listOfApplications( );
+				request.setAttribute( "listOfApplications", listOfApplications );
+				
+//				request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 				return;
 			}
 			i++;
@@ -90,30 +144,16 @@ public class ViewApplication extends HttpServlet
 			if( act != null )
 			{
 				sql.deleteSupervisor( username, i );
-				request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+				
+				//Refresh List because of modifying the table
+				listOfApplications = sql.listOfApplications( );
+				request.setAttribute( "listOfApplications", listOfApplications );
+//				request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 				return;
 			}
 			i++;
 		}
-
-		// Here the buttons for editing the applications. That means, that the
-		// admin can edit the applicaitons
-		i = 1;
-		while( i < tableSize )
-		{
-			String act = request.getParameter( "butEditApp_" + i );
-			if( act != null )
-			{
-				// Set the raw number to query the data for the editing process
-				getServletContext( ).setAttribute( "applicationNr", i );
-				System.out.println( "butEditApp_" + i );
-				queryValuesOfApplication( request, i );
-				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
-				return;
-			}
-			i++;
-		}
-	}
+    }
 
 	private void queryValuesOfApplication( HttpServletRequest request, int applicationNr )
 	{

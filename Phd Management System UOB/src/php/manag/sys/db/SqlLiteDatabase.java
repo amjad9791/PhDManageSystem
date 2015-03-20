@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Formatter;
 
 // JDK 7 and above
@@ -395,11 +396,10 @@ public class SqlLiteDatabase
 			ex.printStackTrace( );
 		}
 	}
-	
-	
-	public ArrayList<Integer> listOfUBNumbers( )
+
+	public ArrayList< Integer > listOfUBNumbers( )
 	{
-		ArrayList<Integer> list = new ArrayList< Integer >( );
+		ArrayList< Integer > list = new ArrayList< Integer >( );
 
 		// Step 1: Allocate a database "Connection" object
 		try
@@ -431,7 +431,7 @@ public class SqlLiteDatabase
 			// getXxx(columnName).
 			while( rset.next( ) )
 			{ // Move the cursor to the next row
-				list.add( Integer.parseInt( rset.getString( "number" )) );
+				list.add( Integer.parseInt( rset.getString( "number" ) ) );
 
 			}
 
@@ -446,41 +446,113 @@ public class SqlLiteDatabase
 		// try-with-resources
 		return null;
 	}
-	
-	private static String encryptPassword(String password)
+
+	public ArrayList< ListApplicationContainer > listOfApplications( )
 	{
-	    String sha1 = "";
-	    try
-	    {
-	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-	        crypt.reset();
-	        crypt.update(password.getBytes("UTF-8"));
-	        sha1 = byteToHex(crypt.digest());
-	    }
-	    catch(NoSuchAlgorithmException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    catch(UnsupportedEncodingException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    return sha1;
+		ArrayList< ListApplicationContainer > list = new ArrayList< ListApplicationContainer >( );
+
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+
+		// Step 2: Allocate a "Statement" object in the Connection
+		Statement stmt = conn.createStatement( ); )
+		{
+			// Step 3: Execute a SQL SELECT query, the query result
+			// is returned in a "ResultSet" object.
+			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id;";
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			                                                        // debugging
+			System.out.println( );
+
+			ResultSet rset = stmt.executeQuery( strSelect );
+
+			// Step 4: Process the ResultSet by scrolling the cursor forward via
+			// next().
+			// For each row, retrieve the contents of the cells with
+			// getXxx(columnName).
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				ListApplicationContainer element = new ListApplicationContainer( );
+				element.setApp_id(  rset.getInt( "app_id" ) ) ;
+				element.setId_status( rset.getInt(  "id_status" ) ) ;
+				element.setUbNumber( rset.getInt( "ubNumber" ) ) ;
+				element.setFirstName( rset.getString( "firstName" ) );
+				element.setMiddleName( rset.getString( "middleName" ) );
+				element.setLastName( rset.getString( "lastName" ) );
+				element.setEmail( rset.getString( "email" ) );
+				element.setBirthday( rset.getDate( "birthday" ) );
+				
+				element.setGender( rset.getString( "gender" ) );
+				element.setDiscipline( rset.getString( "discipline" ) );
+				element.setTitleOfResearch( rset.getString( "titleOfresearch" ) );
+				element.setHighestAward( rset.getString( "highestAward" ) );
+				element.setQualiHighAward( rset.getString( "qualiHighAward" ) );
+				element.setOtherAward( rset.getString( "otherAward" ) );
+				element.setQualiOtherAward( rset.getString( "qualiOtherAward" ) );
+				element.setCreaterUser( rset.getString( "createrUser" ) );
+				element.setTimestamp ( rset.getTimestamp(  "timestamp" ));
+				element.setId_value( rset.getString(  "id_value"  ));
+				element.setSupervisorName( rset.getString( "supervisorName" ) );
+				
+				//Add the colected informations to the major list
+				list.add( element );
+			}
+
+			return list;
+
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+		// Step 5: Close the resources - Done automatically by
+		// try-with-resources
+		return null;
 	}
 
-	private static String byteToHex(final byte[] hash)
+	private static String encryptPassword( String password )
 	{
-	    Formatter formatter = new Formatter();
-	    for (byte b : hash)
-	    {
-	        formatter.format("%02x", b);
-	    }
-	    String result = formatter.toString();
-	    formatter.close();
-	    return result;
+		String sha1 = "";
+		try
+		{
+			MessageDigest crypt = MessageDigest.getInstance( "SHA-1" );
+			crypt.reset( );
+			crypt.update( password.getBytes( "UTF-8" ) );
+			sha1 = byteToHex( crypt.digest( ) );
+		}
+		catch( NoSuchAlgorithmException e )
+		{
+			e.printStackTrace( );
+		}
+		catch( UnsupportedEncodingException e )
+		{
+			e.printStackTrace( );
+		}
+		return sha1;
 	}
-	
-	public void insertFile( String ubNumber, String filePath  )
+
+	private static String byteToHex( final byte[ ] hash )
+	{
+		Formatter formatter = new Formatter( );
+		for( byte b : hash )
+		{
+			formatter.format( "%02x", b );
+		}
+		String result = formatter.toString( );
+		formatter.close( );
+		return result;
+	}
+
+	public void insertFile( String ubNumber, String filePath )
 	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
@@ -506,6 +578,5 @@ public class SqlLiteDatabase
 			ex.printStackTrace( );
 		}
 	}
-
 
 }

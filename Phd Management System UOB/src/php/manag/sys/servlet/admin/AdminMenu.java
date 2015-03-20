@@ -36,7 +36,7 @@ public class AdminMenu extends HttpServlet {
 		else if (request.getParameter("viewResponses") != null) {
 			getServletContext().removeAttribute("applicationNr");
 			getServletContext().setAttribute("applicationNr", 0);
-			request.getRequestDispatcher("viewApplication.jsp").forward(
+			request.getRequestDispatcher("ViewApplication").forward(
 					request, response);
 		}
 
@@ -48,28 +48,16 @@ public class AdminMenu extends HttpServlet {
 
 		// Calling when Upload File Button is selected
 		else if (request.getParameter("uploadFile") != null) {
-			SqlLiteDatabase sql = new SqlLiteDatabase();
-			List<Integer> list = sql.listOfUBNumbers();
-			getServletContext().setAttribute("listUbNumber", list);
-			request.setAttribute("listUbNumber", list);
 			request.getRequestDispatcher("uploadFileProposal.jsp").forward(
 					request, response);
 		}
 		// Calling when ChangePropsalStatus File Button is selected
-		else if (request.getParameter("ChangePropsalStatus") != null) {
-			SqlLiteDatabase sql = new SqlLiteDatabase();
-			List<Integer> list = sql.listOfUBNumbers();
-			getServletContext().setAttribute("listUbNumber", list);
-			request.setAttribute("listUbNumber", list);
-			request.getRequestDispatcher("ChangePropsalStatus.jsp").forward(
+		else if (request.getParameter("changePropsalStatus") != null) {
+			request.getRequestDispatcher("changePropsalStatus.jsp").forward(
 					request, response);
 		}
 		// Calling when ShowProposalByDiscipline File Button is selected
-		else if (request.getParameter("ShowProposalByDiscipline") != null) {
-			SqlLiteDatabase sql = new SqlLiteDatabase();
-			List<Integer> list = sql.listOfUBNumbers();
-			getServletContext().setAttribute("listUbNumber", list);
-			request.setAttribute("listUbNumber", list);
+		else if (request.getParameter("showProposalByDiscipline") != null) {
 			request.getRequestDispatcher("ShowProposalByDiscipline.jsp").forward(
 					request, response);
 		}

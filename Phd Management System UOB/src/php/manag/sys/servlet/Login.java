@@ -52,7 +52,7 @@ public class Login extends HttpServlet
 					getServletContext( ).setAttribute( "role", "professor" );
 
 					//Start the viewApplication to list all current applications
-					request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+					request.getRequestDispatcher("ViewApplication").forward(request, response);
 				}
 				else if( result.equals( "admin" ) )
 				{

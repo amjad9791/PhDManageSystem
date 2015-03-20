@@ -105,7 +105,7 @@ public class AddApplication extends HttpServlet
 					SqlLiteDatabase sql = new SqlLiteDatabase( );
 					sql.updateApplication( Integer.toString( applicationNr ), ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
 					applicationNr = 0;
-					request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+					request.getRequestDispatcher("ViewApplication").forward(request, response);
 				}
 				else
 				{
