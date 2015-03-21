@@ -33,6 +33,7 @@ public class ViewApplication extends HttpServlet
 	private String role;
 	private ArrayList< ListApplicationContainer > listOfApplications;
 	private ArrayList< ListFilterContainer > filterList;
+	private String search;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -56,6 +57,12 @@ public class ViewApplication extends HttpServlet
 		ServletContext context = getServletContext( );
 		username = (String) context.getAttribute( "username" );
 		role = (String) context.getAttribute( "role" );
+		
+		//Get Value from search textfield
+		search = request.getParameter( "searchField" );
+		if(search == null) {
+			search = "";
+		}
 
 		// If clause for the filter functionality. It collects the desired
 		// filter conditions
@@ -64,7 +71,7 @@ public class ViewApplication extends HttpServlet
 		{
 			// Collecting the filter values
 			filterList = radioButFilter( request );
-			listOfApplications = sql.listOfApplications( filterList );
+			listOfApplications = sql.listOfApplications( filterList, search );
 			request.setAttribute( "listOfApplications", listOfApplications );
 			request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 			return;
@@ -74,7 +81,7 @@ public class ViewApplication extends HttpServlet
 		tableSize = sql.numberOfApplications( );
 
 		// Query all records in the table application and forward it to the jsp
-		listOfApplications = sql.listOfApplications( filterList );
+		listOfApplications = sql.listOfApplications( filterList, search );
 		request.setAttribute( "listOfApplications", listOfApplications );
 
 		// Verifying which button got pressed - First the Button Supervisor
@@ -253,7 +260,7 @@ public class ViewApplication extends HttpServlet
 				}
 
 				// Refresh List because of modifying the table
-				listOfApplications = sql.listOfApplications( filterList  );
+				listOfApplications = sql.listOfApplications( filterList , search );
 				request.setAttribute( "listOfApplications", listOfApplications );
 
 				// request.getRequestDispatcher( "viewApplication.jsp"
@@ -273,7 +280,7 @@ public class ViewApplication extends HttpServlet
 				sql.deleteSupervisor( username, i );
 
 				// Refresh List because of modifying the table
-				listOfApplications = sql.listOfApplications( filterList );
+				listOfApplications = sql.listOfApplications( filterList, search );
 				request.setAttribute( "listOfApplications", listOfApplications );
 				// request.getRequestDispatcher( "viewApplication.jsp"
 				// ).forward( request, response );

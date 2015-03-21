@@ -461,7 +461,7 @@ public class SqlLiteDatabase
 	 *            second parameter is "-"
 	 * @return
 	 */
-	public ArrayList< ListApplicationContainer > listOfApplications( ArrayList< ListFilterContainer > filterList )
+	public ArrayList< ListApplicationContainer > listOfApplications( ArrayList< ListFilterContainer > filterList, String search )
 	{
 		ArrayList< ListApplicationContainer > list = new ArrayList< ListApplicationContainer >( );
 
@@ -482,7 +482,7 @@ public class SqlLiteDatabase
 		{
 			// Step 3: Execute a SQL SELECT query, the query result
 			// is returned in a "ResultSet" object.
-			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id GROUP BY app.app_id";
+			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id WHERE app.app_id LIKE '%" + search + "%' OR app.ubNumber LIKE '%" + search + "%' OR app.firstName LIKE '%" + search + "%' OR app.middleName LIKE '%" + search + "%' OR app.lastName LIKE '%" + search + "%' OR app.email LIKE '%" + search + "%' OR app.birthday LIKE '%" + search + "%' OR app.gender LIKE '%" + search + "%' OR app.discipline LIKE '%" + search + "%' OR app.titleOfresearch LIKE '%" + search + "%' OR app.highestAward LIKE '%" + search + "%' OR app.qualiHighAward LIKE '%" + search + "%' OR app.otherAward LIKE '%" + search + "%' OR app.qualiOtherAward LIKE '%" + search + "%' OR app.createrUser LIKE '%" + search + "%' OR sta.id_value LIKE '%" + search + "%' OR supervisorName LIKE '%" + search + "%' GROUP BY app.app_id";
 			StringBuilder sbQuery = new StringBuilder( strSelect );
 
 			// It will append the filters. If the ArrayList is empty, then there
