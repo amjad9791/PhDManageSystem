@@ -72,7 +72,32 @@
 		<servlet-name>UploadFileProposalServlet</servlet-name>
 		<url-pattern>/UploadFileProposal</url-pattern>
 	</servlet-mapping>
-
+	
+	
+	
+	<servlet>
+		<description></description>
+		<servlet-name>ShowProposalbyDisiciplineServlet</servlet-name>
+		<servlet-class>php.manag.sys.db.ShowProposalbyDisicipline</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShowProposalbyDisiciplineServlet</servlet-name>
+		<url-pattern>/ShowProposalbyDisicipline</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+		<servlet>
+		<description></description>
+		<servlet-name>ChangeProposalStatusServlet</servlet-name>
+		<servlet-class>php.manag.sys.servlet.admin.ChangeProposalStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangeProposalStatusServlet</servlet-name>
+		<url-pattern>/ChangeProposalStatus</url-pattern>
+	</servlet-mapping>
+	
+	
   <context-param>
     <param-name>tempfile.dir</param-name>
     <param-value>tmpfiles</param-value>
