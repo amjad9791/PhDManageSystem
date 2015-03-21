@@ -26,7 +26,7 @@ public class SqlLiteDatabase
 	/**
 	 * inserts a Applciation will all required data into the Database
 	 */
-	public void insertApplication( String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
+	public boolean insertApplication( String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
 	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
@@ -48,10 +48,12 @@ public class SqlLiteDatabase
 			// debugging
 
 			stmt.executeUpdate( query );
+			return true;
 		}
 		catch( SQLException ex )
 		{
 			ex.printStackTrace( );
+			return false;
 		}
 	}
 
@@ -492,16 +494,17 @@ public class SqlLiteDatabase
 				sbQuery.append( " ORDER BY " );
 				for( ListFilterContainer element : filterList )
 				{
-					 String append = element.getKeyDatabaseField( ) + " " + element.getValueSort( ) + ", ";
-					 sbQuery.append( append );
+					String append = element.getKeyDatabaseField( ) + " " + element.getValueSort( ) + ", ";
+					sbQuery.append( append );
 				}
 				sbQuery.delete( sbQuery.length( ) - 2, sbQuery.length( ) - 1 );
 			}
-			
+
 			sbQuery.append( ";" );
-			
-			System.out.println( "The SQL query is: " + sbQuery.toString( ) ); // Echo For
-			                                                        // debugging
+
+			System.out.println( "The SQL query is: " + sbQuery.toString( ) ); // Echo
+																			  // For
+			// debugging
 			System.out.println( );
 
 			ResultSet rset = stmt.executeQuery( sbQuery.toString( ) );
@@ -608,6 +611,50 @@ public class SqlLiteDatabase
 		{
 			ex.printStackTrace( );
 		}
+	}
+
+	public boolean jUnit_query( String query )
+	{
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+
+		// Step 2: Allocate a "Statement" object in the Connection
+		Statement stmt = conn.createStatement( ); )
+		{
+			// Step 3: Execute a SQL SELECT query, the query result
+			// is returned in a "ResultSet" object.
+			String strSelect = query;
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			                                                        // debugging
+
+			ResultSet rset = stmt.executeQuery( strSelect );
+
+			// Step 4: Process the ResultSet by scrolling the cursor forward via
+			// next().
+			// For each row, retrieve the contents of the cells with
+			// getXxx(columnName).
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				return true;
+			}
+
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+		// Step 5: Close the resources - Done automatically by
+		// try-with-resources
+		return false;
 	}
 
 }
