@@ -42,7 +42,7 @@
 					<th>Status<p><input type="radio" value="ASC" name="radStatus" />+<input type="radio" value="DESC" name="radStatus" />-</th>
 					<th>Supervisor<p><input type="radio" value="ASC" name="radSupervisor" />+<input type="radio" value="DESC" name="radSupervisor" />-</th>
 					<th>Search and Filter<p>
-							<input name="searchField" type="text" maxlength="49" value='Enter Value here'><input type="submit" name="filter" value="Filter" ></th>
+							<input name="searchField" type="text" maxlength="49" value=''><input type="submit" name="filter" value="Filter" ></th>
 				</tr>
 
 				<%
