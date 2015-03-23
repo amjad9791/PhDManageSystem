@@ -656,5 +656,50 @@ public class SqlLiteDatabase
 		// try-with-resources
 		return false;
 	}
+	
+	public void updatePropsStatus( String ubNumber, String status )
+	{
+		String query = "";
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		     Statement stmt = conn.createStatement( ); )
+		{
+			
+
+			switch( status)
+            {
+				case "current":
+					query = "UPDATE application SET id_status = '0' WHERE ubNumber =  '" + ubNumber + "';";
+					break;
+				case "pending":
+					query = "UPDATE application SET id_status = '1' WHERE ubNumber =  '" + ubNumber + "';";
+					break;
+				case "complete":
+					query = "UPDATE application SET id_status = '2' WHERE ubNumber =  '" + ubNumber + "';";
+					break;
+
+				default:
+					break;
+			}
+					
+			System.out.println( "The SQL query is: " + query ); // Echo For
+			// debugging
+
+			stmt.executeUpdate( query );
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+
+	}
 
 }

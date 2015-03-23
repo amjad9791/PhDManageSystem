@@ -77,7 +77,7 @@
 		<servlet>
 		<description></description>
 		<servlet-name>ChangeProposalStatusServlet</servlet-name>
-		<servlet-class>php.manag.sys.servlet.admin.ChangeProposalStatusServlet</servlet-class>
+		<servlet-class>php.manag.sys.servlet.admin.ChangeProposalStatus</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ChangeProposalStatusServlet</servlet-name>
