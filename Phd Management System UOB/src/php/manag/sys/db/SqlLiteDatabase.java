@@ -13,6 +13,10 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.HashMap;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
+import com.sun.org.apache.regexp.internal.recompile;
+
 // JDK 7 and above
 public class SqlLiteDatabase
 {
@@ -52,8 +56,8 @@ public class SqlLiteDatabase
 		}
 		catch( SQLException ex )
 		{
-			ex.printStackTrace( );
 			return false;
+			
 		}
 	}
 
@@ -178,7 +182,7 @@ public class SqlLiteDatabase
 		return false;
 	}
 
-	public void updateApplication( String appNr, String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
+	public boolean updateApplication( String appNr, String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
 	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
@@ -200,15 +204,17 @@ public class SqlLiteDatabase
 			// debugging
 
 			stmt.executeUpdate( query );
+			return true;
 		}
 		catch( SQLException ex )
 		{
 			ex.printStackTrace( );
+			return false;
 		}
 
 	}
 
-	public void addSupervisor( String username, int applicationNr )
+	public boolean addSupervisor( String username, int applicationNr )
 	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
@@ -229,15 +235,17 @@ public class SqlLiteDatabase
 			// debugging
 
 			stmt.executeUpdate( query );
+			return true;
 		}
 		catch( SQLException ex )
 		{
 			ex.printStackTrace( );
+			return false;
 		}
 
 	}
 
-	public void deleteSupervisor( String username, int applicationNr )
+	public boolean deleteSupervisor( String username, int applicationNr )
 	{
 		String query = "";
 		// Step 1: Allocate a database "Connection" object
@@ -258,10 +266,12 @@ public class SqlLiteDatabase
 			// debugging
 
 			stmt.executeUpdate( query );
+			return true;
 		}
 		catch( SQLException ex )
 		{
 			ex.printStackTrace( );
+			return false;
 		}
 
 	}
@@ -655,6 +665,35 @@ public class SqlLiteDatabase
 		// Step 5: Close the resources - Done automatically by
 		// try-with-resources
 		return false;
+	}
+	
+	public boolean jUnit_update( String query )
+	{
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		     Statement stmt = conn.createStatement( ); )
+		{
+
+			System.out.println( "The SQL query is: " + query ); // Echo For
+			// debugging
+
+			stmt.executeUpdate( query );
+			return true;
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+			return false;
+		}
+
 	}
 	
 	public void updatePropsStatus( String ubNumber, String status )
