@@ -12,7 +12,7 @@ import php.manag.sys.db.SqlLiteDatabase;
 public class ChangeProposalStatus extends HttpServlet
 {
 
-	@Override
+	@Override //catches the button's action if clicked to establish connection and gets the entered values of ubNumber and status. 
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 
