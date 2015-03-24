@@ -236,6 +236,9 @@ public class ViewApplication extends HttpServlet
 	 * @throws ServletException
 	 * @throws IOException
 	 */
+	
+	// this function is for checking when the professor wants to be a supervisor on an application if he is already supervisor
+	//or otherwise will add the application on their list & update database  
 	private void supervisorButtonListener( HttpServletRequest request, HttpServletResponse response, SqlLiteDatabase sql ) throws ServletException, IOException
 	{
 		int i = 1;
