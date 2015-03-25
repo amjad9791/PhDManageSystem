@@ -60,6 +60,7 @@ public class AddApplication extends HttpServlet
 		{
 			// Receive all the entered values out of the form
 			String ubNumber = request.getParameter( "ubNumber" );
+			
 			String firstName = request.getParameter( "firstName" );
 			String middleName = request.getParameter( "middleName" );
 			String lastName = request.getParameter( "lastName" );
