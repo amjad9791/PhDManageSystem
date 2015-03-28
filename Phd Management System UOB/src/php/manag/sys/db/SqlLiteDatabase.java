@@ -57,7 +57,7 @@ public class SqlLiteDatabase
 		catch( SQLException ex )
 		{
 			return false;
-			
+
 		}
 	}
 
@@ -171,6 +171,77 @@ public class SqlLiteDatabase
 			{
 				return false;
 			}
+
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+		}
+		// Step 5: Close the resources - Done automatically by
+		// try-with-resources
+		return false;
+	}
+
+	public boolean isUserOREmailExisting( String username, String email )
+	{
+		int number = 0;
+
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+
+		// Step 2: Allocate a "Statement" object in the Connection
+		Statement stmt = conn.createStatement( ); )
+		{
+			// Part 1: Check if User is already existing
+			String strSelect = "SELECT COUNT(*)  AS number FROM user WHERE username = '" + username + "';";
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			ResultSet rset = stmt.executeQuery( strSelect );
+			System.out.println( "The records selected are:" );
+
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				number = Integer.parseInt( rset.getString( "number" ) );
+				System.out.println( "Number of user: " + number );
+			}
+
+			if( number > 0 )
+			{
+				// If user is existing, it will quit the procedure at this point
+				return true;
+			}
+
+			// Part 2: Check if EMAIL is already existing
+			number = 0;
+			strSelect = "SELECT COUNT(*)  AS number FROM user WHERE email = '" + email + "';";
+			System.out.println( "The SQL query is: " + strSelect ); // Echo For
+			rset = stmt.executeQuery( strSelect );
+			System.out.println( "The records selected are:" );
+
+			while( rset.next( ) )
+			{ // Move the cursor to the next row
+				number = Integer.parseInt( rset.getString( "number" ) );
+				System.out.println( "Number of email: " + number );
+			}
+
+			if( number > 0 )
+			{
+				// If email is existing, it will quit the procedure at this
+				// point
+				return true;
+			}
+
+			// if user or email is not existing it will return false. That means
+			// the desired user can be created in the database
+			return false;
 
 		}
 		catch( SQLException ex )
@@ -513,7 +584,7 @@ public class SqlLiteDatabase
 			sbQuery.append( ";" );
 
 			System.out.println( "The SQL query is: " + sbQuery.toString( ) ); // Echo
-																			  // For
+			                                                                  // For
 			// debugging
 			System.out.println( );
 
@@ -666,7 +737,7 @@ public class SqlLiteDatabase
 		// try-with-resources
 		return false;
 	}
-	
+
 	public boolean jUnit_update( String query )
 	{
 		// Step 1: Allocate a database "Connection" object
@@ -695,7 +766,7 @@ public class SqlLiteDatabase
 		}
 
 	}
-	
+
 	public void updatePropsStatus( String ubNumber, String status )
 	{
 		String query = "";
@@ -711,10 +782,9 @@ public class SqlLiteDatabase
 		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
 		     Statement stmt = conn.createStatement( ); )
 		{
-			
 
 			switch( status)
-            {
+			{
 				case "current":
 					query = "UPDATE application SET id_status = '0' WHERE ubNumber =  '" + ubNumber + "';";
 					break;
@@ -728,7 +798,7 @@ public class SqlLiteDatabase
 				default:
 					break;
 			}
-					
+
 			System.out.println( "The SQL query is: " + query ); // Echo For
 			// debugging
 

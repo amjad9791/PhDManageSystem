@@ -25,32 +25,48 @@ public class RegisterUser extends HttpServlet
 	private static final long serialVersionUID = 6192688008912715427L;
 
 	@Override
-	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		out = response.getWriter( );
-		// Calling when AddApplication Button is selected
+		SqlLiteDatabase sql = new SqlLiteDatabase( );
+
+		showAlert( "TESTTT", response );
+		// Calling when register Button is selected
 		if( request.getParameter( "registerUser" ) != null )
 		{
 			String username = request.getParameter( "username" );
 			String password = request.getParameter( "password" );
 			String email = request.getParameter( "email" );
 			String roleUser = request.getParameter( "roleUser" );
-			
-			isValidEmailAddress( email );
-			
-			SqlLiteDatabase sql = new SqlLiteDatabase( );
-			sql.createUser( username, encryptPassword(password), email, roleUser );
-			
-			request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
+
+			if( ! isValidEmailAddress( email ) )
+			{
+				request.setAttribute( "Error_Message",  "The Email Address is not valid" );
+				request.setAttribute( "username", username );
+				request.setAttribute( "email", email );
+				request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
+			}
+			else if( sql.isUserOREmailExisting( username, email ) )
+			{
+				request.setAttribute( "Error_Message", "The User or email address is already existing. Please choose another one" );
+				request.setAttribute( "username", username );
+				request.setAttribute( "email", email );
+				request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
+			}
+			else
+			{
+				sql.createUser( username, encryptPassword( password ), email, roleUser );
+				request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
+			}
 		}
-		// Calling this clauses when the pending Button got pressed
+		// Calling this clauses when the clear Button got pressed
 		else if( request.getParameter( "clearUser" ) != null )
 		{
 			request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
 		}
 
 	}
-	
+
 	public boolean isValidEmailAddress( String email )
 	{
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -59,46 +75,49 @@ public class RegisterUser extends HttpServlet
 		return m.matches( );
 	}
 
-
-
-	public void showAlert( String alertText )
+	public void showAlert( String alertText, HttpServletResponse response )
 	{
-		out.println( "<script type=\"text/javascript\">" );
-		out.println( "alert('" + alertText + "');" );
-		out.println( "location='registerUser.jsp';" );
-		out.println( "</script>" );
-	}
-	
-	private static String encryptPassword(String password)
-	{
-	    String sha1 = "";
-	    try
-	    {
-	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-	        crypt.reset();
-	        crypt.update(password.getBytes("UTF-8"));
-	        sha1 = byteToHex(crypt.digest());
-	    }
-	    catch(NoSuchAlgorithmException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    catch(UnsupportedEncodingException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    return sha1;
+
+		// servlet code
+		out.print("<html><head>");
+		out.print("<script type=\"text/javascript\">alert(" + alertText + ");</script>");
+		out.print("</head><body></body></html>");
+		// out.println( "<script type=\"text/javascript\">" );
+		// out.println( "alert('" + alertText + "');" );
+		// out.println( "location='registerUser.jsp';" );
+		// out.println( "</script>" );
 	}
 
-	private static String byteToHex(final byte[] hash)
+	private static String encryptPassword( String password )
 	{
-	    Formatter formatter = new Formatter();
-	    for (byte b : hash)
-	    {
-	        formatter.format("%02x", b);
-	    }
-	    String result = formatter.toString();
-	    formatter.close();
-	    return result;
+		String sha1 = "";
+		try
+		{
+			MessageDigest crypt = MessageDigest.getInstance( "SHA-1" );
+			crypt.reset( );
+			crypt.update( password.getBytes( "UTF-8" ) );
+			sha1 = byteToHex( crypt.digest( ) );
+		}
+		catch( NoSuchAlgorithmException e )
+		{
+			e.printStackTrace( );
+		}
+		catch( UnsupportedEncodingException e )
+		{
+			e.printStackTrace( );
+		}
+		return sha1;
+	}
+
+	private static String byteToHex( final byte[ ] hash )
+	{
+		Formatter formatter = new Formatter( );
+		for( byte b : hash )
+		{
+			formatter.format( "%02x", b );
+		}
+		String result = formatter.toString( );
+		formatter.close( );
+		return result;
 	}
 }

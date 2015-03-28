@@ -8,12 +8,12 @@
 </head>
 <body>
 
-	<form action="RegisterUser">
+	<form action="RegisterUser" method="post">
 
 		<table border="1" cellpadding="5">
 			<tr>
 				<td>Username:</td>
-				<td><input name="username" type="text" maxlength="49"></td>
+				<td><input name="username" value='<%=((request.getAttribute( "username") == null) ? "" : request.getAttribute( "username")) %>' type="text" maxlength="49"></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>Email:</td>
-				<td><input name="email" type="text" maxlength="49"></td>
+				<td><input name="email" value='<%=((request.getAttribute( "email") == null) ? "" : request.getAttribute( "email")) %>' type="text" maxlength="49"></td>
 			</tr>
 			<tr>
 				<td>Role:</td>
@@ -33,6 +33,10 @@
 			<tr>
 				<td><input type="submit" name="registerUser" value="Register"></td>
 				<td><input type="submit" name="clearUser" value="Clear"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>${requestScope.Error_Message}</td>
 			</tr>
 		</table>
 
