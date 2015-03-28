@@ -41,32 +41,32 @@
 	  </div><!--close site_heading-->
 	  <div id="header">
 	    <div id="menubar">
-	    <form action="Login" class="auto-style2" style="width: 959px; height: 38px ">
-			<table align="center"  >
+	    <form action="Login" method="post" class="auto-style2" style="width: 959px; height: 38px ">
+			<table  align="center" >
 				<tr>
 					<td style="width: 45px " class="auto-style3">
 					<span class="auto-style4">Login</span>:</td>
-					<td><input type="text" name="username" autocomplete="off" style="width: 166px;"></td>
+					<td><input type="text" name="username" style="width: 166px;"></input></td>
 					<td>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
 			
 					<td style="width: 61px"><span class="auto-style4">Password:</span> </td>
 					<td><input type="password" name="password"
-						style="width: 166px;" autocomplete="off" >
+						style="width: 166px;" ></input></td>
 				<td>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
 
 					<td>
 					<input type="submit" name="sendBtn" value="Login"
-						style="background-position: right; width: 60px;" align="right" class="auto-style1"></td>
+						style="background-position: right; width: 60px;" class="auto-style1"></input></td>
 						<td>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
 
 					<td>
-					<input type="submit" name="clearBtn" value="Clear" style="width: 61px"></td>
+					<input type="submit" name="clearBtn" value="Clear" style="width: 61px"></input></td>
 				</tr>
-
 			</table>
+			<td style="width: 61px"><span class="auto-style4"><%=((request.getAttribute( "Error_Message") == null) ? "" : request.getAttribute( "Error_Message")) %></span> </td>
 		</form>
         </div><!--close menubar-->
         <div>

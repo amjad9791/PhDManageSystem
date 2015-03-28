@@ -23,7 +23,7 @@ public class Login extends HttpServlet
 	private static final long serialVersionUID = 2443648499957228483L;
 
 	@Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 
 		// Calling when Send Button got pressed
@@ -37,7 +37,8 @@ public class Login extends HttpServlet
 			// he will be redirect to the loginFailure page
 			if( username.equals( "" ) || password.equals( "" ) )
 			{
-				request.getRequestDispatcher( "loginFailure.jsp" ).forward( request, response );
+				request.setAttribute( "Error_Message",  "Enter a username and a password" );
+				request.getRequestDispatcher( "login.jsp" ).forward( request, response );
 			}
 			else
 			{ // Verifying the user for existence in the database
@@ -64,7 +65,8 @@ public class Login extends HttpServlet
 				else
 				{
 					// Such a user doesn't exist in the database
-					request.getRequestDispatcher( "loginFailure.jsp" ).forward( request, response );
+					request.setAttribute( "Error_Message",  "The user doesn't exist (Wrong username or password)" );
+					request.getRequestDispatcher( "login.jsp" ).forward( request, response );
 				}
 
 				PrintWriter out = response.getWriter( );

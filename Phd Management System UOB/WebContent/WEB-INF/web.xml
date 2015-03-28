@@ -22,14 +22,6 @@
 		<url-pattern>/Login</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>LoginFailureServlet</servlet-name>
-		<servlet-class>php.manag.sys.servlet.LoginFailure</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>LoginFailureServlet</servlet-name>
-		<url-pattern>/LoginFailure</url-pattern>
-	</servlet-mapping>
-	<servlet>
 		<servlet-name>AdminMenuServlet</servlet-name>
 		<servlet-class>php.manag.sys.servlet.admin.AdminMenu</servlet-class>
 	</servlet>
