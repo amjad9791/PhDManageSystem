@@ -49,7 +49,7 @@ public class ViewApplication extends HttpServlet
 	 *      response)
 	 */
 	@Override
-	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		SqlLiteDatabase sql = new SqlLiteDatabase( );
 		// Creating a Html writer object to modify the webpage on runtime
@@ -252,12 +252,13 @@ public class ViewApplication extends HttpServlet
 
 				if( sql.isAlreadySupervisor( username, i ) )
 				{
-					showAlert( "You are already supervisor of this application" );
-
+					request.setAttribute( "Error_Message",  "You are already supervisor of this application" );
+					return;
 				}
 				else if( sql.hasSufficientSupervisor( i ) )
 				{
-					showAlert( "This application has enough supervisors" );
+					request.setAttribute( "Error_Message",  "This application has enough supervisors" );
+					return;
 				}
 				else
 				{
@@ -358,21 +359,4 @@ public class ViewApplication extends HttpServlet
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@Override
-	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
-	{
-		// TODO Auto-generated method stub
-	}
-
-	public void showAlert( String alertText )
-	{
-		out.println( "<script type=\"text/javascript\">" );
-		out.println( "alert('" + alertText + "');" );
-		out.println( "location='viewApplication.jsp';" );
-		out.println( "</script>" );
-	}
 }

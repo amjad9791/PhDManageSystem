@@ -17,11 +17,12 @@
 
 </head>
 <body>
-	<form action="ViewApplication">
+	<form action="ViewApplication" method="post">
 		<div align="center">
 			<table border="1" cellpadding="5">
 				<caption>
 					<h2>List of applications</h2>
+					<h3><%=((request.getAttribute( "Error_Message") == null) ? "" : request.getAttribute( "Error_Message")) %></h3>
 				</caption>
 				<tr>
 					<th>App ID<p><input type="radio" value="ASC" name="radApp_id" />+<input type="radio" value="DESC" name="radApp_id" />-</th>
