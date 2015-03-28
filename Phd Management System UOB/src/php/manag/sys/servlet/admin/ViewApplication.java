@@ -52,7 +52,9 @@ public class ViewApplication extends HttpServlet
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		SqlLiteDatabase sql = new SqlLiteDatabase( );
-
+		// Creating a Html writer object to modify the webpage on runtime
+		out = response.getWriter( );
+		
 		// Receiving the username from the login page
 		ServletContext context = getServletContext( );
 		username = (String) context.getAttribute( "username" );
