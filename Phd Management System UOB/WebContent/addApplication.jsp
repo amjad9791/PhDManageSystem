@@ -64,7 +64,7 @@
 </head>
 <body>
 
-	<form action="AddApplication">
+	<form action="AddApplication" method="post">
 		<table>
 			<thead>
 				<tr>
@@ -127,14 +127,12 @@
 							<option value="m">Male</option>
 					</select></td>
 					<td></td>
-					<td>Proposal</td>
-					<td>
-                <input type="submit" name="uploadFile" value="upload" /></td>
 				</tr>
 			</thead>
 		</table>
 		<table></table>
 		<input type="submit" name="addApplication" value="Add Application">
+		   <%=((request.getAttribute( "Error_Message") == null) ? "" : request.getAttribute( "Error_Message")) %>
 	</form>
 </body>
 </html>

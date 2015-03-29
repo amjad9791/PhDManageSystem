@@ -33,7 +33,7 @@ public class AddApplication extends HttpServlet
 	private int applicationNr;
 
 	@Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		// Receiving the applicationNr from the viewApplication page
 		ServletContext context = getServletContext( );
@@ -60,40 +60,52 @@ public class AddApplication extends HttpServlet
 		{
 			// Receive all the entered values out of the form
 			String ubNumber = request.getParameter( "ubNumber" );
-			
+			request.setAttribute( "ubNumber", ubNumber );
 			String firstName = request.getParameter( "firstName" );
+			request.setAttribute( "firstName", firstName );
 			String middleName = request.getParameter( "middleName" );
+			request.setAttribute( "middleName", middleName );
 			String lastName = request.getParameter( "lastName" );
+			request.setAttribute( "lastName", lastName );
 			String eMail = request.getParameter( "eMail" );
+			request.setAttribute( "email", eMail );
 			String dateOfBirth = request.getParameter( "dateOfBirth" );
+			request.setAttribute( "birthday", dateOfBirth );
 			String gender = request.getParameter( "gender" );
-
+			request.setAttribute( "gender", gender );
 			String discipline = request.getParameter( "discipline" );
+			request.setAttribute( "discipline", discipline );
 			String titleOfresearch = request.getParameter( "titleOfresearch" );
+			request.setAttribute( "titleOfresearch", titleOfresearch );
 			String highestAward = request.getParameter( "highestAward" );
+			request.setAttribute( "highestAward", highestAward );
 			String qualificationHighestAward = request.getParameter( "qualificationHighestAward" );
+			request.setAttribute( "qualiHighAward", qualificationHighestAward );
 			String otherAward = request.getParameter( "otherAward" );
+			request.setAttribute( "otherAward", otherAward );
 			String qualificationOtherAward = request.getParameter( "qualificationOtherAward" );
+			request.setAttribute( "qualiOtherAward", qualificationOtherAward );
 
 			// checking for a valid mail address
 			if( !isValidEmailAddress( eMail ) )
 			{
-				showAlert( "Mail Address is not valid" );
+				request.setAttribute( "Error_Message", "Mail Address is not valid" );
+				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 			}
-
 			// check the ub number for digits
-			if( !isValidDigit( ubNumber ) )
+			else if( !isValidDigit( ubNumber ) )
 			{
-				showAlert( "UB number are only digits" );
+				request.setAttribute( "Error_Message", "UB number are only digits" );
+				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 			}
-
 			// Every field needs to be filled, otherwise a alert will inform the
 			// user
 			else if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) || otherAward.equals( "" ) || qualificationOtherAward.equals( "" ) )
 			{
-				showAlert( "Please fill every field with your details" );
+				request.setAttribute( "Error_Message", "Please fill every field with your details" );
+				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 			}
-			// All correct and saving the data into the database
+			// All correct and it is alright to save the data into the database
 			else
 			{
 				// Here are two cases, the first is that the admin register a
@@ -106,7 +118,7 @@ public class AddApplication extends HttpServlet
 					SqlLiteDatabase sql = new SqlLiteDatabase( );
 					sql.updateApplication( Integer.toString( applicationNr ), ubNumber, firstName, middleName, lastName, eMail, dateOfBirth, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, username );
 					applicationNr = 0;
-					request.getRequestDispatcher("ViewApplication").forward(request, response);
+					request.getRequestDispatcher( "ViewApplication" ).forward( request, response );
 				}
 				else
 				{
@@ -117,8 +129,6 @@ public class AddApplication extends HttpServlet
 				}
 			}
 		}
-		
-
 
 	}
 
@@ -141,14 +151,6 @@ public class AddApplication extends HttpServlet
 		{
 			return false;
 		}
-	}
-
-	public void showAlert( String alertText )
-	{
-		out.println( "<script type=\"text/javascript\">" );
-		out.println( "alert('" + alertText + "');" );
-		out.println( "location='addApplication.jsp';" );
-		out.println( "</script>" );
 	}
 
 }

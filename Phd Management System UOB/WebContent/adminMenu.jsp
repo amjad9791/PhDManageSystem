@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form action="AdminMenu">
+	<form action="AdminMenu" method="post">
 		<input type="submit" name="addApplication" value="Add Application" style="width: 500px; "><br>
 		<input type="submit" name="viewResponses" value="View Responses" style="width: 500px; "><br>
 		<input type="submit" name="addUser" value="Add User" style="width: 500px; "><br>

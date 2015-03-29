@@ -23,7 +23,7 @@ public class AdminMenu extends HttpServlet {
 	private static final long serialVersionUID = 6192688008912715427L;
 
 	@Override
-	protected void doGet(HttpServletRequest request,
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		// Calling when AddApplication Button is selected
@@ -58,5 +58,13 @@ public class AdminMenu extends HttpServlet {
 		}
 	
 
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+	System.out.println("hallooooooo");
+	
+	
 	}
 }
