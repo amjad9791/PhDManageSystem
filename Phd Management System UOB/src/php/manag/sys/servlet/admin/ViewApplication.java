@@ -224,7 +224,15 @@ public class ViewApplication extends HttpServlet
 				getServletContext( ).setAttribute( "applicationNr", i );
 				System.out.println( "butEditApp_" + i );
 				queryValuesOfApplication( request, i );
-				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
+				
+				try
+                {
+	                request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
+                }
+                catch( Exception e )
+                {
+	               
+                }
 				return;
 			}
 			i++;
