@@ -102,8 +102,8 @@ public class AddApplication extends HttpServlet
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 			}
 			// Every field needs to be filled, otherwise a alert will inform the
-			// user
-			else if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) || otherAward.equals( "" ) || qualificationOtherAward.equals( "" ) )
+			// user. Other Awards is an optional field
+			else if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) )
 			{
 				request.setAttribute( "Error_Message", "Please fill every field with your details" );
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );

@@ -105,11 +105,14 @@
 							<input type="radio" value="ASC" name="radStatus" />+<input
 								type="radio" value="DESC" name="radStatus" />-
 					</th>
-					<th>Supervisor
-						<p>
-							<input type="radio" value="ASC" name="radSupervisor" />+<input
-								type="radio" value="DESC" name="radSupervisor" />-
-					</th>
+					<%
+						String role = (String) getServletContext( ).getAttribute( "role" );
+						if( role.equals( "admin" ) )
+						{
+							out.println( "<th>Supervisor <p> <input type='radio' value='ASC' name='radSupervisor' />+ <input type='radio' value='DESC' name='radSupervisor' />- </th>" );
+						}
+					%>
+
 					<th>Search and Filter
 						<p>
 							<input name="searchField" type="text" maxlength="49" value=''><input
@@ -120,6 +123,7 @@
 				<%
 					// retrieve your list from the request, with casting 
 					ArrayList< ListApplicationContainer > list = (ArrayList< ListApplicationContainer >) request.getAttribute( "listOfApplications" );
+					// 					role = (String) getServletContext( ).getAttribute( "role" );
 
 					// print the information about every category of the list
 					for( ListApplicationContainer element : list )
@@ -141,18 +145,19 @@
 						out.println( "<td>" + element.getQualiOtherAward( ) + "</td>" );
 						out.println( "<td>" + element.getCreaterUser( ) + "</td>" );
 						out.println( "<td>" + element.getId_value( ) + "</td>" );
-						out.println( "<td>" + element.getSupervisorName( ) + "</td>" );
+						if( role.equals( "admin" ) )
+						{
+							out.println( "<td>" + element.getSupervisorName( ) + "</td>" );
+						}
 
-						String role = (String) getServletContext( ).getAttribute( "role" );
 						if( role.equals( "professor" ) )
 						{
-
 							out.println( "<td><input type='submit' name='butSupervisorYes_" + element.getApp_id( ) + "' value='Become Supervisor' /></td>" );
 							out.println( "<td><input type='submit' name='butSupervisorNo_" + element.getApp_id( ) + "' value='Reject supervisor task' /></td>" );
 						}
 						else if( role.equals( "admin" ) )
 						{
-							out.println( "<td><input type='submit' name='butEditApp_" + element.getApp_id( ) + "' value='Edit application' /></td>" );
+							out.println( "<td><input type='submit' name='butEditApp_" + element.getApp_id( ) + "' value='Update application' /></td>" );
 							if( element.isFile( ) )
 							{
 								out.println( "<td><input type='submit' name='butDownloadApp_" + element.getApp_id( ) + "' value='Download file' /></td>" );
@@ -172,7 +177,7 @@
 
 			</table>
 		</div>
-		<br><input type="submit" name="logout" value="Logout"><br>
+		<br> <input type="submit" name="logout" value="Logout"><br>
 	</form>
 </body>
 </html>
