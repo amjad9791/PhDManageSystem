@@ -15,6 +15,14 @@ public class ChangeProposalStatus extends HttpServlet
 	@Override //catches the button's action if clicked to establish connection and gets the entered values of ubNumber and status. 
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
+		
+		String username = (String) getServletContext( ).getAttribute( "username" );
+		//Check if it is a valid session.
+		if(username == null){
+			//No valid session so send him back to the login page		
+			response.sendRedirect( "login.jsp" );
+			return;
+		}
 
 		if( request.getParameter( "statusChangeBtn" ) != null )
 		{
@@ -24,10 +32,17 @@ public class ChangeProposalStatus extends HttpServlet
 			SqlLiteDatabase sql = new SqlLiteDatabase( );
 			sql.updatePropsStatus( ubNumber, status );
 
+			request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 		}
 
-		request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 
+		// Calling when Logout Button is selected
+		if( request.getParameter( "logout" ) != null )
+		{
+			getServletContext( ).removeAttribute( "username" );
+			response.sendRedirect( "login.jsp" );
+			return;
+		}
 	}
 
 	@Override

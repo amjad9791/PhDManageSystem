@@ -27,14 +27,21 @@ public class RegisterUser extends HttpServlet
 	@Override
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
-		out = response.getWriter( );
+		String username = (String) getServletContext( ).getAttribute( "username" );
+		//Check if it is a valid session.
+		if(username == null){
+			//No valid session so send him back to the login page		
+			response.sendRedirect( "login.jsp" );
+			return;
+		}
+		
 		SqlLiteDatabase sql = new SqlLiteDatabase( );
 
 		showAlert( "TESTTT", response );
 		// Calling when register Button is selected
 		if( request.getParameter( "registerUser" ) != null )
 		{
-			String username = request.getParameter( "username" );
+			username = request.getParameter( "username" );
 			String password = request.getParameter( "password" );
 			String email = request.getParameter( "email" );
 			String roleUser = request.getParameter( "roleUser" );
@@ -63,6 +70,14 @@ public class RegisterUser extends HttpServlet
 		else if( request.getParameter( "clearUser" ) != null )
 		{
 			request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
+		}
+		
+		// Calling when Logout Button is selected
+		if( request.getParameter( "logout" ) != null )
+		{
+			getServletContext( ).removeAttribute( "username" );
+			response.sendRedirect( "login.jsp" );
+			return;
 		}
 
 	}

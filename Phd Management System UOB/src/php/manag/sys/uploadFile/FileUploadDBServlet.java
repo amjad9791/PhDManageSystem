@@ -28,6 +28,22 @@ public class FileUploadDBServlet extends HttpServlet
 	@Override
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
+		String username = (String) getServletContext( ).getAttribute( "username" );
+		//Check if it is a valid session.
+		if(username == null){
+			//No valid session so send him back to the login page		
+			response.sendRedirect( "login.jsp" );
+			return;
+		}		
+		
+		// Calling when Logout Button is selected
+		if( request.getParameter( "logout" ) != null )
+		{
+			getServletContext( ).removeAttribute( "username" );
+			response.sendRedirect( "login.jsp" );
+			return;
+		}
+		
 		// gets values of text fields
 		String ubNumbers = request.getParameter( "listUBNumbers" );
 		String lastName = request.getParameter( "listUBNumbers" );

@@ -58,6 +58,14 @@ public class ViewApplication extends HttpServlet
 		username = (String) context.getAttribute( "username" );
 		role = (String) context.getAttribute( "role" );
 
+		//Check if it is a valid session.
+		if(username == null){
+			//No valid session so send him back to the login page		
+			response.sendRedirect( "login.jsp" );
+			return;
+		}
+		
+		
 		// Get Value from search textfield
 		search = request.getParameter( "searchField" );
 		if( search == null )
@@ -75,6 +83,14 @@ public class ViewApplication extends HttpServlet
 			listOfApplications = sql.listOfApplications( filterList, search );
 			request.setAttribute( "listOfApplications", listOfApplications );
 			request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+			return;
+		}
+		
+		// Calling when Logout Button is selected
+		if( request.getParameter( "logout" ) != null )
+		{
+			getServletContext( ).removeAttribute( "username" );
+			response.sendRedirect( "login.jsp" );
 			return;
 		}
 

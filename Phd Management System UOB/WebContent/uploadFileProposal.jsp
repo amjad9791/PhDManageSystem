@@ -3,13 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <html>
-<head><title>Upload applications Page</title></head>
+<head>
+<title>Upload applications Page</title>
+</head>
 <body>
 
 
-	<form name="uploadSelection" action="UploadFileProposal"
-		method="post" enctype="multipart/form-data">
-		
+	<form name="uploadSelection" action="UploadFileProposal" method="post"
+		enctype="multipart/form-data">
+
 		<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
 			url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
 			password="<%=SqlLiteDatabase.PASSWORD%>" />
@@ -24,7 +26,11 @@
 			</c:forEach>
 		</select> <input type="file" name="fileName"> <br> <input
 			type="submit" value="Upload">
-	</form><p>
-	<%=((request.getAttribute( "Error_Message") == null) ? "" : request.getAttribute( "Error_Message")) %>
+
+		<%=( ( request.getAttribute( "Error_Message" ) == null ) ? "" : request.getAttribute( "Error_Message" ) )%>
+		<br>
+		<input type="submit" name="logout" value="Logout"><br>
+	</form>
+	<p>
 </body>
 </html>

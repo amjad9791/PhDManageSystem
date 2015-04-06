@@ -172,6 +172,7 @@
 
 			</table>
 		</div>
+		<br><input type="submit" name="logout" value="Logout"><br>
 	</form>
 </body>
 </html>

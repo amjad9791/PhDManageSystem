@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>s
+	pageEncoding="ISO-8859-1"%>
 	<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page import="php.manag.sys.db.SqlLiteDatabase"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -33,7 +33,7 @@
 		
 		</select>
 		<input type="submit" name="statusChangeBtn" value="Change Status">
-		
+		<br><input type="submit" name="logout" value="Logout"><br>
 	</form>
 
 </body>
