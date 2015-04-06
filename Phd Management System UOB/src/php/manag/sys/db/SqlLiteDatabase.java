@@ -701,33 +701,6 @@ public class SqlLiteDatabase
 		return result;
 	}
 
-	public void insertFile( String ubNumber, String filePath )
-	{
-		String query = "";
-		// Step 1: Allocate a database "Connection" object
-		try
-		{
-			Class.forName( "com.mysql.jdbc.Driver" );
-		}
-		catch( ClassNotFoundException e )
-		{
-			e.printStackTrace( );
-		}
-		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
-		     Statement stmt = conn.createStatement( ); )
-		{
-			query = "INSERT INTO `app_file` (`ubNumber`, `filePath`) VALUES ( " + ubNumber + ", '" + filePath + "');";
-			System.out.println( "The SQL query is: " + query ); // Echo For
-			// debugging
-
-			stmt.executeUpdate( query );
-		}
-		catch( SQLException ex )
-		{
-			ex.printStackTrace( );
-		}
-	}
-
 	public boolean jUnit_query( String query )
 	{
 		// Step 1: Allocate a database "Connection" object
