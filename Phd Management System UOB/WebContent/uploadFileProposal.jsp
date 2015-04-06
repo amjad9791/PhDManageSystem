@@ -7,14 +7,14 @@
 <body>
 
 
-	<form name="uploadSelection" action="UploadDownloadFileServlet"
+	<form name="uploadSelection" action="UploadFileProposal"
 		method="post" enctype="multipart/form-data">
 		
 		<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
 			url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
 			password="<%=SqlLiteDatabase.PASSWORD%>" />
 		<sql:query var="listUbNumbers" dataSource="${myDS}">
-		SELECT ubNumber FROM application;
+		SELECT ubNumber FROM application WHERE ubNumber NOT IN ( SELECT ubNumber FROM app_file);
 		</sql:query>
 		<select name="listUBNumbers">
 			<c:forEach var="user" items="${listUbNumbers.rows}">
@@ -24,6 +24,7 @@
 			</c:forEach>
 		</select> <input type="file" name="fileName"> <br> <input
 			type="submit" value="Upload">
-	</form>
+	</form><p>
+	<%=((request.getAttribute( "Error_Message") == null) ? "" : request.getAttribute( "Error_Message")) %>
 </body>
 </html>

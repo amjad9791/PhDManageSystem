@@ -1,6 +1,5 @@
 package php.manag.sys.servlet.admin;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
@@ -9,14 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import php.manag.sys.db.SqlLiteDatabase;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 /**
  * @author Crunchify.com

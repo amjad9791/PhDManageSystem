@@ -24,6 +24,7 @@ public class ListApplicationContainer
 	String createrUser;
 	String id_value;
 	String supervisorName;
+	boolean file;
 	Timestamp timestamp;
 
 	public ListApplicationContainer( )
@@ -44,6 +45,7 @@ public class ListApplicationContainer
 		otherAward = "";
 		qualiOtherAward = "";
 		createrUser = "";
+		file = false;
 		// timestamp = new Data();
 	}
 
@@ -243,4 +245,15 @@ public class ListApplicationContainer
 			this.supervisorName = supervisorName;
 		}
 	}
+
+	public boolean isFile( )
+	{
+		return file;
+	}
+
+	public void setFile( boolean file )
+	{
+		this.file = file;
+	}
+
 }

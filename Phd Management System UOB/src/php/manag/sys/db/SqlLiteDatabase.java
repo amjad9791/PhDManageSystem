@@ -9,23 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Formatter;
-import java.util.HashMap;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import com.sun.org.apache.regexp.internal.recompile;
 
 // JDK 7 and above
 public class SqlLiteDatabase
 {
 	// JDBC driver name and database URL
-	public static final String DB_URL = "jdbc:mysql://phdman2014-15.hosting.comp.brad.ac.uk:3306/olaf_phdManagementSystem";
+	public static final String DB_URL = "jdbc:mysql://localhost:8888/phdmanagsys";
 
 	// Database credentials
-	public static final String USER = "olaf_admin";
-	public static final String PASSWORD = "groupproject";
+
+	public static final String USER = "jerry";
+	public static final String PASSWORD = "siemens";
 
 	/**
 	 * inserts a Applciation will all required data into the Database
@@ -346,6 +341,37 @@ public class SqlLiteDatabase
 		}
 
 	}
+	
+	public boolean deleteFile( int applicationNr )
+	{
+		String query = "";
+		// Step 1: Allocate a database "Connection" object
+		try
+		{
+			Class.forName( "com.mysql.jdbc.Driver" );
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace( );
+		}
+		try( Connection conn = DriverManager.getConnection( DB_URL, USER, PASSWORD ); // MySQL
+		     Statement stmt = conn.createStatement( ); )
+		{
+
+			query = "DELETE FROM app_file WHERE app_file.ubNumber IN (SELECT app.ubNumber FROM application AS app WHERE app_file.ubNumber = app.ubNumber and app.app_id = " + applicationNr + ");";
+			System.out.println( "The SQL query is: " + query ); // Echo For
+			// debugging
+
+			stmt.executeUpdate( query );
+			return true;
+		}
+		catch( SQLException ex )
+		{
+			ex.printStackTrace( );
+			return false;
+		}
+
+	}
 
 	public boolean hasSufficientSupervisor( int applicationNr )
 	{
@@ -565,7 +591,7 @@ public class SqlLiteDatabase
 		{
 			// Step 3: Execute a SQL SELECT query, the query result
 			// is returned in a "ResultSet" object.
-			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id WHERE app.app_id LIKE '%" + search + "%' OR app.ubNumber LIKE '%" + search + "%' OR app.firstName LIKE '%" + search + "%' OR app.middleName LIKE '%" + search + "%' OR app.lastName LIKE '%" + search + "%' OR app.email LIKE '%" + search + "%' OR app.birthday LIKE '%" + search + "%' OR app.gender LIKE '%" + search + "%' OR app.discipline LIKE '%" + search + "%' OR app.titleOfresearch LIKE '%" + search + "%' OR app.highestAward LIKE '%" + search + "%' OR app.qualiHighAward LIKE '%" + search + "%' OR app.otherAward LIKE '%" + search + "%' OR app.qualiOtherAward LIKE '%" + search + "%' OR app.createrUser LIKE '%" + search + "%' OR sta.id_value LIKE '%" + search + "%' OR supervisorName LIKE '%" + search + "%' GROUP BY app.app_id";
+			String strSelect = "SELECT app.app_id, app.ubNumber, app.firstName, app.middleName, app.lastName,app.email,app.birthday, app.gender,app.discipline,app.titleOfresearch,app.highestAward,app.qualiHighAward,app.otherAward,app.qualiOtherAward,app.createrUser,app.timestamp, sta.id_status, sta.id_value,GROUP_CONCAT(sv.supervisorName) AS supervisorName, af.ubNumber AS file FROM application AS app  JOIN app_status_values AS sta ON app.id_status = sta.id_status LEFT JOIN supervisor AS sv ON sv.app_id = app.app_id LEFT JOIN app_file AS af ON af.ubNumber = app.ubNumber WHERE app.app_id LIKE '%" + search + "%' OR app.ubNumber LIKE '%" + search + "%' OR app.firstName LIKE '%" + search + "%' OR app.middleName LIKE '%" + search + "%' OR app.lastName LIKE '%" + search + "%' OR app.email LIKE '%" + search + "%' OR app.birthday LIKE '%" + search + "%' OR app.gender LIKE '%" + search + "%' OR app.discipline LIKE '%" + search + "%' OR app.titleOfresearch LIKE '%" + search + "%' OR app.highestAward LIKE '%" + search + "%' OR app.qualiHighAward LIKE '%" + search + "%' OR app.otherAward LIKE '%" + search + "%' OR app.qualiOtherAward LIKE '%" + search + "%' OR app.createrUser LIKE '%" + search + "%' OR sta.id_value LIKE '%" + search + "%' OR supervisorName LIKE '%" + search + "%' GROUP BY app.app_id";
 			StringBuilder sbQuery = new StringBuilder( strSelect );
 
 			// It will append the filters. If the ArrayList is empty, then there
@@ -617,6 +643,14 @@ public class SqlLiteDatabase
 				element.setTimestamp( rset.getTimestamp( "timestamp" ) );
 				element.setId_value( rset.getString( "id_value" ) );
 				element.setSupervisorName( rset.getString( "supervisorName" ) );
+				if( rset.getString( "file" ) == null  )
+				{
+					element.setFile( false );
+				}
+				else
+				{
+					element.setFile( true );
+				}
 
 				// Add the colected informations to the major list
 				list.add( element );

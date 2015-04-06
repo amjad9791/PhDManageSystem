@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,6 +33,7 @@ public class ViewApplication extends HttpServlet
 	private ArrayList< ListApplicationContainer > listOfApplications;
 	private ArrayList< ListFilterContainer > filterList;
 	private String search;
+	private SqlLiteDatabase sql;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -51,18 +51,17 @@ public class ViewApplication extends HttpServlet
 	@Override
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
-		SqlLiteDatabase sql = new SqlLiteDatabase( );
-		// Creating a Html writer object to modify the webpage on runtime
-		out = response.getWriter( );
-		
+		sql = new SqlLiteDatabase( );
+
 		// Receiving the username from the login page
 		ServletContext context = getServletContext( );
 		username = (String) context.getAttribute( "username" );
 		role = (String) context.getAttribute( "role" );
-		
-		//Get Value from search textfield
+
+		// Get Value from search textfield
 		search = request.getParameter( "searchField" );
-		if(search == null) {
+		if( search == null )
+		{
 			search = "";
 		}
 
@@ -89,120 +88,165 @@ public class ViewApplication extends HttpServlet
 		// Verifying which button got pressed - First the Button Supervisor
 		supervisorButtonListener( request, response, sql );
 		editButtonListener( request, response );
+		downloadButtonListener( request, response );
+		deleteFileButtonListener( request, response );
 
-		// Forward to the application jsp
-		request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+		try
+        {
+	        // Forward to the application jsp
+	        request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+        }
+        catch( Exception e )
+        {
+        	System.out.println(e.getStackTrace( ).toString( ));
+        }
 	}
 
 	/**
-	 * @param request If clause for the filter functionality. It collects the desired filter conditions
+	 * @param request
+	 *            If clause for the filter functionality. It collects the
+	 *            desired filter conditions
 	 */
-    private ArrayList<ListFilterContainer> radioButFilter( HttpServletRequest request )
-    {
-    	ArrayList<ListFilterContainer> filterList = new ArrayList< ListFilterContainer >( );
-	    String value = request.getParameter( "radApp_id" );
-	    //Collecting the APP ID value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "app_id", value ));
-	    }
+	private ArrayList< ListFilterContainer > radioButFilter( HttpServletRequest request )
+	{
+		ArrayList< ListFilterContainer > filterList = new ArrayList< ListFilterContainer >( );
+		String value = request.getParameter( "radApp_id" );
+		// Collecting the APP ID value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "app_id", value ) );
+		}
 
-	    value = request.getParameter( "radUBNumber" );
-	    //Collecting the UB Number value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer(  "ubNumber", value ));
-	    }
-	    
-	    value = request.getParameter( "radFirstName" );
-	    //Collecting the radFirstName value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer(  "firstName", value ));
-	    }
-	    
-	    value = request.getParameter( "radMiddleName" );
-	    //Collecting the middleName value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer(  "middleName", value ));
-	    }
-	    
-	    value = request.getParameter( "radLastName" );
-	    //Collecting the lastName value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer(  "lastName", value ));
-	    }
-	    
-	    value = request.getParameter( "radEmail" );
-	    //Collecting the email value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "email", value) );
-	    }
-	    
-	    value = request.getParameter( "radBirthday" );
-	    //Collecting the birthday value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer(  "birthday", value ));
-	    }
-	    
-	    value = request.getParameter( "radGender" );
-	    //Collecting the gender value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "gender", value ));
-	    }
-	    
-	    value = request.getParameter( "radDiscipline" );
-	    //Collecting the discipline value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "discipline", value ));
-	    }
-	    
-	    value = request.getParameter( "radTitleOfResearch" );
-	    //Collecting the titleOfresearch value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "titleOfresearch", value) );
-	    }
-	    
-	    value = request.getParameter( "radHA" );
-	    //Collecting the highestAward value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer(  "highestAward", value) );
-	    }
-	    
-	    value = request.getParameter( "radQualiHA" );
-	    //Collecting the qualiHighAward value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "qualiHighAward", value ));
-	    }
-	    
-	    value = request.getParameter( "radOA" );
-	    //Collecting the otherAward value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "otherAward", value) );
-	    }
-	    
-	    value = request.getParameter( "radQualiOA" );
-	    //Collecting the qualiOtherAward value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "qualiOtherAward", value) );
-	    }
-	    
-	    value = request.getParameter( "radCreater" );
-	    //Collecting the createrUser value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "createrUser", value ));
-	    }
-	    
-	    value = request.getParameter( "radStatus" );
-	    //Collecting the id_status value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "id_status", value ));
-	    }
-	    
-	    value = request.getParameter( "radSupervisor" );
-	    //Collecting the id_status value from the RadioButton in the View Apllication Interface
-	    if(value !=null){
-	    	filterList.add( new ListFilterContainer( "supervisorName", value ));
-	    }
-	    return filterList;
-    }
+		value = request.getParameter( "radUBNumber" );
+		// Collecting the UB Number value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "ubNumber", value ) );
+		}
+
+		value = request.getParameter( "radFirstName" );
+		// Collecting the radFirstName value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "firstName", value ) );
+		}
+
+		value = request.getParameter( "radMiddleName" );
+		// Collecting the middleName value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "middleName", value ) );
+		}
+
+		value = request.getParameter( "radLastName" );
+		// Collecting the lastName value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "lastName", value ) );
+		}
+
+		value = request.getParameter( "radEmail" );
+		// Collecting the email value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "email", value ) );
+		}
+
+		value = request.getParameter( "radBirthday" );
+		// Collecting the birthday value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "birthday", value ) );
+		}
+
+		value = request.getParameter( "radGender" );
+		// Collecting the gender value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "gender", value ) );
+		}
+
+		value = request.getParameter( "radDiscipline" );
+		// Collecting the discipline value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "discipline", value ) );
+		}
+
+		value = request.getParameter( "radTitleOfResearch" );
+		// Collecting the titleOfresearch value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "titleOfresearch", value ) );
+		}
+
+		value = request.getParameter( "radHA" );
+		// Collecting the highestAward value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "highestAward", value ) );
+		}
+
+		value = request.getParameter( "radQualiHA" );
+		// Collecting the qualiHighAward value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "qualiHighAward", value ) );
+		}
+
+		value = request.getParameter( "radOA" );
+		// Collecting the otherAward value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "otherAward", value ) );
+		}
+
+		value = request.getParameter( "radQualiOA" );
+		// Collecting the qualiOtherAward value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "qualiOtherAward", value ) );
+		}
+
+		value = request.getParameter( "radCreater" );
+		// Collecting the createrUser value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "createrUser", value ) );
+		}
+
+		value = request.getParameter( "radStatus" );
+		// Collecting the id_status value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "id_status", value ) );
+		}
+
+		value = request.getParameter( "radSupervisor" );
+		// Collecting the id_status value from the RadioButton in the View
+		// Apllication Interface
+		if( value != null )
+		{
+			filterList.add( new ListFilterContainer( "supervisorName", value ) );
+		}
+		return filterList;
+	}
 
 	/**
 	 * @param request
@@ -224,15 +268,69 @@ public class ViewApplication extends HttpServlet
 				getServletContext( ).setAttribute( "applicationNr", i );
 				System.out.println( "butEditApp_" + i );
 				queryValuesOfApplication( request, i );
-				
+
 				try
-                {
-	                request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
-                }
-                catch( Exception e )
-                {
-	               
-                }
+				{
+					request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
+				}
+				catch( Exception e )
+				{
+
+				}
+				return;
+			}
+			i++;
+		}
+	}
+
+	private void downloadButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	{
+		// Here the buttons to download the applications.
+		int i = 1;
+		while( i < tableSize )
+		{
+			String act = request.getParameter( "butDownloadApp_" + i );
+			if( act != null )
+			{
+				// Set the raw number to query the data for the editing process
+				request.setAttribute( "applicationNr", i );
+				System.out.println( "butDownloadApp_" + i );
+				queryValuesOfApplication( request, i );
+
+				try
+				{
+					request.getRequestDispatcher( "DownloadFileProposal" ).forward( request, response );
+				}
+				catch( Exception e )
+				{
+
+				}
+				return;
+			}
+			i++;
+		}
+	}
+	
+	private void deleteFileButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	{
+		// Here the buttons to download the applications.
+		int i = 1;
+		while( i < tableSize )
+		{
+			String act = request.getParameter( "butDeleteApp_" + i );
+			if( act != null )
+			{
+				// Set the raw number to query the data for the editing process
+				System.out.println( "butDeleteApp_" + i );
+				queryValuesOfApplication( request, i );
+				try
+				{
+					sql.deleteFile( i );
+				}
+				catch( Exception e )
+				{
+
+				}
 				return;
 			}
 			i++;
@@ -246,9 +344,10 @@ public class ViewApplication extends HttpServlet
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	
-	// this function is for checking when the professor wants to be a supervisor on an application if he is already supervisor
-	//or otherwise will add the application on their list & update database  
+
+	// this function is for checking when the professor wants to be a supervisor
+	// on an application if he is already supervisor
+	// or otherwise will add the application on their list & update database
 	private void supervisorButtonListener( HttpServletRequest request, HttpServletResponse response, SqlLiteDatabase sql ) throws ServletException, IOException
 	{
 		int i = 1;
@@ -260,12 +359,12 @@ public class ViewApplication extends HttpServlet
 
 				if( sql.isAlreadySupervisor( username, i ) )
 				{
-					request.setAttribute( "Error_Message",  "You are already supervisor of this application" );
+					request.setAttribute( "Error_Message", "You are already supervisor of this application" );
 					return;
 				}
 				else if( sql.hasSufficientSupervisor( i ) )
 				{
-					request.setAttribute( "Error_Message",  "This application has enough supervisors" );
+					request.setAttribute( "Error_Message", "This application has enough supervisors" );
 					return;
 				}
 				else
@@ -274,7 +373,7 @@ public class ViewApplication extends HttpServlet
 				}
 
 				// Refresh List because of modifying the table
-				listOfApplications = sql.listOfApplications( filterList , search );
+				listOfApplications = sql.listOfApplications( filterList, search );
 				request.setAttribute( "listOfApplications", listOfApplications );
 
 				// request.getRequestDispatcher( "viewApplication.jsp"

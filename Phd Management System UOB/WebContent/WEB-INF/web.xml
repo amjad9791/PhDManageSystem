@@ -58,15 +58,23 @@
 		<servlet>
 		<description></description>
 		<servlet-name>UploadFileProposalServlet</servlet-name>
-		<servlet-class>php.manag.sys.uploadFile.UploadDownloadFileServlet</servlet-class>
+		<servlet-class>php.manag.sys.uploadFile.FileUploadDBServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UploadFileProposalServlet</servlet-name>
 		<url-pattern>/UploadFileProposal</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<servlet-name>DownloadFileProposalServlet</servlet-name>
+		<servlet-class>php.manag.sys.uploadFile.DBFileDownloadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DownloadFileProposalServlet</servlet-name>
+		<url-pattern>/DownloadFileProposal</url-pattern>
+	</servlet-mapping>
 	
-	
-		<servlet>
+	<servlet>
 		<description></description>
 		<servlet-name>ChangeProposalStatusServlet</servlet-name>
 		<servlet-class>php.manag.sys.servlet.admin.ChangeProposalStatus</servlet-class>
