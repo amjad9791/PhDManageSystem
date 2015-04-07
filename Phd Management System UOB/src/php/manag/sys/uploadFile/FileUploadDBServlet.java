@@ -46,7 +46,6 @@ public class FileUploadDBServlet extends HttpServlet
 		
 		// gets values of text fields
 		String ubNumbers = request.getParameter( "listUBNumbers" );
-		String lastName = request.getParameter( "listUBNumbers" );
 
 		InputStream inputStream = null; // input stream of the upload file
 

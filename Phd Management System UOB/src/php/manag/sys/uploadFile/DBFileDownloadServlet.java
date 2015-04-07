@@ -33,7 +33,8 @@ public class DBFileDownloadServlet extends HttpServlet
 	private static final int BUFFER_SIZE = 4096;
 	private Integer applicationNr;
 
-	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+	@Override
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		//Receive the Application Number
 		applicationNr = (Integer) request.getAttribute( "applicationNr" );

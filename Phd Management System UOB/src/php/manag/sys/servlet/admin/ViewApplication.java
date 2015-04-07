@@ -26,7 +26,6 @@ import php.manag.sys.db.SqlLiteDatabase;
 public class ViewApplication extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private PrintWriter out;
 	private int tableSize;
 	private String username;
 	private String role;

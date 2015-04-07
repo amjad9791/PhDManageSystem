@@ -125,9 +125,6 @@ public class SqlLiteDatabase
 
 	public boolean isAlreadySupervisor( String username, int applicationNr )
 	{
-		String result = "";
-		int rowCount = 0;
-
 		// Step 1: Allocate a database "Connection" object
 		try
 		{

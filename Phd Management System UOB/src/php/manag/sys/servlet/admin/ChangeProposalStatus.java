@@ -11,6 +11,7 @@ import php.manag.sys.db.SqlLiteDatabase;
 
 public class ChangeProposalStatus extends HttpServlet
 {
+    private static final long serialVersionUID = 3679454722520368334L;
 
 	@Override //catches the button's action if clicked to establish connection and gets the entered values of ubNumber and status. 
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException

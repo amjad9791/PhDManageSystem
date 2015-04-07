@@ -9,12 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import php.manag.sys.db.SqlLiteDatabase;
 
-import java.io.PrintWriter;
-
-/**
- * @author Crunchify.com
- */
-
 public class Login extends HttpServlet
 {
 	/**
@@ -68,8 +62,6 @@ public class Login extends HttpServlet
 					request.setAttribute( "Error_Message",  "The user doesn't exist (Wrong username or password)" );
 					request.getRequestDispatcher( "login.jsp" ).forward( request, response );
 				}
-
-				PrintWriter out = response.getWriter( );
 			}
 		}
 		// Calling this clauses when the Clear Button got pressed

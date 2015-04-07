@@ -117,7 +117,6 @@ public class jUnit_SqlLiteDatabase
 	{
 		String supervisor1 = "Junit1";
 		String supervisor2 = "Junit2";
-		String supervisor3 = "Junit3";
 		int applicationNr = 1000;
 		//Case: A third person can not be added
 		assertTrue( "Supervisor1 added", sql.addSupervisor( supervisor1, applicationNr ) );

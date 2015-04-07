@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import php.manag.sys.db.SqlLiteDatabase;
 
-import java.io.PrintWriter;
-
 /**
  * @author Crunchify.com
  */
@@ -23,7 +21,6 @@ public class AddApplication extends HttpServlet
 	 * 
 	 */
 	private static final long serialVersionUID = -810903093372580449L;
-	private PrintWriter out;
 	private int applicationNr;
 
 	@Override
@@ -48,8 +45,6 @@ public class AddApplication extends HttpServlet
 			return;
 		}
 		
-		// Creating a Html writer object to modify the webpage on runtime
-		out = response.getWriter( );
 
 		// Filling the form with the values of an application. This happens when
 		// the admin wants to edit a existing application
