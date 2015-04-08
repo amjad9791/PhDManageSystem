@@ -28,7 +28,7 @@ public class AddApplication extends HttpServlet
 	{
 		// Receiving the applicationNr from the viewApplication page
 		ServletContext context = getServletContext( );
-		
+
 		if( context.getAttribute( "applicationNr" ) != null )
 		{
 			applicationNr = (Integer) context.getAttribute( "applicationNr" );
@@ -37,14 +37,20 @@ public class AddApplication extends HttpServlet
 		// Receiving the username from the login page
 		String username = (String) context.getAttribute( "username" );
 
-		
-		//Check if it is a valid session.
-		if(username == null){
-			//No valid session so send him back to the login page		
+		// Check if it is a valid session.
+		if( username == null )
+		{
+			// No valid session so send him back to the login page
 			response.sendRedirect( "login.jsp" );
 			return;
 		}
-		
+
+		// Return to the main menu, when the back button is pressed
+		if( request.getParameter( "mainMenu" ) != null )
+		{
+			response.sendRedirect( "adminMenu.jsp" );
+			return;
+		}
 
 		// Filling the form with the values of an application. This happens when
 		// the admin wants to edit a existing application
@@ -127,7 +133,7 @@ public class AddApplication extends HttpServlet
 				}
 			}
 		}
-		
+
 		// Calling when Logout Button is selected
 		if( request.getParameter( "logout" ) != null )
 		{

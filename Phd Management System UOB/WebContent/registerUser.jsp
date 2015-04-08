@@ -44,6 +44,7 @@
 			</tr>
 		</table>
 		<br>
+		<input type="submit" name="mainMenu" value="Main Menu"><br>
 		<input type="submit" name="logout" value="Logout"><br>
 	</form>
 </body>

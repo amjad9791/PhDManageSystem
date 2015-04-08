@@ -29,6 +29,7 @@
 
 		<%=( ( request.getAttribute( "Error_Message" ) == null ) ? "" : request.getAttribute( "Error_Message" ) )%>
 		<br>
+		<input type="submit" name="mainMenu" value="Main Menu"><br>
 		<input type="submit" name="logout" value="Logout"><br>
 	</form>
 	<p>

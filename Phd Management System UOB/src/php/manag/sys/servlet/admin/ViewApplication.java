@@ -57,14 +57,21 @@ public class ViewApplication extends HttpServlet
 		username = (String) context.getAttribute( "username" );
 		role = (String) context.getAttribute( "role" );
 
-		//Check if it is a valid session.
-		if(username == null){
-			//No valid session so send him back to the login page		
+		// Check if it is a valid session.
+		if( username == null )
+		{
+			// No valid session so send him back to the login page
 			response.sendRedirect( "login.jsp" );
 			return;
 		}
-		
-		
+
+		// Return to the main menu, when the back button is pressed
+		if( request.getParameter( "mainMenu" ) != null )
+		{
+			response.sendRedirect( "adminMenu.jsp" );
+			return;
+		}
+
 		// Get Value from search textfield
 		search = request.getParameter( "searchField" );
 		if( search == null )
@@ -84,7 +91,7 @@ public class ViewApplication extends HttpServlet
 			request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
 			return;
 		}
-		
+
 		// Calling when Logout Button is selected
 		if( request.getParameter( "logout" ) != null )
 		{
@@ -107,14 +114,14 @@ public class ViewApplication extends HttpServlet
 		deleteFileButtonListener( request, response );
 
 		try
-        {
-	        // Forward to the application jsp
-	        request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
-        }
-        catch( Exception e )
-        {
-        	System.out.println(e.getStackTrace( ).toString( ));
-        }
+		{
+			// Forward to the application jsp
+			request.getRequestDispatcher( "viewApplication.jsp" ).forward( request, response );
+		}
+		catch( Exception e )
+		{
+			System.out.println( e.getStackTrace( ).toString( ) );
+		}
 	}
 
 	/**
@@ -325,7 +332,7 @@ public class ViewApplication extends HttpServlet
 			i++;
 		}
 	}
-	
+
 	private void deleteFileButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		// Here the buttons to download the applications.

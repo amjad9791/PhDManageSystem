@@ -28,13 +28,21 @@ public class RegisterUser extends HttpServlet
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		String username = (String) getServletContext( ).getAttribute( "username" );
-		//Check if it is a valid session.
-		if(username == null){
-			//No valid session so send him back to the login page		
+		// Check if it is a valid session.
+		if( username == null )
+		{
+			// No valid session so send him back to the login page
 			response.sendRedirect( "login.jsp" );
 			return;
 		}
-		
+
+		// Return to the main menu, when the back button is pressed
+		if( request.getParameter( "mainMenu" ) != null )
+		{
+			response.sendRedirect( "adminMenu.jsp" );
+			return;
+		}
+
 		SqlLiteDatabase sql = new SqlLiteDatabase( );
 
 		showAlert( "TESTTT", response );
@@ -46,9 +54,9 @@ public class RegisterUser extends HttpServlet
 			String email = request.getParameter( "email" );
 			String roleUser = request.getParameter( "roleUser" );
 
-			if( ! isValidEmailAddress( email ) )
+			if( !isValidEmailAddress( email ) )
 			{
-				request.setAttribute( "Error_Message",  "The Email Address is not valid" );
+				request.setAttribute( "Error_Message", "The Email Address is not valid" );
 				request.setAttribute( "username", username );
 				request.setAttribute( "email", email );
 				request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
@@ -71,7 +79,7 @@ public class RegisterUser extends HttpServlet
 		{
 			request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
 		}
-		
+
 		// Calling when Logout Button is selected
 		if( request.getParameter( "logout" ) != null )
 		{
@@ -94,9 +102,9 @@ public class RegisterUser extends HttpServlet
 	{
 
 		// servlet code
-		out.print("<html><head>");
-		out.print("<script type=\"text/javascript\">alert(" + alertText + ");</script>");
-		out.print("</head><body></body></html>");
+		out.print( "<html><head>" );
+		out.print( "<script type=\"text/javascript\">alert(" + alertText + ");</script>" );
+		out.print( "</head><body></body></html>" );
 		// out.println( "<script type=\"text/javascript\">" );
 		// out.println( "alert('" + alertText + "');" );
 		// out.println( "location='registerUser.jsp';" );

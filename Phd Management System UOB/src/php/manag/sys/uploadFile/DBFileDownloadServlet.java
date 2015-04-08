@@ -90,7 +90,14 @@ public class DBFileDownloadServlet extends HttpServlet
 
 				while( ( bytesRead = inputStream.read( buffer ) ) != -1 )
 				{
-					outStream.write( buffer, 0, bytesRead );
+					try
+                    {
+	                    outStream.write( buffer, 0, bytesRead );
+                    }
+                    catch( Exception e )
+                    {
+                    	System.out.println("java.io.IOException:");
+                    }
 				}
 
 				inputStream.close( );
@@ -99,18 +106,18 @@ public class DBFileDownloadServlet extends HttpServlet
 			else
 			{
 				// no file found
-				response.getWriter( ).print( "File not found for the id: " + applicationNr );
+				System.out.println("File not found for the id: " + applicationNr);
 			}
 		}
 		catch( SQLException ex )
 		{
 			ex.printStackTrace( );
-			response.getWriter( ).print( "SQL Error: " + ex.getMessage( ) );
+			System.out.println("SQL Error: " + ex.getMessage( ) );
 		}
 		catch( IOException ex )
 		{
 			ex.printStackTrace( );
-			response.getWriter( ).print( "IO Error: " + ex.getMessage( ) );
+			System.out.println("IO Error: " + ex.getMessage( ));
 		}
 		finally
 		{

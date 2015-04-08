@@ -176,6 +176,7 @@
 
 			</table>
 		</div>
+		<input type="submit" name="mainMenu" value="Main Menu"><br>
 		<br> <input type="submit" name="logout" value="Logout"><br>
 	</form>
 </body>

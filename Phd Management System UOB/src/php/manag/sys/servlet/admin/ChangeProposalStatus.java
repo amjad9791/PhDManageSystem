@@ -11,17 +11,27 @@ import php.manag.sys.db.SqlLiteDatabase;
 
 public class ChangeProposalStatus extends HttpServlet
 {
-    private static final long serialVersionUID = 3679454722520368334L;
+	private static final long serialVersionUID = 3679454722520368334L;
 
-	@Override //catches the button's action if clicked to establish connection and gets the entered values of ubNumber and status. 
+	@Override
+	// catches the button's action if clicked to establish connection and gets
+	// the entered values of ubNumber and status.
 	protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
-		
+
 		String username = (String) getServletContext( ).getAttribute( "username" );
-		//Check if it is a valid session.
-		if(username == null){
-			//No valid session so send him back to the login page		
+		// Check if it is a valid session.
+		if( username == null )
+		{
+			// No valid session so send him back to the login page
 			response.sendRedirect( "login.jsp" );
+			return;
+		}
+
+		// Return to the main menu, when the back button is pressed
+		if( request.getParameter( "mainMenu" ) != null )
+		{
+			response.sendRedirect( "adminMenu.jsp" );
 			return;
 		}
 
@@ -35,7 +45,6 @@ public class ChangeProposalStatus extends HttpServlet
 
 			request.getRequestDispatcher( "adminMenu.jsp" ).forward( request, response );
 		}
-
 
 		// Calling when Logout Button is selected
 		if( request.getParameter( "logout" ) != null )

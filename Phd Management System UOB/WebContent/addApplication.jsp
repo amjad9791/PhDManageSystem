@@ -133,6 +133,7 @@
 		<table></table>
 		<input type="submit" name="addApplication" value="Add Application">
 		   <%=((request.getAttribute( "Error_Message") == null) ? "" : request.getAttribute( "Error_Message")) %>
+		   <input type="submit" name="mainMenu" value="Main Menu"><br>
 		   <br><input type="submit" name="logout" value="Logout"><br>
 	</form>
 </body>

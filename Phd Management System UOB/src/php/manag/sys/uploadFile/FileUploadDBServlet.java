@@ -29,13 +29,21 @@ public class FileUploadDBServlet extends HttpServlet
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		String username = (String) getServletContext( ).getAttribute( "username" );
-		//Check if it is a valid session.
-		if(username == null){
-			//No valid session so send him back to the login page		
+		// Check if it is a valid session.
+		if( username == null )
+		{
+			// No valid session so send him back to the login page
 			response.sendRedirect( "login.jsp" );
 			return;
-		}		
-		
+		}
+
+		// Return to the main menu, when the back button is pressed
+		if( request.getParameter( "mainMenu" ) != null )
+		{
+			response.sendRedirect( "adminMenu.jsp" );
+			return;
+		}
+
 		// Calling when Logout Button is selected
 		if( request.getParameter( "logout" ) != null )
 		{
@@ -43,7 +51,7 @@ public class FileUploadDBServlet extends HttpServlet
 			response.sendRedirect( "login.jsp" );
 			return;
 		}
-		
+
 		// gets values of text fields
 		String ubNumbers = request.getParameter( "listUBNumbers" );
 
@@ -68,7 +76,7 @@ public class FileUploadDBServlet extends HttpServlet
 			{
 				// Set error message to inform user about the file type
 				request.setAttribute( "Error_Message", "Only PDF files are allowed" );
-				request.getRequestDispatcher( "uploadFileProposal.jsp" ).forward( request, response );
+				request.getRequestDispatcher( "uploadFileProposal.jsp" );
 				return;
 			}
 		}
@@ -99,6 +107,7 @@ public class FileUploadDBServlet extends HttpServlet
 			if( row > 0 )
 			{
 				message = "File uploaded and saved into database";
+				request.getRequestDispatcher( "adminMenu.jsp" );
 			}
 		}
 		catch( SQLException ex )
