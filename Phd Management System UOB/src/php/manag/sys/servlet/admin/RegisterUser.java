@@ -28,7 +28,7 @@ public class RegisterUser extends HttpServlet
 	protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		String username = (String) getServletContext( ).getAttribute( "username" );
-		// Check if it is a valid session.
+		/// Check if it is a valid session.
 		if( username == null )
 		{
 			// No valid session so send him back to the login page
