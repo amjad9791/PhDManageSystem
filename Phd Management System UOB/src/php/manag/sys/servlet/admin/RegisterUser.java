@@ -45,7 +45,6 @@ public class RegisterUser extends HttpServlet
 
 		SqlLiteDatabase sql = new SqlLiteDatabase( );
 
-		showAlert( "TESTTT", response );
 		// Calling when register Button is selected
 		if( request.getParameter( "registerUser" ) != null )
 		{
@@ -96,19 +95,6 @@ public class RegisterUser extends HttpServlet
 		java.util.regex.Pattern p = java.util.regex.Pattern.compile( ePattern );
 		java.util.regex.Matcher m = p.matcher( email );
 		return m.matches( );
-	}
-
-	public void showAlert( String alertText, HttpServletResponse response )
-	{
-
-		// servlet code
-//		out.print( "<html><head>" );
-//		out.print( "<script type=\"text/javascript\">alert(" + alertText + ");</script>" );
-//		out.print( "</head><body></body></html>" );
-		// out.println( "<script type=\"text/javascript\">" );
-		// out.println( "alert('" + alertText + "');" );
-		// out.println( "location='registerUser.jsp';" );
-		// out.println( "</script>" );
 	}
 
 	private static String encryptPassword( String password )
