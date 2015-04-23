@@ -102,9 +102,9 @@ public class RegisterUser extends HttpServlet
 	{
 
 		// servlet code
-		out.print( "<html><head>" );
-		out.print( "<script type=\"text/javascript\">alert(" + alertText + ");</script>" );
-		out.print( "</head><body></body></html>" );
+//		out.print( "<html><head>" );
+//		out.print( "<script type=\"text/javascript\">alert(" + alertText + ");</script>" );
+//		out.print( "</head><body></body></html>" );
 		// out.println( "<script type=\"text/javascript\">" );
 		// out.println( "alert('" + alertText + "');" );
 		// out.println( "location='registerUser.jsp';" );

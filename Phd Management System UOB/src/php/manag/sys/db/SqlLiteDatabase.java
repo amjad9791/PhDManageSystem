@@ -14,12 +14,14 @@ import java.util.Formatter;
 // JDK 7 and above
 public class SqlLiteDatabase
 {
-	// JDBC driver name and database URL
-	public static final String DB_URL = "jdbc:mysql://phdman2014-15.hosting.comp.brad.ac.uk:3306/olaf_phdManagementSystem";
 
+	// JDBC driver name and database URL
+	public static final String DB_URL = "jdbc:mysql://localhost:8888/phdmanagsys";
+	
 	// Database credentials
-	public static final String USER = "olaf_admin";
-	public static final String PASSWORD = "groupproject";
+
+	public static final String USER = "jerry";
+	public static final String PASSWORD = "siemens";
 
 	/**
 	 * inserts a Applciation will all required data into the Database
