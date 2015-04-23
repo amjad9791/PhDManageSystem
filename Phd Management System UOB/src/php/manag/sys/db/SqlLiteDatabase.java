@@ -14,9 +14,8 @@ import java.util.Formatter;
 // JDK 7 and above
 public class SqlLiteDatabase
 {
-
 	// JDBC driver name and database URL
-	public static final String DB_URL = "jdbc:mysql://localhost:8888/phdmanagsys";
+	public static final String DB_URL = "jdbc:mysql://localhost:8888/olaf_phdmanagementsystem";
 	
 	// Database credentials
 
