@@ -18,16 +18,17 @@ public class AddApplicationTest
 		 app = new AddApplication( );
 	}
 
-	@Test
-	public void testDoPostHttpServletRequestHttpServletResponse( )
-	{
-//		fail( "Not yet implemented" );
-	}
+	
 
 	@Test
 	public void testIsValidEmailAddress( )
 	{
-//		fail( "Not yet implemented" );
+		String str1 = "john1991gamilcom";
+		assertFalse(  "String value is not number" , app.isValidEmailAddress( str1 ));
+		
+		//1 Case: Given value is a integer
+		String		str12 = "john123@gmail.com";
+		assertTrue(  "String value is a number" , app.isValidEmailAddress( str12 ));
 	}
 
 	@Test
