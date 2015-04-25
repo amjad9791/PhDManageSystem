@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import php.manag.sys.db.ListFilterContainer;
+
 public class ListFilterContainer_Test
 {
-
+	ListFilterContainer listfi;
 	@BeforeClass
 	public static void setUpBeforeClass( ) throws Exception
 	{
@@ -18,6 +20,9 @@ public class ListFilterContainer_Test
 	@Before
 	public void setUp( ) throws Exception
 	{
+		listfi = new ListFilterContainer() ;
+
+		
 	}
 
 	@After

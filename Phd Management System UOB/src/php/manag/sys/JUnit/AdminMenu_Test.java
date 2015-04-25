@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import php.manag.sys.servlet.admin.AdminMenu;
+
 public class AdminMenu_Test
 {
-
+	AdminMenu admin; 
 	@BeforeClass
 	public static void setUpBeforeClass( ) throws Exception
 	{
@@ -18,6 +20,8 @@ public class AdminMenu_Test
 	@Before
 	public void setUp( ) throws Exception
 	{
+		admin = new AdminMenu( );
+
 	}
 
 	@After

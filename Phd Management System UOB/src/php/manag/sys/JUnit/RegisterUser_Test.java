@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import php.manag.sys.servlet.admin.RegisterUser;
+
 public class RegisterUser_Test
 {
-
+	RegisterUser reg;
 	@BeforeClass
 	public static void setUpBeforeClass( ) throws Exception
 	{
@@ -18,6 +20,7 @@ public class RegisterUser_Test
 	@Before
 	public void setUp( ) throws Exception
 	{
+		reg = new RegisterUser(); 
 	}
 
 	@After

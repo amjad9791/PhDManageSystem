@@ -2,7 +2,6 @@ package php.manag.sys.JUnit;
 
 import static org.junit.Assert.*;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,8 +45,12 @@ public class AddApplication_Test
 		String str = "test";
 		assertFalse(  "String value is not number" , app.isValidDigit( str ));
 		
-		//2 Case: Given value is a integer
-		str = "2";
+		//2 Case: Given value is a symbols
+		 str = "!@#$%FDFD";
+		assertFalse(  "String value is not number" , app.isValidDigit( str ));
+		
+		//3 Case: Given value is a integer
+		str = "22233329";
 		assertTrue(  "String value is a number" , app.isValidDigit( str ));
 		
 		

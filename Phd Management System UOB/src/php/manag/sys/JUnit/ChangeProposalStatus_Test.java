@@ -6,9 +6,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import php.manag.sys.servlet.admin.ChangeProposalStatus;
 
 public class ChangeProposalStatus_Test
-{
+{ 
+	 ChangeProposalStatus ch;
 
 	@BeforeClass
 	public static void setUpBeforeClass( ) throws Exception
@@ -18,6 +20,8 @@ public class ChangeProposalStatus_Test
 	@Before
 	public void setUp( ) throws Exception
 	{
+		ch= new ChangeProposalStatus();
+	
 	}
 
 	@After

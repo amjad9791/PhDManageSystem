@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import php.manag.sys.db.ListApplicationContainer;
+
 public class ListApplicationContainer_Test
 {
-
+	ListApplicationContainer listapp;
 	@BeforeClass
 	public static void setUpBeforeClass( ) throws Exception
 	{
@@ -18,6 +20,9 @@ public class ListApplicationContainer_Test
 	@Before
 	public void setUp( ) throws Exception
 	{
+		
+		listapp = new ListApplicationContainer() ;
+
 	}
 
 	@After
