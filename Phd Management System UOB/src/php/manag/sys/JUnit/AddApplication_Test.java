@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import php.manag.sys.servlet.admin.AddApplication;
 
-public class AddApplicationTest
+public class AddApplication_Test
 {
 	AddApplication app;
 

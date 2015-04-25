@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import php.manag.sys.db.SqlLiteDatabase;
 
-public class SqlLiteDatabaseTest
+public class SqlLiteDatabase_Test
 {
 
 	private SqlLiteDatabase sql;
