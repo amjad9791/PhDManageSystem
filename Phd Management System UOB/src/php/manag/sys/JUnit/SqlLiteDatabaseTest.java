@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import php.manag.sys.db.SqlLiteDatabase;
 
-public class jUnit_SqlLiteDatabase
+public class SqlLiteDatabaseTest
 {
 
 	private SqlLiteDatabase sql;
@@ -52,7 +52,7 @@ public class jUnit_SqlLiteDatabase
 		createrUser = "Junit";
 
 		assertTrue( "Application successfully inserted", sql.insertApplication( ubNumber, firstName, middleName, lastname, email, birthday, gender, discipline, titleOfresearch, highestAward, qualificationHighestAward, otherAward, qualificationOtherAward, createrUser ) );
-		
+	
 		//Clear the environment
 		sql.jUnit_update( "DELETE FROM application WHERE firstName = 'Junit';" );
 	}
