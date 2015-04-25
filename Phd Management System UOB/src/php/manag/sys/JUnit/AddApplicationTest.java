@@ -23,12 +23,21 @@ public class AddApplicationTest
 	@Test
 	public void testIsValidEmailAddress( )
 	{
-		String str1 = "john1991gamilcom";
-		assertFalse(  "String value is not number" , app.isValidEmailAddress( str1 ));
+		// 1 Case: Given value without "@" and " . "
+		String email1 = "john1991gamilcom";
+		assertFalse( "String value is not number", app.isValidEmailAddress( email1 ) );
 		
-		//1 Case: Given value is a integer
-		String		str12 = "john123@gmail.com";
-		assertTrue(  "String value is a number" , app.isValidEmailAddress( str12 ));
+		// 2 Case: Given value without "@"
+		String email2 = "john1991gamil.com";
+		assertFalse( "String value is not number", app.isValidEmailAddress( email2 ) );
+
+		// 3 Case:  Given value rubbish values
+        String email3 = "32efwddf32";
+		assertFalse( "String value is not number", app.isValidEmailAddress( email3 ) );
+
+		// 4 Case: Given value is a with "@" and " . "
+		String email4 = "john123@gmail.com";
+		assertTrue( "String value is a number", app.isValidEmailAddress( email4 ) );
 	}
 
 	@Test
@@ -38,7 +47,7 @@ public class AddApplicationTest
 		String str = "test";
 		assertFalse(  "String value is not number" , app.isValidDigit( str ));
 		
-		//1 Case: Given value is a integer
+		//2 Case: Given value is a integer
 		str = "2";
 		assertTrue(  "String value is a number" , app.isValidDigit( str ));
 		
