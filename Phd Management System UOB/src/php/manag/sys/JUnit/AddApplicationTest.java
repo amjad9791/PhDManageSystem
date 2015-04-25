@@ -25,19 +25,19 @@ public class AddApplicationTest
 	{
 		// 1 Case: Given value without "@" and " . "
 		String email1 = "john1991gamilcom";
-		assertFalse( "String value is not number", app.isValidEmailAddress( email1 ) );
+		assertFalse( "Email form is missing @ and a dot ", app.isValidEmailAddress( email1 ) );
 		
 		// 2 Case: Given value without "@"
 		String email2 = "john1991gamil.com";
-		assertFalse( "String value is not number", app.isValidEmailAddress( email2 ) );
+		assertFalse( "Email form is missing a dot", app.isValidEmailAddress( email2 ) );
 
 		// 3 Case:  Given value rubbish values
         String email3 = "32efwddf32";
-		assertFalse( "String value is not number", app.isValidEmailAddress( email3 ) );
+		assertFalse( "Email value is not in the right form", app.isValidEmailAddress( email3 ) );
 
 		// 4 Case: Given value is a with "@" and " . "
 		String email4 = "john123@gmail.com";
-		assertTrue( "String value is a number", app.isValidEmailAddress( email4 ) );
+		assertTrue( "Email value is in the right form", app.isValidEmailAddress( email4 ) );
 	}
 
 	@Test
