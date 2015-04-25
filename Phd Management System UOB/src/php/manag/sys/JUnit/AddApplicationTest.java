@@ -19,7 +19,6 @@ public class AddApplicationTest
 	}
 
 	
-
 	@Test
 	public void testIsValidEmailAddress( )
 	{
