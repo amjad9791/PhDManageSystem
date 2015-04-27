@@ -65,7 +65,7 @@
 		<input type="submit" name="logout" value="Logout" style="width: 500px;  "><br>
 	</form>
           </div>	
-          <div> </div>
+          
 
       		  
 	
