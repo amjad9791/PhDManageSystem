@@ -76,7 +76,7 @@ public class FileUploadDBServlet extends HttpServlet
 			{
 				// Set error message to inform user about the file type
 				request.setAttribute( "Error_Message", "Only PDF files are allowed" );
-				request.getRequestDispatcher( "uploadFileProposal.jsp" );
+				request.getRequestDispatcher( "uploadFileProposal.jsp" ).forward( request, response );
 				return;
 			}
 		}
