@@ -90,13 +90,19 @@ public class AddApplication extends HttpServlet
 			// checking for a valid mail address
 			if( !isValidEmailAddress( eMail ) )
 			{
-				request.setAttribute( "Error_Message", "Mail Address is not valid" );
+				request.setAttribute( "Error_Message", "Email Address is not valid" );
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 			}
 			// check the ub number for digits
 			else if( !isValidDigit( ubNumber ) )
 			{
-				request.setAttribute( "Error_Message", "UB number are only digits" );
+				request.setAttribute( "Error_Message", "Numeric values only in UB number" );
+				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
+			}
+			// check the first name and lastname are only characters 
+			else if( isValidDigit( firstName ) || isValidDigit( middleName ) || isValidDigit( lastName ) )
+			{
+				request.setAttribute( "Error_Message", "Only characters in first name, middle name, last name" );
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
 			}
 			// Every field needs to be filled, otherwise a alert will inform the
