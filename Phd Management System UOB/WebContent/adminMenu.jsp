@@ -56,13 +56,13 @@
       		  
 	
 	  <div id="content" class="auto-style3" style="height: 241px; width: 786px;">
-	  <form action="AdminMenu" method="post">
-		<input type="submit" name="addApplication" value="Add Application" style="width: 500px; height:300;"><br>
-		<input type="submit" name="viewResponses" value="View Responses" style="width: 500px; "><br>
-		<input type="submit" name="addUser" value="Add User" style="width: 500px; "><br>
-		<input type="submit" name="uploadFile" value="Upload File" style="width: 500px; "><br>
-		<input type="submit" name="changeProposalStatus" value="Change Propsal Status" style="width: 500px; "><br>
-		<input type="submit" name="logout" value="Logout" style="width: 500px;  "><br>
+	  <form action="AdminMenu" method="post" style="height: 187px">
+		<input type="submit" name="addApplication" value="Add Application" style="width: 500px; height: 40px; "><br>
+		<input type="submit" name="viewResponses" value="View Responses" style="width: 500px; height: 40px; "><br>
+		<input type="submit" name="addUser" value="Add User" style="width: 500px; height: 40px;"><br>
+		<input type="submit" name="uploadFile" value="Upload File" style="width: 500px; height: 40px;"><br>
+		<input type="submit" name="changeProposalStatus" value="Change Propsal Status" style="width: 500px;height: 40px; "><br>
+		<input type="submit" name="logout" value="Logout" style="width: 500px; height: 40px; "><br>
 	</form>
           </div>	
           
