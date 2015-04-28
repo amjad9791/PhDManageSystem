@@ -17,9 +17,6 @@ import php.manag.sys.db.SqlLiteDatabase;
 public class AddApplication extends HttpServlet
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -810903093372580449L;
 	private int applicationNr;
 
@@ -144,6 +141,11 @@ public class AddApplication extends HttpServlet
 
 	}
 
+	/**
+	 * Validates the email address for correctness
+	 * @param email the gives address will be validate
+	 * @return true if it is valid otherwise false
+	 */
 	public boolean isValidEmailAddress( String email )
 	{
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -152,6 +154,11 @@ public class AddApplication extends HttpServlet
 		return m.matches( );
 	}
 
+	/**
+	 * It validates numbers
+	 * @param the given parameter has to be any string
+	 * @return true if the parameter consists numbers otherwise false
+	 */
 	public boolean isValidDigit( String value )
 	{
 		try

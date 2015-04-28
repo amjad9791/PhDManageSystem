@@ -271,10 +271,7 @@ public class ViewApplication extends HttpServlet
 	}
 
 	/**
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
+	// this function will listen to the edit button listener and start the AddApplication view
 	 */
 	private void editButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
@@ -305,6 +302,9 @@ public class ViewApplication extends HttpServlet
 		}
 	}
 
+	/**
+	// this function will listen to the download button listener 
+	 */
 	private void downloadButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		// Here the buttons to download the applications.
@@ -333,6 +333,9 @@ public class ViewApplication extends HttpServlet
 		}
 	}
 
+	/**
+	// this function will listen to the delete button listener 
+	 */
 	private void deleteFileButtonListener( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
 	{
 		// Here the buttons to download the applications.
@@ -360,16 +363,10 @@ public class ViewApplication extends HttpServlet
 	}
 
 	/**
-	 * @param request
-	 * @param response
-	 * @param sql
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-
 	// this function is for checking when the professor wants to be a supervisor
 	// on an application if he is already supervisor
 	// or otherwise will add the application on their list & update database
+	 */
 	private void supervisorButtonListener( HttpServletRequest request, HttpServletResponse response, SqlLiteDatabase sql ) throws ServletException, IOException
 	{
 		int i = 1;

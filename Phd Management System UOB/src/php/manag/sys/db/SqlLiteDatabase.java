@@ -23,7 +23,7 @@ public class SqlLiteDatabase
 	public static final String PASSWORD = "siemens";
 
 	/**
-	 * inserts a Applciation will all required data into the Database
+	 * inserts a Application with all required data into the Database
 	 */
 	public boolean insertApplication( String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
 	{
@@ -123,6 +123,12 @@ public class SqlLiteDatabase
 		return result;
 	}
 
+	/**
+	 * This method ensures that only one supervisor has assigned one application
+	 * @param username is the synonym for supervisor. The database uses the current user to assign him to the selected application
+	 * @param applicationNr is the selected applcation to assign the supervisor to. 
+	 * @return true when the the supervisor is already assigned. false, if the user is not assigned
+	 */
 	public boolean isAlreadySupervisor( String username, int applicationNr )
 	{
 		// Step 1: Allocate a database "Connection" object
@@ -174,6 +180,13 @@ public class SqlLiteDatabase
 		return false;
 	}
 
+	
+	/**
+	 * The method ensures that only one user or email address is existing in the user table
+	 * @param username the given username can only exist once
+	 * @param email the given email address can only exist once
+	 * @return true if the email or user already exists, false if the user doesn't exists
+	 */
 	public boolean isUserOREmailExisting( String username, String email )
 	{
 		int number = 0;
@@ -245,6 +258,10 @@ public class SqlLiteDatabase
 		return false;
 	}
 
+	/**
+	 * When the user wants to edit an existing application. The method updates the application in the database with all the necessary fields 
+	 * @return true if it was successful and return false when not 
+	 */
 	public boolean updateApplication( String appNr, String ubNumber, String firstName, String middleName, String lastname, String email, String birthday, String gender, String discipline, String titleOfresearch, String highestAward, String qualificationHighestAward, String otherAward, String qualificationOtherAward, String createrUser )
 	{
 		String query = "";
@@ -277,6 +294,12 @@ public class SqlLiteDatabase
 
 	}
 
+	/**
+	 * The method inserts an user to assign him to an application
+	 * @param username its the parameter from the interface
+	 * @param applicationNr gets assigned to the supervisor
+	 * @return
+	 */
 	public boolean addSupervisor( String username, int applicationNr )
 	{
 		String query = "";
@@ -308,6 +331,12 @@ public class SqlLiteDatabase
 
 	}
 
+	/**
+	 * Deletes the selected supervisor from the assigned application
+	 * @param username is the current user and he gets removed from the application
+	 * @param applicationNr gets removed from user
+	 * @return true, if the procedure was successful otherwise false
+	 */
 	public boolean deleteSupervisor( String username, int applicationNr )
 	{
 		String query = "";
@@ -339,6 +368,12 @@ public class SqlLiteDatabase
 
 	}
 	
+	
+	/**
+	 * Deletes the file that is uploaded to the application
+	 * @param applicationNr, if the application has an file, it will delete the dependent file  
+	 * @return true if the procedure was successful otherwise false
+	 */
 	public boolean deleteFile( int applicationNr )
 	{
 		String query = "";
@@ -370,6 +405,11 @@ public class SqlLiteDatabase
 
 	}
 
+	/**
+	 * This method guarantees that an application only has two supervisor
+	 * @param applicationNr gets checked for the application number
+	 * @return true if the user has more than two application otherwise false
+	 */
 	public boolean hasSufficientSupervisor( int applicationNr )
 	{
 		int result = 0;
@@ -427,6 +467,10 @@ public class SqlLiteDatabase
 		return false;
 	}
 
+	/**
+	 * Returns the total number of the current applications in the server
+	 * @return
+	 */
 	public int numberOfApplications( )
 	{
 		int result = 0;
@@ -477,6 +521,13 @@ public class SqlLiteDatabase
 		return 0;
 	}
 
+	/**
+	 * The method inserts an user to privilege the new user to use the system
+	 * @param username its the parameter from the interface
+	 * @param password
+	 * @param email
+	 * @param roleUser
+	 */
 	public void createUser( String username, String password, String email, String roleUser )
 	{
 		String query = "";
@@ -504,6 +555,10 @@ public class SqlLiteDatabase
 		}
 	}
 
+	/**
+	 * Ensures a list with all available applications in the system
+	 * @return a Array List with all available values of the applications
+	 */
 	public ArrayList< Integer > listOfUBNumbers( )
 	{
 		ArrayList< Integer > list = new ArrayList< Integer >( );
@@ -698,6 +753,11 @@ public class SqlLiteDatabase
 		return result;
 	}
 
+	/**
+	 * An additional method to support the JUnit test according to the database
+	 * @param query Is the desired query
+	 * @return the values from the database
+	 */
 	public boolean jUnit_query( String query )
 	{
 		// Step 1: Allocate a database "Connection" object
@@ -742,6 +802,11 @@ public class SqlLiteDatabase
 		return false;
 	}
 
+	/**
+	 * An additional method to support the JUnit test according to the database
+	 * @param query ensures the update functionality for the JUnit test
+	 * @return true if successful otherwise not
+	 */
 	public boolean jUnit_update( String query )
 	{
 		// Step 1: Allocate a database "Connection" object
@@ -771,6 +836,11 @@ public class SqlLiteDatabase
 
 	}
 
+	/**
+	 * Updates the status of an application 
+	 * @param ubNumber which gets changed
+	 * @param status the desired status. Only follow status are avaiable: complete, pending, current
+	 */
 	public void updatePropsStatus( String ubNumber, String status )
 	{
 		String query = "";

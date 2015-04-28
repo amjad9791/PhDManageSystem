@@ -5,94 +5,103 @@
 <html>
 <head>
 <title>ARaynorDesign Template</title>
-  <meta name="description" content="free website template" />
-  <meta name="keywords" content="enter your keywords here" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/jquery.easing.min.js"></script>
-  <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
-  <script type="text/javascript">
-    $(window).load(function() {
-        $('#slider').nivoSlider();
-    });
-  </script>
-  <style type="text/css">
+<meta name="description" content="free website template" />
+<meta name="keywords" content="enter your keywords here" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+<script type="text/javascript">
+	$(window).load(function() {
+		$('#slider').nivoSlider();
+	});
+</script>
+<style type="text/css">
 .auto-style1 {
 	color: #FFFFFF;
 	font-size: medium;
 }
-  .auto-style3 {
-	  margin-top: 1px;
-	  margin-left: 237px;
-  }
-  .auto-style4 {
-	  margin-top: 71;
-  }
-  .auto-style5 {
-	  margin-left: 0px;
-  }
-  .auto-style6 {
-	  margin-left: 154px;
-  }
-  .auto-style7 {
-	  margin-left: 86px;
-  }
-  </style>
+
+.auto-style3 {
+	margin-top: 1px;
+	margin-left: 237px;
+}
+
+.auto-style4 {
+	margin-top: 71;
+}
+
+.auto-style5 {
+	margin-left: 0px;
+}
+
+.auto-style6 {
+	margin-left: 154px;
+}
+
+.auto-style7 {
+	margin-left: 86px;
+}
+</style>
 </head>
 <body>
-  <div id="main">	
-	<div id="site_content">
-      <div id="site_heading">
-	    <h1>PAMS</h1>	
-	    <h2>University Of Bradford</h2>
-	  </div><!--close site_heading-->
-	  <div id="header">
-	    <div id="menubar">
-          <ul id="menu">
-            <li class="auto-style1">Log Out</li>
-            <li class="current">&nbsp;&nbsp;&nbsp; <a href="ourwork.html">Home</a></li>
-            <li></li>
-                      </ul>
-        </div><!--close menubar-->
-      </div><!--close header-->	  
-	  	  
-	    <!--close content-->	
+	<div id="main">
+		<div id="site_content">
+			<div id="site_heading">
+				<h1>PAMS</h1>
+				<h2>University Of Bradford</h2>
+			</div>
+			<!--close site_heading-->
+			<div id="header">
+				<div id="menubar">
+					<ul id="menu">
+						<li class="auto-style1">Log Out</li>
+						<li class="current">&nbsp;&nbsp;&nbsp; <a href="ourwork.html">Home</a></li>
+						<li></li>
+					</ul>
+				</div>
+				<!--close menubar-->
+			</div>
+			<!--close header-->
 
-      		  
-	
-	  <div id="content" class="auto-style3" style="height: 241px; width: 786px;">
-	  <form name="ChangeProposalStatus" action="ChangeProposalStatus" class="auto-style5">
-		<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
-			url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
-			password="<%=SqlLiteDatabase.PASSWORD%>" />
-		<sql:query var="listUbNumbers" dataSource="${myDS}">
-		SELECT ubNumber FROM application;
+			<!--close content-->
+
+
+
+			<div id="content" class="auto-style3"
+				style="height: 241px; width: 786px;">
+				<form name="uploadSelection" action="UploadFileProposal"
+					method="post" enctype="multipart/form-data">
+
+					<sql:setDataSource var="myDS" driver="com.mysql.jdbc.Driver"
+						url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
+						password="<%=SqlLiteDatabase.PASSWORD%>" />
+					<sql:query var="listUbNumbers" dataSource="${myDS}">
+		SELECT ubNumber FROM application WHERE ubNumber NOT IN ( SELECT ubNumber FROM app_file);
 		</sql:query>
-		<select name="listUBNumbers">
-			<c:forEach var="user" items="${listUbNumbers.rows}">
+					<select name="listUBNumbers">
+						<c:forEach var="user" items="${listUbNumbers.rows}">
 
-				<option value="${user.ubNumber}">${user.ubNumber}</option>
+							<option value="${user.ubNumber}">${user.ubNumber}</option>
 
-			</c:forEach>
-		</select> <select name="status">
-		
-		<option value="current">current</option>
-				<option value="pending">pending</option>
-				<option value="complete">complete</option>
-		
-		
-		</select>
-		<input type="submit" name="statusChangeBtn" value="Change Status"> <br>
-		<br>
-		  <input type="submit" name="logout" value="Logout" class="auto-style7" style="width: 163px; height: 26px"><input type="submit" name="mainMenu" value="Main Menu" class="auto-style6" style="width: 148px"><br>
-	</form>          </div>	
+						</c:forEach>
+					</select> <input type="file" name="fileName"> <br> <input
+						type="submit" value="Upload">
 
-      		  
-	
-	</div><!--close site_content-->	
-    <div id="footer" class="auto-style4" style="height: 45px">  
-    </div><!--close footer-->		
-  </div><!--close main-->	
+					<%=( ( request.getAttribute( "Error_Message" ) == null ) ? "" : request.getAttribute( "Error_Message" ) )%>
+					<br> <input type="submit" name="mainMenu" value="Main Menu"><br>
+					<input type="submit" name="logout" value="Logout"><br>
+				</form>
+			</div>
+
+
+
+		</div>
+		<!--close site_content-->
+		<div id="footer" class="auto-style4" style="height: 45px"></div>
+		<!--close footer-->
+	</div>
+	<!--close main-->
 </body>
 </html>

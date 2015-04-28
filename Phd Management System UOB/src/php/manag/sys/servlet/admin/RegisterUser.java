@@ -89,6 +89,11 @@ public class RegisterUser extends HttpServlet
 
 	}
 
+	/**
+	 * Validates the email address for correctness
+	 * @param email the gives address will be validate
+	 * @return true if it is valid otherwise false
+	 */
 	public boolean isValidEmailAddress( String email )
 	{
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -97,6 +102,12 @@ public class RegisterUser extends HttpServlet
 		return m.matches( );
 	}
 
+	
+	/**The SHA hash functions are a set of cryptographic hash functions designed by the National Security Agency (NSA)
+	 * SHA-1 is believe the most secure hashing algorithm as this article is written
+	 * @param password this password gets encrypted 
+	 * @return returns the encrpted password
+	 */
 	private static String encryptPassword( String password )
 	{
 		String sha1 = "";
