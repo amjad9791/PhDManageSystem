@@ -53,7 +53,15 @@ public class RegisterUser extends HttpServlet
 			String email = request.getParameter( "email" );
 			String roleUser = request.getParameter( "roleUser" );
 
-			if( !isValidEmailAddress( email ) )
+			
+			if( username.equals( "" )|| password.equals( "" ) || email.equals( "" ) )
+			{
+				request.setAttribute( "Error_Message", "Please enter data" );
+				request.setAttribute( "username", username );
+				request.setAttribute( "email", email );
+				request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );
+			}
+			else if( !isValidEmailAddress( email ) )
 			{
 				request.setAttribute( "Error_Message", "The Email Address is not valid" );
 				request.setAttribute( "username", username );
@@ -62,7 +70,7 @@ public class RegisterUser extends HttpServlet
 			}
 			else if( sql.isUserOREmailExisting( username, email ) )
 			{
-				request.setAttribute( "Error_Message", "The User or email address is already existing. Please choose another one" );
+				request.setAttribute( "Error_Message", "The User or email address is already existing. Please choose another" );
 				request.setAttribute( "username", username );
 				request.setAttribute( "email", email );
 				request.getRequestDispatcher( "registerUser.jsp" ).forward( request, response );

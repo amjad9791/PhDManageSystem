@@ -87,8 +87,15 @@ public class AddApplication extends HttpServlet
 			String qualificationOtherAward = request.getParameter( "qualificationOtherAward" );
 			request.setAttribute( "qualiOtherAward", qualificationOtherAward );
 
+			// Every field needs to be filled, otherwise a alert will inform the
+			// user. Other Awards is an optional field
+		    if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) )
+			{
+				request.setAttribute( "Error_Message", "Please fill every field with your details" );
+				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
+			}
 			// checking for a valid mail address
-			if( !isValidEmailAddress( eMail ) )
+		    else if( !isValidEmailAddress( eMail ) )
 			{
 				request.setAttribute( "Error_Message", "Email Address is not valid" );
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
@@ -104,14 +111,7 @@ public class AddApplication extends HttpServlet
 			{
 				request.setAttribute( "Error_Message", "Only characters in first name, middle name, last name" );
 				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
-			}
-			// Every field needs to be filled, otherwise a alert will inform the
-			// user. Other Awards is an optional field
-			else if( firstName.equals( "" ) || lastName.equals( "" ) || discipline.equals( "" ) || titleOfresearch.equals( "" ) || highestAward.equals( "" ) || qualificationHighestAward.equals( "" ) )
-			{
-				request.setAttribute( "Error_Message", "Please fill every field with your details" );
-				request.getRequestDispatcher( "addApplication.jsp" ).forward( request, response );
-			}
+			} 
 			// All correct and it is alright to save the data into the database
 			else
 			{
