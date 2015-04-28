@@ -524,9 +524,9 @@ public class SqlLiteDatabase
 	/**
 	 * The method inserts an user to privilege the new user to use the system
 	 * @param username its the parameter from the interface
-	 * @param password
-	 * @param email
-	 * @param roleUser
+	 * @param password parameter from interface what is encryted by SHA-1 
+	 * @param email email addresses what are validated 
+	 * @param roleUser There are only two possible values: professor and admin
 	 */
 	public void createUser( String username, String password, String email, String roleUser )
 	{
