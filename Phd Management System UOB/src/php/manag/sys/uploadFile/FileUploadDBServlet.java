@@ -66,6 +66,13 @@ public class FileUploadDBServlet extends HttpServlet
 			System.out.println( filePart.getSize( ) );
 			System.out.println( );
 
+			//Set error if no file is selected
+			if(filePart.getSize( ) <= 0){
+				request.setAttribute( "Error_Message", "No file is selected" );
+				request.getRequestDispatcher( "uploadFileProposal.jsp" ).forward( request, response );
+				return;
+			}
+			
 			// only PDF files are allowed
 			if( filePart.getContentType( ).equals( "application/pdf" ) )
 			{

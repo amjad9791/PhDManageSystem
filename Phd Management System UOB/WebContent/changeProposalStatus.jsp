@@ -75,7 +75,7 @@
 			url="<%=SqlLiteDatabase.DB_URL%>" user="<%=SqlLiteDatabase.USER%>"
 			password="<%=SqlLiteDatabase.PASSWORD%>" />
 		<sql:query var="listUbNumbers" dataSource="${myDS}">
-		SELECT ubNumber FROM application;
+		SELECT DISTINCT ubNumber FROM application;
 		</sql:query>
 		<select name="listUBNumbers">
 			<c:forEach var="user" items="${listUbNumbers.rows}">
