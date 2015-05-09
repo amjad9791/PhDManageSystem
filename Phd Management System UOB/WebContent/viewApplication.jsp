@@ -30,82 +30,82 @@ p    {color:green}
 			<table border="1" cellpadding="5">
 				<caption></caption>
 				<tr>
-					<th style="background:cornflowerblue">App ID
+					<th style="background:#8B98A5">App ID
 						<p>
 							<input type="radio" value="ASC" name="radApp_id" />+<input
 								type="radio" value="DESC" name="radApp_id" />-
 					</th>
-					<th style="background:cornflowerblue" >UB Number
+					<th style="background:#8B98A5" >UB Number
 						<p>
 							<input type="radio" value="ASC" name="radUBNumber" />+<input
 								type="radio" value="DESC" name="radUBNumber" />-
 					</th>
-					<th style="background:cornflowerblue" >First Name
+					<th style="background:#8B98A5" >First Name
 						<p>
 							<input type="radio" value="ASC" name="radFirstName" />+<input
 								type="radio" value="DESC" name="radFirstName" />-
 					</th>
-					<th style="background:cornflowerblue" >Middle Name
+					<th style="background:#8B98A5" >Middle Name
 						<p>
 							<input type="radio" value="ASC" name="radMiddleName" />+<input
 								type="radio" value="DESC" name="radMiddleName" />-
 					</th>
-					<th style="background:cornflowerblue" >Last Name
+					<th style="background:#8B98A5" >Last Name
 						<p>
 							<input type="radio" value="ASC" name="radLastName" />+<input
 								type="radio" value="DESC" name="radLastName" />-
 					</th>
-					<th style="background:cornflowerblue">Email
+					<th style="background:#8B98A5">Email
 						<p>
 							<input type="radio" value="ASC" name="radEmail" />+<input
 								type="radio" value="DESC" name="radEmail" />-
 					</th>
-					<th style="background:cornflowerblue" >Birthday
+					<th style="background:#8B98A5" >Birthday
 						<p>
 							<input type="radio" value="ASC" name="radBirthday" />+<input
 								type="radio" value="DESC" name="radBirthday" />-
 					</th>
-					<th style="background:cornflowerblue" >Gender
+					<th style="background:#8B98A5" >Gender
 						<p>
 							<input type="radio" value="ASC" name="radGender" />+<input
 								type="radio" value="DESC" name="radGender" />-
 					</th>
-					<th style="background:cornflowerblue" >Discipline
+					<th style="background:#8B98A5" >Discipline
 						<p>
 							<input type="radio" value="ASC" name="radDiscipline" />+<input
 								type="radio" value="DESC" name="radDiscipline" />-
 					</th>
-					<th style="background:cornflowerblue" >Title of research
+					<th style="background:#8B98A5" >Title of research
 						<p>
 							<input type="radio" value="ASC" name="radTitleOfResearch" />+<input
 								type="radio" value="DESC" name="radTitleOfResearch" />-
 					</th>
-					<th style="background:cornflowerblue" >Highest award (HA)
+					<th style="background:#8B98A5" >Highest award (HA)
 						<p>
 							<input type="radio" value="ASC" name="radHA" />+<input
 								type="radio" value="DESC" name="radHA" />-
 					</th>
-					<th style="background:cornflowerblue" >Qualification (HA)
+					<th style="background:#8B98A5" >Qualification (HA)
 						<p>
 							<input type="radio" value="ASC" name="radQualiHA" />+<input
 								type="radio" value="DESC" name="radQualiHA" />-
 					</th>
-					<th style="background:cornflowerblue" >Other Award (OA)
+					<th style="background:#8B98A5" >Other Award (OA)
 						<p>
 							<input type="radio" value="ASC" name="radOA" />+<input
 								type="radio" value="DESC" name="radOA" />-
 					</th>
-					<th style="background:cornflowerblue" >Qualification (OA)
+					<th style="background:#8B98A5" >Qualification (OA)
 						<p>
 							<input type="radio" value="ASC" name="radQualiOA" />+<input
 								type="radio" value="DESC" name="radQualiOA" />-
 					</th>
-					<th style="background:cornflowerblue" >Admin User
+					<th style="background:#8B98A5" >Admin User
 						<p>
 							<input type="radio" value="ASC" name="radCreater" />+<input
 								type="radio" value="DESC" name="radCreater" />-
 					</th>
-					<th style="background:cornflowerblue" >Status
+					<th style="background:#8B98A5" >Status
 						<p>
 							<input type="radio" value="ASC" name="radStatus" />+<input
 								type="radio" value="DESC" name="radStatus" />-
@@ -114,11 +114,11 @@ p    {color:green}
 						String role = (String) getServletContext( ).getAttribute( "role" );
 						if( role.equals( "admin" ) )
 						{
-							out.println( "<th style='background:cornflowerblue' >Supervisor <p> <input type='radio' value='ASC' name='radSupervisor' />+ <input type='radio' value='DESC' name='radSupervisor' />- </th>" );
+							out.println( "<th style='background:#8B98A5' >Supervisor <p> <input type='radio' value='ASC' name='radSupervisor' />+ <input type='radio' value='DESC' name='radSupervisor' />- </th>" );
 						}
 					%>
 
-					<th style="background:cornflowerblue" >Search and Filter
+					<th style="background:#8B98A5" >Search and Filter
 						<p>
 							<input name="searchField" type="text" maxlength="49" value=''><input
 								type="submit" name="filter" value="Filter">
@@ -134,7 +134,7 @@ p    {color:green}
 					for( ListApplicationContainer element : list )
 					{
 						out.println( "<tr>" );
-						out.println( "<td >" + element.getApp_id( ) + "</td>" );
+						out.println( "<td style='background:#8B98A5' >" + element.getApp_id( ) + "</td>" );
 						out.println( "<td >" + element.getUbNumber( ) + "</td>" );
 						out.println( "<td >" + element.getFirstName( ) + "</td>" );
 						out.println( "<td>" + element.getMiddleName( ) + "</td>" );

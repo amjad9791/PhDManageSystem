@@ -36,7 +36,7 @@
   <div id="main">	
 	<div id="site_content">
       <div id="site_heading">
-	    <h1>PAMS</h1>	
+	    <h1>PhD Application Management System</h1>	
 	    <h2>University of Bradford</h2>
 	  </div><!--close site_heading-->
 	  <div id="header">

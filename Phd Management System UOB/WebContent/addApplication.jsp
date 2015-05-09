@@ -97,13 +97,7 @@
 	  </div><!--close site_heading-->
 	  <div id="header">
 	    <div id="menubar">
-          <ul id="menu">
-            <li class="auto-style1">Log Out</li>
-            <li class="current">&nbsp;&nbsp;&nbsp; <a href="ourwork.html">Home</a></li>
-            <li></li>
-            <li><a href="projects.html">Proposals</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
+         
         </div><!--close menubar-->
       </div><!--close header-->	  
 	  	  
