@@ -60,7 +60,7 @@
 		<input type="submit" name="viewResponses" value="View Responses" style="width: 500px; height: 40px; "><br>
 		<input type="submit" name="addUser" value="Add User" style="width: 500px; height: 40px;"><br>
 		<input type="submit" name="uploadFile" value="Upload File" style="width: 500px; height: 40px;"><br>
-		<input type="submit" name="changeProposalStatus" value="Change Propsal Status" style="width: 500px;height: 40px; "><br>
+		<input type="submit" name="changeProposalStatus" value="Change Proposal Status" style="width: 500px;height: 40px; "><br>
 		<input type="submit" name="logout" value="Logout" style="width: 500px; height: 40px; "><br>
 	</form>
           </div>	
