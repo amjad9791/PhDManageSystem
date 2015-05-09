@@ -14,14 +14,15 @@
 <title>View proposals page</title>
 
 <style>
-body {background-color:lightgray}
 h1   {color:blue}
 p    {color:green}
-</style>
+ body {background-color:whitesmoke}
+ 
 
+</style>
 </head>
 
-<body>
+<body> 
 	<form action="ViewApplication" method="post">
 		<div align="center">
 			<h2>List of applications</h2>
@@ -133,21 +134,21 @@ p    {color:green}
 					for( ListApplicationContainer element : list )
 					{
 						out.println( "<tr>" );
-						out.println( "<td>" + element.getApp_id( ) + "</td>" );
-						out.println( "<td>" + element.getUbNumber( ) + "</td>" );
-						out.println( "<td>" + element.getFirstName( ) + "</td>" );
+						out.println( "<td >" + element.getApp_id( ) + "</td>" );
+						out.println( "<td >" + element.getUbNumber( ) + "</td>" );
+						out.println( "<td >" + element.getFirstName( ) + "</td>" );
 						out.println( "<td>" + element.getMiddleName( ) + "</td>" );
-						out.println( "<td>" + element.getLastName( ) + "</td>" );
+						out.println( "<td  >" + element.getLastName( ) + "</td>" );
 						out.println( "<td>" + element.getEmail( ) + "</td>" );
-						out.println( "<td>" + element.getBirthday( ) + "</td>" );
+						out.println( "<td >" + element.getBirthday( ) + "</td>" );
 						out.println( "<td>" + element.getGender( ) + "</td>" );
-						out.println( "<td>" + element.getDiscipline( ) + "</td>" );
+						out.println( "<td  >" + element.getDiscipline( ) + "</td>" );
 						out.println( "<td>" + element.getTitleOfResearch( ) + "</td>" );
-						out.println( "<td>" + element.getHighestAward( ) + "</td>" );
+						out.println( "<td >" + element.getHighestAward( ) + "</td>" );
 						out.println( "<td>" + element.getQualiHighAward( ) + "</td>" );
-						out.println( "<td>" + element.getOtherAward( ) + "</td>" );
+						out.println( "<td  >" + element.getOtherAward( ) + "</td>" );
 						out.println( "<td>" + element.getQualiOtherAward( ) + "</td>" );
-						out.println( "<td>" + element.getCreaterUser( ) + "</td>" );
+						out.println( "<td  >" + element.getCreaterUser( ) + "</td>" );
 						out.println( "<td>" + element.getId_value( ) + "</td>" );
 						if( role.equals( "admin" ) )
 						{
